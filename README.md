@@ -1,6 +1,6 @@
-Tietokantasovelluksen aihekuvaus:
+# Työryhmäjäsenyydet
 
-Työryhmäjäsenyydet ja oikeustasot
+## Tietokantasovelluksen aihekuvaus
 
 Organisaatiossa on käytössä yhteistyöalusta, jossa on omia työtiloja eri työryhmille. Työntekijät voivat kuulua useisiin eri työryhmiin, ja työryhmissä on useita jäseniä. Työryhmän jäsenillä voi olla eri tasoisia oikeuksia työryhmän toimintoihin: selaaja, muokkaaja, hallinnoija. Lisäksi kullakin työryhmällä on nimetty hyväksyjä, joka hyväksyy uusia henkilöitä ryhmän jäseneksi. Organisaatiossa tarvitaan tietokanta, josta pääsee helposti tarkistamaan, keitä kuhunkin työryhmään kuuluu ja minkä tason oikeudet kullakin käyttäjällä materiaaliin on, ja henkilöittäin mihin kaikkiin työryhmiin henkilö kuuluu ja minkä tason oikeuksin. Tietokannasta tulee myös löytyä tiedot jo päättyneiltä ajanjaksoilta niin käyttäjittäin kuin työryhmittäin hakemalla, milloin kukakin työntekijä on kuulunut mihinkin työryhmään ja millaisin oikeuksin. 
 
@@ -9,7 +9,8 @@ Tietokannan tarkastelujärjestelmällä on käyttäjiä, joiden tulee kirjautua 
 Käyttäjät pystyvät myös hakemaan käyttöoikeuksia uusiin työryhmiin, oikeustasonsa muutosta tai oikeuksien poistoa. Oikeuspyynnöt hyväksytetään erikseen työryhmän hyväksyjällä, ja pääkäyttäjät merkitsevät hakemuksen tilan sen mukaisesti ja tekevät muutokset tietokantaan. 
 
 
-Toimintoja:
+## Toimintoja
+
 * kirjautuminen 
 * tietokantajärjestelmän käyttäjien lisääminen, muokkaaminen ja päättäminen (käyttäjän nimi, id, käyttöoikeustaso, milloin lisätty järjestelmään, mihin asti käyttöoikeus voimassa)
 * työryhmän lisääminen, sen tietojen muokkaus ja päättäminen (työryhmän nimi, käyttöoikeushyväksyjä, perustamisajankohta, työryhmän päättymispäivä jos työ päättynyt)
@@ -20,4 +21,5 @@ Toimintoja:
 * jäsenyyden hakeminen työryhmään tai muutoksen hakeminen työryhmään olevaan jäsenyystasoon tai jäsenyyden poiston hakeminen
 * jäsenyyshakemusten selaaminen (avoimet ja suljetut) ja hyväksyminen tai hylkääminen.
 
-Linkki tietokantakaavioon: https://github.com/jmlii/tr-jasenyydet/blob/master/Tietokantakaavio.pdf
+[Linkki tietokantakaavioon](https://github.com/jmlii/tr-jasenyydet/blob/master/Tietokantakaavio.pdf) 
+(https://github.com/jmlii/tr-jasenyydet/blob/master/Tietokantakaavio.pdf)
