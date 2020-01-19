@@ -7,6 +7,9 @@
       <th>Sukunimi</th>
       <th>Kayttooikeustaso</th>
       <th>Id</th>
+      <th>Aktiivinen</th>
+      <th>Luontipvm</th>
+      <th></th>
     </tr>
     {% for kayttaja in kayttajat %}
     <tr>
@@ -14,6 +17,13 @@
       <td>{{ kayttaja.sukunimi }}</td>
       <td>{{ kayttaja.kayttooikeustaso}}</td>
       <td>{{ kayttaja.id }}</td>
+      <td>{{ kayttaja.aktiivinen }}</td>
+      <td>{{ kayttaja.luontipvm }}</td>
+      <td>
+          <form method="POST" action="{{ url_for('kayttajat_set_end', kayttaja_id=kayttaja.id) }}">
+              <input type="submit" value="Päätä käyttäjä"/>
+          </form>
+      </td>
     </tr>
     {% endfor %}
   </table>
