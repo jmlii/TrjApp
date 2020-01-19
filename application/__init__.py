@@ -18,6 +18,7 @@ from application import views
 
 # Luetaan kansiosta application/kayttajat tiedoston models sisältö
 from application.kayttajat import models
+from application.kayttajat import views
 
 # Luodaan tarvittavat tietokantataulut
 db.create_all()
