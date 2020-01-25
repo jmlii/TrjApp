@@ -2,7 +2,9 @@
 venv
 __pycache__
 vanhatversiot
+trj.db
 kayttajat.db
+
 
 
 # GitHubista kopioidut lisäykset gitignoreen:

@@ -1,0 +1,18 @@
+from application import db
+
+class Wgroup(db.Model):
+    id = db.Column(db.Integer, primary_key=True)   
+    name = db.Column(db.String(36), nullable=False)
+    authoriser = db.Column(db.String(36), nullable=False)
+    active = db.Column(db.Boolean, nullable=False, default=True)
+    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
+    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
+    onupdate=db.func.current_timestamp())
+    date_ended = db.Column(db.DateTime)
+
+    def __init__(self, name, authoriser):
+        self.name = name
+        self.authoriser = authoriser
+
+
+        

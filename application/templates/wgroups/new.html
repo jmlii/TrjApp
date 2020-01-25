@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+  
+{% block body %}
+<form method="POST" action="{{ url_for('wgroups_create') }}">
+  <input type="text" name="name"/>
+  <input type="text" name="authoriser"/>
+  <input type="submit" value="Add a new working group"/>
+</form>
+{% endblock %}
