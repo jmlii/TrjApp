@@ -49,5 +49,5 @@ def load_user(user_id):
 # Luodaan tarvittavat tietokantataulut vain kerran
 try:
     db.create_all()
-else:
+except:
     pass
