@@ -6,19 +6,35 @@
     </head>
 
     <body>
+        {% if current_user.is_authenticated %}
+        <p>
+            Kirjautunut tunnuksella {{ current_user.username }}. <a href="{{ url_for('auth_logout') }}">Kirjaudu ulos</a>
+        </p>
         <ul>
-            <li><a href="{{ url_for('kayttajat_index') }}">Listaa käyttäjät</a></li>
-            <li><a href="{{ url_for('kayttajat_form') }}">Lisää käyttäjä</a></li>
-            <li><a href="{{ url_for('wgroups_index') }}">Listaa työryhmät</a></li>
+            <li><a href="{{ url_for('users_form') }}">Lisää uusi käyttäjä</a></li>
             <li><a href="{{ url_for('wgroups_form') }}">Lisää uusi työryhmä</a></li>
         </ul>
 
+        {% else %}
+        <a href="{{ url_for('auth_login') }}">Kirjaudu</a>
+        <a href="{{ url_for('users_form') }}">Luo uusi tunnus</a>
+        {% endif %}
 
+        <ul>
+            <li><a href="{{ url_for('users_index') }}">Listaa käyttäjät</a></li>
+            <li><a href="{{ url_for('wgroups_index') }}">Listaa työryhmät</a></li>
+        </ul>
 
         {% block body %}
             <p>
                 Content.
             </p>
         {% endblock %}
+
+        {% if not current_user.is_authenticated %}
+        <p>
+            Aloita kirjautumalla sisään tai luomalla uusi käyttäjätunnus. 
+        </p>
+        {% endif %}
     </body>
 </html>

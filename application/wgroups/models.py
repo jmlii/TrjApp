@@ -13,6 +13,3 @@ class Wgroup(db.Model):
     def __init__(self, name, authoriser):
         self.name = name
         self.authoriser = authoriser
-
-
-        
