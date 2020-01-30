@@ -25,9 +25,14 @@ Käyttäjät pystyvät myös hakemaan käyttöoikeuksia uusiin työryhmiin, työ
 * jäsenyyden hakeminen työryhmään tai muutoksen hakeminen työryhmään olevaan jäsenyystasoon tai jäsenyyden poiston hakeminen
 * jäsenyyshakemusten selaaminen (avoimet ja suljetut) ja hyväksyminen tai hylkääminen.
 
-[Linkki tarkempiin käyttötapauksiin](../master/documentation/kayttotapaukset.txt)
+[Linkki tarkempiin käyttötapauksiin](../master/kayttotapaukset.md) 
 
-[Linkki tietokantakaavioon](../master/documentation/Tietokantakaavio.pdf)
+## Tietokantakaavio
+
+![](https://github.com/jmlii/TrjApp/raw/master/documentation/Tietokantakaavio.png "Tietokantakaavio")
+
+
+[Linkki tietokantakaavioon (pdf)](../master/documentation/Tietokantakaavio.pdf)
 
 
 
