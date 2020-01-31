@@ -54,11 +54,22 @@ def users_create():
 
     return redirect(url_for("users_index"))
     
+# Käyttäjän asettaminen lepotilaan
 @app.route("/users/inactivate<user_id>/", methods=["POST"])
-def users_set_inactive(user_id):
+def users_inactivate(user_id):
     u = User.query.get(user_id)
     u.account_active = False
     u.date_inactivated = db.func.current_timestamp()
+    db.session().commit()
+
+    return redirect(url_for("users_index"))
+
+# Käyttäjän poistaminen tietokannasta
+@app.route("/users/delete<user_id>/", methods=["POST"])
+def users_delete(user_id):
+    u = User.query.get(user_id)
+     
+    db.session().delete(u)
     db.session().commit()
 
     return redirect(url_for("users_index"))
