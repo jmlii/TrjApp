@@ -1,20 +1,22 @@
 # Käyttötapaukset:
 
 ## Kirjautuminen
-* Käyttäjä pystyy kirjautumaan sovellukseen
+* Käyttäjä pystyy kirjautumaan sovellukseen.
+* Jos käyttäjän tunnus on merkitty epäaktiiviseksi, käyttäjä ei pysty kirjautumaan sovellukseen.
 
 ## Käyttäjätiedot:
 * Sovellukseen voidaan lisätä kahden tasoisia käyttäjiä: peruskäyttäjiä ja pääkäyttäjiä.
 * Pääkäyttäjä pystyy lisäämään uuden käyttäjän sovellukseen: etunimi, sukunimi, käyttöoikeustaso; sovellus merkitsee oletuksena lisättävän käyttäjän aktiiviseksi ja tallentaa luomisajankohdan automaattisesti.
 * Pääkäyttäjä pystyy muokkaamaan käyttäjän nimiä ja käyttöoikeustasoa.
-* Pääkäyttäjä pystyy muuttamaan käyttäjän epäaktiiviseksi, ja päättämisajankohta tallentuu automaattisesti.
+* Pääkäyttäjä pystyy muuttamaan käyttäjän epäaktiiviseksi, ja päättämisajankohta tallentuu automaattisesti. 
 * Käyttäjän tietoja muokatessa muokkausajankohta tallentuu automaattisesti.
-* Pääkäyttäjä pystyy listaamaan kaikki järjestelmän nykyiset ja entiset käyttäjät käyttäjätietoineen. 
+* Pääkäyttäjä pystyy listaamaan kaikki järjestelmän aktiiviset ja epäaktiiviset käyttäjät käyttäjätietoineen. 
+* Pääkäyttäjä pystyy poistamaan käyttäjän tiedot järjestelmästä, jonka jälkeen niitä ei enää löydy. 
 
 ## Työryhmätiedot: 
 * Pääkäyttäjä pystyy lisäämään järjestelmään uuden työryhmän: työryhmän nimi, jäsenhyväksyjä; sovellus merkitsee oletuksena työryhmän aktiiviseksi ja tallentaa perustamisajankohdan automaattisesti.
 * Pääkäyttäjä pystyy muuttamaan työryhmän perustietoja.
-* Pääkäyttäjä pystyy muuttamaan työryhmän epäaktiiviseksi, ja päättämisajankohta tallentuu automaattisesti.
+* Pääkäyttäjä pystyy muuttamaan työryhmän päättyneeksi, ja päättämisajankohta tallentuu automaattisesti.
 * Työryhmän tietoja muokatessa muokkausajankohta tallentuu automaattisesti.
 * Työryhmillä on kolme jäsenyystasoa: selaaja, muokkaaja, hallinnoija. Näillä tasoilla ei ole merkitystä tämän sovelluksen käytön kannalta, vaan ne viittaavat toisen sovelluksen käyttöoikeustasoihin. Jäsenyystasotiedon on kuitenkin löydyttävä kaikilta työryhmän jäseniltä.
 * Pääkäyttäjä pystyy lisäämään järjestelmään uusia jäsenyystasoja.
