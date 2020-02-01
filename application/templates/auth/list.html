@@ -20,6 +20,7 @@
       <td>{{ user.last_name }}</td>
       <td>{{ user.date_created }}</td>
       <td>{{ user.date_modified }}</td>
+      {% if current_user.is_authenticated %}
       <td>
         <form method="POST" action="{{ url_for('users_inactivate', user_id=user.id) }}">
           <input type="submit" value="Inactivate user"/>
@@ -29,6 +30,7 @@
         <form method="POST" action="{{ url_for('users_delete', user_id=user.id )}}">
           <input type="submit" value="Delete user account" onclick="return confirm('Are you sure you want to delete this user account from the database?')">
       </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </table>

@@ -18,11 +18,13 @@
       <td>{{ wgroup.active }}</td>
       <td>{{ wgroup.date_created }}</td>
       <td>{{ wgroup.date_modified }}</td>
+      {% if current_user.is_authenticated %}
       <td>
         <form method="POST" action="{{ url_for('wgroups_set_end', wgroup_id=wgroup.id) }}">
           <input type="submit" value="End group"/>
         </form>
       </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </table>
