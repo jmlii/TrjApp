@@ -25,7 +25,7 @@ Käyttäjät pystyvät myös hakemaan käyttöoikeuksia uusiin työryhmiin, työ
 * jäsenyyden hakeminen työryhmään tai muutoksen hakeminen työryhmään olevaan jäsenyystasoon tai jäsenyyden poiston hakeminen
 * jäsenyyshakemusten selaaminen (avoimet ja suljetut) ja hyväksyminen tai hylkääminen.
 
-[Linkki tarkempiin käyttötapauksiin](../master/kayttotapaukset.md) 
+[Linkki tarkempiin käyttötapauksiin](../master/documentation/kayttotapaukset.md) 
 
 ## Tietokantakaavio
 
