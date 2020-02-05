@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 from application import app, db
 from application.auth.models import User
 from application.auth.forms import LoginForm, UserForm
@@ -35,11 +35,13 @@ def users_index():
 
 # Uuden käyttäjän luominen
 @app.route("/users/new/")
+@login_required
 def users_form():
     return render_template("/auth/new.html", form = UserForm())
 
 # Luodun käyttäjän tiedot tietokantaan
 @app.route("/users/", methods=["POST"])
+@login_required
 def users_create():
     form = UserForm(request.form)
     
@@ -56,6 +58,7 @@ def users_create():
     
 # Käyttäjän asettaminen lepotilaan
 @app.route("/users/inactivate<user_id>/", methods=["POST"])
+@login_required
 def users_inactivate(user_id):
     u = User.query.get(user_id)
     u.account_active = False
@@ -66,6 +69,7 @@ def users_inactivate(user_id):
 
 # Käyttäjän poistaminen tietokannasta
 @app.route("/users/delete<user_id>/", methods=["POST"])
+@login_required
 def users_delete(user_id):
     u = User.query.get(user_id)
      
