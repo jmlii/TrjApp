@@ -52,10 +52,8 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-db.create_all()
-
-# Luodaan tarvittavat tietokantataulut vain kerran
-#try:
-#    db.create_all()
-#except:
-#    pass
+Luodaan tarvittavat tietokantataulut vain kerran
+try:
+    db.create_all()
+except:
+    pass
