@@ -11,6 +11,9 @@ class Wgroup(Base):  #(db.Model):
     # onupdate=db.func.current_timestamp())
     date_ended = db.Column(db.DateTime)
 
+    rolerequests = db.relationship("Rolerequest", backref='wgroup', lazy=True)
+
+
     def __init__(self, name): #, authoriser):
         self.name = name
     #   self.authoriser = authoriser

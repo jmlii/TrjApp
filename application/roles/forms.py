@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, validators
+from wtforms import StringField
 
 class RoleForm(FlaskForm):
     name = StringField("Roolin nimi")
