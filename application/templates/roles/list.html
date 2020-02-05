@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Id</th>
+      <th>Rooli</th>
+    </tr>
+    {% for role in roles %}
+    <tr>
+      <td>{{ role.id }}</td>
+      <td>{{ role.name }}</td>
+      {% if current_user.is_authenticated %}
+      <td>
+        <form method="POST" action="{{ url_for('roles_delete', role_id=role.id )}}">
+            <input type="submit" value="Poista rooli" onclick="return confirm('Oletko täysin varma, että haluat poistaa tämän roolin tietokannasta?')">
+        </form>
+      </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

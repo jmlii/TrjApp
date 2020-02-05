@@ -3,18 +3,18 @@ from wtforms import PasswordField, StringField, validators
 
 # kirjautumislomake
 class LoginForm(FlaskForm):
-    username = StringField("Username")
-    password = PasswordField("Password")
+    username = StringField("Käyttäjätunnus")
+    password = PasswordField("Salasana")
 
     class Meta:
         csrf = False
 
 # uuden käyttäjän lisääminen
 class UserForm(FlaskForm):
-    first_name = StringField("First name", [validators.Length(min=1)])
-    last_name = StringField("Last name", [validators.Length(min=1)])
-    username = StringField("Username", [validators.Length(min=8)])
-    password = PasswordField("Password")
+    first_name = StringField("Etunimi", [validators.Length(min=1)])
+    last_name = StringField("Sukunimi", [validators.Length(min=1)])
+    username = StringField("Käyttäjätunnus", [validators.Length(min=8)])
+    password = PasswordField("Salasana")
 
     class Meta:
         csrf = False

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<form method="POST" action="{{ url_for('wgroups_create') }}">
+<form method="POST" action="{{ url_for('roles_create') }}">
     <table>
         <tr>
             <td>
@@ -19,23 +19,8 @@
             </td>
         </tr>
         <tr>
-            <td>
-                {{ form.authoriser.label }}
-            </td>
-            <td>
-                {{ form.authoriser }}
-            </td>
-            <td>
-                <ul>
-                    {% for error in form.authoriser.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            </td>
-        </tr>
-        <tr>
             <td colspan="2">
-                <input type="submit" value="Lisää työryhmä"/>
+                <input type="submit" value="Lisää uusi rooli"/>
             </td>
         </tr>
     </table>

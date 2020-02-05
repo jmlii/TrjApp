@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Id</th>
+      <th>Pyynnön tyyppi</th>
+      <th>Käyttäjän id</th>
+      <th>Työryhmän id</th>
+      <th>Roolin id</th>
+      <th>Hyväksytty</th>
+      <th>Hylätty</th>
+      <th>Toteutettu</th>
+      <th>Luotu</th>
+    </tr>
+    {% for rolerequest in rolerequests %}
+    <tr>
+      <td>{{ rolerequest.id }}</td>
+      <td>{{ rolerequest.request_type }}</td>
+      <td>{{ rolerequest.account_id }}</td>
+      <td>{{ rolerequest.wgroup_id }}</td>
+      <td>{{ rolerequest.role_id }}</td>
+      <td>{{ rolerequest.approved }}</td>
+      <td>{{ rolerequest.rejected }}</td>
+      <td>{{ rolerequest.executed }}</td>
+      <td>{{ rolerequest.date_created }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

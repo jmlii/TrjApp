@@ -16,6 +16,8 @@ class User(Base): #(db.Model):
     #    onupdate=db.func.current_timestamp())
     date_inactivated = db.Column(db.DateTime)
 
+    rolerequests = db.relationship("Rolerequest", backref='account', lazy=True)
+
     
     def __init__(self, first_name, last_name, username, password):
         self.first_name = first_name

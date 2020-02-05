@@ -3,17 +3,17 @@
 {% block body %}
   <table>
     <tr>
-      <th>Working group</th>
       <th>Id</th>
-      <th>Authoriser</th>
-      <th>Active</th>
-      <th>Created</th>
-      <th>Modified</th>
+      <th>Työryhmä</th>
+      <th>Oikeushyväksyjä</th>
+      <th>Aktiivinen</th>
+      <th>Luotu</th>
+      <th>Muokattu</th>
     </tr>
     {% for wgroup in wgroups %}
     <tr>
-      <td>{{ wgroup.name }}</td>
       <td>{{ wgroup.id }}</td>
+      <td>{{ wgroup.name }}</td>
       <td>{{ wgroup.authoriser }}</td>
       <td>{{ wgroup.active }}</td>
       <td>{{ wgroup.date_created }}</td>
@@ -21,7 +21,7 @@
       {% if current_user.is_authenticated %}
       <td>
         <form method="POST" action="{{ url_for('wgroups_set_end', wgroup_id=wgroup.id) }}">
-          <input type="submit" value="End group"/>
+          <input type="submit" value="Lopeta työryhmä"/>
         </form>
       </td>
       {% endif %}

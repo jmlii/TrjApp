@@ -12,38 +12,62 @@
   <body>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-      <a class="navbar-brand" href="#">TrjApp</a>
+      <a class="navbar-brand" href="{{ url_for('index') }}">TrjApp</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+      
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Työryhmät
-            </a> 
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{{ url_for('wgroups_index') }} ">Listaa työryhmät</a>
-              {% if current_user.is_authenticated %}
-              <a class="dropdown-item" href="{{ url_for('wgroups_form') }} ">Lisää uusi työryhmä</a>
-              {% endif %}
-            </div>
-          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Käyttäjät
             </a> 
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{{ url_for('users_index') }} ">Listaa käyttäjät</a>
+              <a class="dropdown-item" href="{{ url_for('users_index') }}">Listaa käyttäjät</a>
               {% if current_user.is_authenticated %}
-              <a class="dropdown-item" href="{{ url_for('users_form') }} ">Lisää uusi käyttäjä</a>
+              <a class="dropdown-item" href="{{ url_for('users_form') }}">Lisää uusi käyttäjä</a>
               {% endif %}
             </div>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Työryhmät
+            </a> 
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{{ url_for('wgroups_index') }}">Listaa työryhmät</a>
+              {% if current_user.is_authenticated %}
+              <a class="dropdown-item" href="{{ url_for('wgroups_form') }}">Lisää uusi työryhmä</a>
+              {% endif %}
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Roolit
+            </a> 
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{{ url_for('roles_index') }} ">Listaa roolit</a>
+              {% if current_user.is_authenticated %}
+              <a class="dropdown-item" href="{{ url_for('roles_form') }} ">Lisää uusi rooli</a>
+              {% endif %}
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Jäsenyyshakemukset
+            </a> 
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{{ url_for('rolerequests_index') }} ">Listaa hakemukset</a>
+              {% if current_user.is_authenticated %}
+              <a class="dropdown-item" href="{{ url_for('rolerequests_form') }} ">Lisää uusi hakemus itselle</a>
+              <a class="dropdown-item" href="{{ url_for('rolerequests_form2') }} ">Lisää uusi hakemus toiselle käyttäjälle</a>
+              {% endif %}
+            </div>
+          </li>
+          
         </ul>
 
-        <div class="form-inline mt-2 mt-md-0">          
-          
+        <div class="form-inline mt-2 mt-md-0">                    
           {% if current_user.is_authenticated %}
           <span class="navbar-text px-3">
             Kirjautunut tunnuksella {{ current_user.username }} 
@@ -53,8 +77,8 @@
           <a class="nav-item nav-link" href="{{ url_for('auth_login') }}">Kirjaudu</a>
           <a class="nav-item nav-link, pl-2" href="{{ url_for('users_form') }}">Luo uusi tunnus</a>
           {% endif %}
-
         </div>
+
       </div>
     </nav>
 

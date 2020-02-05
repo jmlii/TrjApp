@@ -22,13 +22,18 @@ db = SQLAlchemy(app)
 # Luetaan kansiosta application tiedoston views sisältö
 from application import views
 
-# Luetaan kansiosta application/wgroups tiedoston models sisältö
+# Luetaan tiedostot models ja views sovelluksen eri kansioista
 from application.wgroups import models
 from application.wgroups import views
 
-# Luetaan kansiosta application/auth tiedoston models sisältö
 from application.auth import models
 from application.auth import views
+
+from application.roles import models
+from application.roles import views
+
+from application.rolerequests import models
+from application.rolerequests import views
 
 # Kirjautuminen
 from application.auth.models import User 

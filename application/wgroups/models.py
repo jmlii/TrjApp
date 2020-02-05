@@ -11,6 +11,6 @@ class Wgroup(Base):  #(db.Model):
     # onupdate=db.func.current_timestamp())
     date_ended = db.Column(db.DateTime)
 
-    def __init__(self, name, authoriser):
+    def __init__(self, name): #, authoriser):
         self.name = name
-        self.authoriser = authoriser
+    #   self.authoriser = authoriser

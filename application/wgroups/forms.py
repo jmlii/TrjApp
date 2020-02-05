@@ -2,8 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, validators
 
 class WgroupForm(FlaskForm):
-    name = StringField("Working group name", [validators.Length(min=3)])
-    authoriser = StringField("Working group authoriser", [validators.InputRequired()])
+    name = StringField("Työryhmän nimi", [validators.Length(min=3)])
+    authoriser = StringField("Työryhmän oikeushyväksyjä", [validators.InputRequired()])
 
     class Meta:
         csrf = False
