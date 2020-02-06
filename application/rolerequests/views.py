@@ -25,12 +25,13 @@ def rolerequests_create():
     if not form.validate():
         return render_template("rolerequests/new.html", form=form)
 
-    rr = Rolerequest(form.request_type.data, form.justification.data)
-    rr.account_id = current_user.id
-    rr.role_id = form.role_id.data
-    rr.wgroup_id = form.wgroup_id.data
+    rolerequest = Rolerequest(form.request_type.data)
+    rolerequest.account_id = current_user.id
+    rolerequest.role_id = form.role_id.data
+    rolerequest.wgroup_id = form.wgroup_id.data
+    rolerequest.justification = form.justification.data
 
-    db.session().add(rr)
+    db.session().add(rolerequest)
     db.session().commit()
 
     return redirect(url_for("rolerequests_index"))
@@ -42,20 +43,21 @@ def rolerequests_form2():
     return render_template("rolerequests/new2.html", form=RolerequestForm2())
 
 # Uuden roolipyynnön toiselle käyttäjälle tallentaminen lomakkeelta tietokantaan
-@app.route("/rolerequests/", methods=["POST"])
+@app.route("/rolerequests/2", methods=["POST"])
 @login_required
 def rolerequests_create2():
     form = RolerequestForm2(request.form)
 
     if not form.validate():
-        return render_template("rolerequests/new.html", form=form)
+        return render_template("rolerequests/new2.html", form=form)
 
-    rr = Rolerequest(form.request_type.data, form.justification.data)
-    rr.account_id = form.account_id.data
-    rr.role_id = form.role_id.data
-    rr.wgroup_id = form.wgroup_id.data
+    rolerequest2 = Rolerequest(form.request_type.data)
+    rolerequest2.account_id = form.account_id.data
+    rolerequest2.role_id = form.role_id.data
+    rolerequest2.wgroup_id = form.wgroup_id.data
+    rolerequest2.justification = form.justification.data
 
-    db.session().add(rr)
+    db.session().add(rolerequest2)
     db.session().commit()
 
     return redirect(url_for("rolerequests_index"))
@@ -64,9 +66,9 @@ def rolerequests_create2():
 @app.route("/rolerequests/approve<rolerequest_id>/", methods=["POST"])
 @login_required
 def rolerequests_approve(user_id):
-    rr = Rolerequest.query.get(rolerequest_id)
-    rr.approved = True
-    rr.date_approved = db.func.current_timestamp()
+    rolerequest = Rolerequest.query.get(rolerequest_id)
+    rolerequest.approved = True
+    rolerequest.date_approved = db.func.current_timestamp()
 
     db.session().commit()
 
@@ -77,9 +79,9 @@ def rolerequests_approve(user_id):
 @app.route("/rolerequests/reject<rolerequest_id>/", methods=["POST"])
 @login_required
 def rolerequests_reject(user_id):
-    rr = Rolerequest.query.get(rolerequest_id)
-    rr.rejected = True
-    rr.date_rejected = db.func.current_timestamp()
+    rolerequest = Rolerequest.query.get(rolerequest_id)
+    rolerequest.rejected = True
+    rolerequest.date_rejected = db.func.current_timestamp()
      
     db.session().commit()
 
@@ -90,8 +92,8 @@ def rolerequests_reject(user_id):
 @app.route("/rolerequests/set_executed<rolerequest_id>/", methods=["POST"])
 @login_required
 def rolerequests_set_executed(user_id):
-    rr = Rolerequest.query.get(rolerequest_id)
-    rr.executed = True     
+    rolerequest = Rolerequest.query.get(rolerequest_id)
+    rolerequest.executed = True     
 
     db.session().commit()
 

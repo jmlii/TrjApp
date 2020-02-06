@@ -18,9 +18,8 @@ class Rolerequest(Base):
         nullable=False)
 
 
-    def __init__(self, request_type, justification):
+    def __init__(self, request_type):
         self.request_type = request_type
-        self.justification = justification
 
 
   
