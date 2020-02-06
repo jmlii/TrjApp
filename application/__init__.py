@@ -19,7 +19,7 @@ else:
 # Luodaan db-olio, jota käytetään tietokannan käsittelyyn
 db = SQLAlchemy(app)
 
-# Luetaan kansiosta application tiedoston views sisältö
+# Luetaan kansiosta application tiedostojen views ja models sisältö
 from application import views
 from application import models
 

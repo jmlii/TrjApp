@@ -13,7 +13,7 @@ class RolerequestForm(FlaskForm):
         [validators.InputRequired()], choices=[('New', 'Uusi rooli'), 
         ('Modify', 'Muokkaus'), ('Remove', 'Poisto')])
     wgroup_id = IntegerField("Työryhmän id", [validators.InputRequired()])
-    role_id = SelectField("Rooli", choices=[('1', 'Reader'), ('2', 'Editor'), ('3', 'Manager')], coerce=int)
+    role_id = SelectField("Rooli", choices=[('1', 'Reader'), ('2', 'Editor'), ('3', 'Manager')])
     justification = StringField("Perustelut", [validators.Length(min=3)])
 
     class Meta:
@@ -28,7 +28,7 @@ class RolerequestForm2(FlaskForm):
         ('Modify', 'Muokkaus'), ('Remove', 'Poisto')])
     account_id = IntegerField("Käyttäjän id", [validators.InputRequired()])
     wgroup_id = IntegerField("Työryhmän id", [validators.InputRequired()])
-    role_id = SelectField("Rooli", choices=[('1', 'Reader'), ('2', 'Editor'), ('3', 'Manager')], coerce=int)
+    role_id = SelectField("Rooli", choices=[('1', 'Reader'), ('2', 'Editor'), ('3', 'Manager')])
     justification = StringField("Perustelut", [validators.Length(min=3)])
 
     class Meta:

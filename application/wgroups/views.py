@@ -21,9 +21,10 @@ def wgroups_create():
     if not form.validate():
         return render_template("wgroups/new.html", form=form)
 
-    wg = Wgroup(form.name.data, form.authoriser.data)
+    wgroup = Wgroup(form.name.data)
+    wgroup.authoriser = form.authoriser.data
 
-    db.session().add(wg)
+    db.session().add(wgroup)
     db.session().commit()
 
     return redirect(url_for("wgroups_index"))

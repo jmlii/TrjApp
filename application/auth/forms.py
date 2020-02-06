@@ -14,7 +14,7 @@ class UserForm(FlaskForm):
     first_name = StringField("Etunimi", [validators.Length(min=1)])
     last_name = StringField("Sukunimi", [validators.Length(min=1)])
     username = StringField("Käyttäjätunnus", [validators.Length(min=8)])
-    password = PasswordField("Salasana")
+    password = PasswordField("Salasana", [validators.Length(min=6)])
 
     class Meta:
         csrf = False
