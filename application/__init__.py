@@ -52,7 +52,7 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-Luodaan tarvittavat tietokantataulut vain kerran
+# Luodaan tarvittavat tietokantataulut vain kerran
 try:
     db.create_all()
 except:
