@@ -6,7 +6,10 @@ from application.wgroups.forms import WgroupForm
 
 @app.route("/wgroups/", methods=["GET"])
 def wgroups_index():
-    return render_template("wgroups/list.html", wgroups = Wgroup.query.all())
+    return render_template("wgroups/list.html", 
+        wgroups = Wgroup.query.all(), 
+        count_new_rolerequests = Wgroup.count_rolerequests_per_wgroup(0, 0, 0),
+        count_approved_rolerequests = Wgroup.count_rolerequests_per_wgroup(1,0,0))
 
 @app.route("/wgroups/new/")
 @login_required
