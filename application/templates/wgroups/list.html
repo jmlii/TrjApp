@@ -34,7 +34,7 @@
   {% if count_new_rolerequests is defined %}
   <table>
     <p></p>
-    <p> Työryhmissä on uusia jäsenyyspyyntöjä: </p>
+    <p> Työryhmien uusien jäsenyyspyyntöjen lukumäärä: </p>
     <tr>
       <th>Työryhmä</th>
       <th>Uusia pyyntöjä</th>
@@ -51,7 +51,7 @@
   {% if count_approved_rolerequests is defined %}
   <table>
     <p></p>
-    <p> Työryhmissä on hyväksyttyjä, käsittelyä odottavia jäsenyyspyyntöjä: </p>
+    <p> Työryhmien hyväksyttyjen, käsittelyä odottavien jäsenyyspyyntöjen lukumäärä: </p>
     <tr>
       <th>Työryhmä</th>
       <th>Odottavia pyyntöjä</th>
@@ -64,6 +64,7 @@
     {% endfor %}
   </table>
   {% endif %}
+
   {% endif %}
 
 {% endblock %}

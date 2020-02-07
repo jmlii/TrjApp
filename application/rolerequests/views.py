@@ -65,7 +65,7 @@ def rolerequests_create2():
 # Roolipyynnön hyväksyminen
 @app.route("/rolerequests/approve<rolerequest_id>/", methods=["POST"])
 @login_required
-def rolerequests_approve(user_id):
+def rolerequests_approve(rolerequest_id):
     rolerequest = Rolerequest.query.get(rolerequest_id)
     rolerequest.approved = True
     rolerequest.date_approved = db.func.current_timestamp()
@@ -78,7 +78,7 @@ def rolerequests_approve(user_id):
 # Roolipyynnön hylkääminen
 @app.route("/rolerequests/reject<rolerequest_id>/", methods=["POST"])
 @login_required
-def rolerequests_reject(user_id):
+def rolerequests_reject(rolerequest_id):
     rolerequest = Rolerequest.query.get(rolerequest_id)
     rolerequest.rejected = True
     rolerequest.date_rejected = db.func.current_timestamp()
@@ -91,7 +91,7 @@ def rolerequests_reject(user_id):
 # Roolipyynnön merkitseminen toteutetuksi
 @app.route("/rolerequests/set_executed<rolerequest_id>/", methods=["POST"])
 @login_required
-def rolerequests_set_executed(user_id):
+def rolerequests_set_executed(rolerequest_id):
     rolerequest = Rolerequest.query.get(rolerequest_id)
     rolerequest.executed = True     
 
