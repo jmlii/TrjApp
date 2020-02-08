@@ -21,16 +21,12 @@
 * Työryhmillä on kolme jäsenyystasoa: selaaja, muokkaaja, hallinnoija. Näillä tasoilla ei ole merkitystä tämän sovelluksen käytön kannalta, vaan ne viittaavat toisen sovelluksen käyttöoikeustasoihin. Jäsenyystasotiedon on kuitenkin löydyttävä kaikilta työryhmän jäseniltä.
 * Pääkäyttäjä pystyy lisäämään järjestelmään uusia jäsenyystasoja.
 * Pääkäyttäjä pystyy muokkaamaan jäsenyystasojen nimiä.
-* Kaikki käyttäjät pystyvät selaamaan aktiivisten työryhmien perustietoja (nimi, hyväksyjä, perustamispäivä) ja jäsenten nimiä. 
-* Työryhmän jäsenet näkevät omien työryhmiensä jäsenten jäsenyystasot. 
-* Pääkäyttäjä pystyy selaamaan myös päättyneiden työryhmien tietoja ja niissä olleita jäseniä. 
-* Pääkäyttäjä pystyy listaamaan työryhmien nykyiset ja entiset jäsenet jäsentasoineen tietyn ajankohdan perusteella. 
-* Työryhmän jäsen näkee oman jäsenyyshistoriansa: kaikki työryhmät ja jäsenyystasot, jotka käyttäjällä on ollut. 
-* Pääkäyttäjä voi hakea käyttäjittäin tietoa jäsenyyshistoriasta: kaikki työryhmät ja jäsenyystasot, jotka käyttäjällä on ollut. 
+* Kaikki käyttäjät pystyvät selaamaan aktiivisten työryhmien perustietoja (nimi, hyväksyjä, perustamispäivä) ja jäsenten nimiä ja jäsenyystasoja.  
+* Pääkäyttäjä pystyy selaamaan myös päättyneiden työryhmien tietoja ja niissä olleita jäseniä.  
 
 ## Jäsenyyshakemukset työryhmiin:
 * Käyttäjät pystyvät tekemään jäsenyyshakemuksia työryhmiin.
-* Pääkäyttäjät voivat tehdä jäsenyyshakemuksia toisille käyttäjille.
+* Pääkäyttäjät voivat tehdä jäsenyyshakemuksia myös toisille käyttäjille.
 * Käyttäjät pystyvät hakemaan työryhmän jäsenyystason muutosta työryhmiin, joissa heillä on jäsenyys.
 * Käyttäjät voivat hakea työryhmän jäsenyyden poistoa. 
 * Jäsenyyshakemuksessa on oltava tiedot käyttäjästä, työryhmästä, haettavasta jäsenyystasosta, hakemustyyppi (uusi hakemus, muokkaus, jäsenyyden poisto) ja perustelut. Hakemuksen tallentamisajankohdan tulee tallentua luontiajankohdaksi automaattisesti. 
@@ -45,6 +41,6 @@
 ## Käyttäjän liittäminen työryhmän jäseneksi:
 * Pääkäyttäjä pystyy lisäämään käyttäjiä työryhmien jäseniksi. Lisäämisessä tarvitaan tieto käyttäjästä, työryhmästä ja jäsenyystasosta. Lisäämisajankohdan on tallennuttava järjestelmään automaattisesti.
 * Pääkäyttäjä pystyy lopettamaan käyttäjän työryhmäjäsenyyden merkitsemällä jäsenyydelle päättymisajankohdan. 
-* Työryhmän jäsenen jäsenyystasoa ei tule muuttaa suoraan tietokantaan, vaan jäsenyystaso tulee merkitä päättyneeksi ja lisätä uusi jäsenyys uudella jäsenyystasolla. Jäsenyyteen ei tule myöskään vaihtaa käyttäjää tai työryhmää, vaan kaikki muutokset merkitään päättämällä jäsenyys ja luomalla uusi oikeilla tiedoilla. Vain kirjausvirheet saa tehdä muuttamalla jäsenyystietoa. Muokkausten ajankohta tulee tallentua järjestelmään automaattisesti. 
+* Työryhmän jäsenen jäsenyystasoa ei tule muuttaa suoraan tietokantaan, vaan jäsenyystaso tulee merkitä päättyneeksi ja lisätä uusi jäsenyys uudella jäsenyystasolla. Jäsenyyteen ei tule myöskään vaihtaa käyttäjää tai työryhmää, vaan kaikki muutokset merkitään päättämällä jäsenyys ja luomalla uusi oikeilla tiedoilla. Vain kirjausvirheet saa tehdä muuttamalla jäsenyystietoa.
 
 
