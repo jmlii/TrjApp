@@ -5,9 +5,9 @@
 
 ## Tietokantasovelluksen aihekuvaus
 
-Organisaatiossa on käytössä yhteistyöalusta, jossa on omia työtiloja eri työryhmille. Työntekijät voivat kuulua useisiin eri työryhmiin, ja työryhmissä on useita jäseniä. Työryhmän jäsenillä voi olla eri tasoisia oikeuksia työryhmän toimintoihin: selaaja (reader), muokkaaja (editor), hallinnoija (manager). Lisäksi kullakin työryhmällä on nimetty hyväksyjä, joka hyväksyy uusia henkilöitä ryhmän jäseneksi. Organisaatiossa tarvitaan tietokanta, josta pääsee helposti tarkistamaan, keitä kuhunkin työryhmään kuuluu ja minkä tason oikeudet kullakin käyttäjällä materiaaliin on, ja henkilöittäin mihin kaikkiin työryhmiin henkilö kuuluu ja minkä tason oikeuksin. Myöhempää kehittämistyötä varten tietokanta tulee rakentaa siten, että siitä on mahdollista saada tiedot myös jo päättyneiltä ajanjaksoilta niin käyttäjittäin kuin työryhmittäin hakemalla, milloin kukakin työntekijä on kuulunut mihinkin työryhmään ja millaisin oikeuksin. 
+Organisaatiossa on käytössä yhteistyöalusta, jossa on omia työtiloja eri työryhmille. Työntekijät voivat kuulua useisiin eri työryhmiin, ja työryhmissä on useita jäseniä. Työryhmän jäsenillä voi olla eri tasoisia oikeuksia työryhmän toimintoihin: selaaja (reader), muokkaaja (editor), hallinnoija (manager). Lisäksi kullakin työryhmällä on nimetty hyväksyjä, joka hyväksyy uusia henkilöitä ryhmän jäseneksi. Organisaatiossa tarvitaan tietokanta, josta pääsee helposti tarkistamaan, keitä kuhunkin työryhmään kuuluu ja minkä tason oikeudet kullakin käyttäjällä materiaaliin on, ja henkilöittäin mihin kaikkiin työryhmiin henkilö kuuluu ja minkä tason oikeuksin. Myöhempää kehittämistyötä varten tietokanta rakennetaan siten, että siitä on mahdollista saada tiedot myös jo päättyneiltä ajanjaksoilta niin käyttäjittäin kuin työryhmittäin hakemalla, milloin kukakin työntekijä on kuulunut mihinkin työryhmään ja millaisin oikeuksin. 
 
-Tietokannan tarkastelujärjestelmällä on käyttäjiä, joiden tulee kirjautua järjestelmään tarkastellakseen tai muokatakseen tietoja. Tietokantaan on kahden tasoisia oikeuksia: tarkastelijat ja pääkäyttäjät. Tarkastelijat voivat vain selata järjestelmässä olevia tietoja ja tehdä käyttöikeushakemuksia. Pääkäyttäjät voivat lisätä järjestelmään uusia käyttäjiä ja poistaa niitä, muokata käyttäjien tietoja, lisätä, muokata ja poistaa työryhmiä, lisätä henkilöitä työryhmiin, muokata työryhmäjäsenten oikeustasoja ja poistaa henkilöitä työryhmistä. Kaikki työryhmiin kuuluvat henkilöt ovat myös järjestelmän käyttäjiä. Tietokannan käyttäjien ei kuitenkaan ole välttämätöntä olla työryhmien jäseniä. 
+Tietokannan tarkastelujärjestelmällä on käyttäjiä, joiden tulee kirjautua järjestelmään tarkastellakseen omia tietojaan tai muokatakseen tietoja. Työryhmien perustietojen selaaminen on sallittua myös kirjautumattomille käyttäjille. Tietokantaan on kahden tasoisia oikeuksia: tarkastelijat ja pääkäyttäjät. Tarkastelijat voivat vain selata järjestelmässä olevia tietoja ja tehdä käyttöikeushakemuksia. Pääkäyttäjät voivat lisätä järjestelmään uusia käyttäjiä ja poistaa niitä, muokata käyttäjien tietoja, lisätä, muokata ja poistaa työryhmiä, lisätä henkilöitä työryhmiin, muokata työryhmäjäsenten oikeustasoja ja poistaa henkilöitä työryhmistä. Kaikki työryhmiin kuuluvat henkilöt ovat myös järjestelmän käyttäjiä. Tietokannan käyttäjien ei kuitenkaan ole välttämätöntä olla työryhmien jäseniä. 
 
 Käyttäjät pystyvät myös hakemaan käyttöoikeuksia uusiin työryhmiin, työryhmään olevan oikeustason muutosta tai oikeuksien poistoa. Oikeuspyynnöt hyväksytetään erikseen työryhmän hyväksyjällä, ja pääkäyttäjät merkitsevät hakemuksen tilan sen mukaisesti ja tekevät muutokset tietokantaan. 
 
@@ -36,7 +36,6 @@ salasana: salasana
 ![](https://github.com/jmlii/TrjApp/raw/master/documentation/Tietokantakaavio.png "Tietokantakaavio")
 
 
-[Linkki tietokantakaavioon (pdf)](../master/documentation/Tietokantakaavio.pdf)
 
 
 
