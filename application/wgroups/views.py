@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for
 from flask_login import login_required
 from application import app, db
 from application.wgroups.models import Wgroup
-from application.wgroups.forms import WgroupForm
+from application.wgroups.forms import WgroupForm, WgroupUpdateForm
 
 @app.route("/wgroups/", methods=["GET"])
 def wgroups_index():
@@ -41,3 +41,22 @@ def wgroups_set_end(wgroup_id):
     db.session().commit()
 
     return redirect(url_for("wgroups_index"))
+
+@app.route("/wgroups/update<wgroup_id>/", methods=["GET", "POST"])
+def wgroups_update(wgroup_id):
+    
+    wgroup = Wgroup.query.get(wgroup_id)
+    form = WgroupUpdateForm(request.form)
+
+    if request.method=="POST" and form.validate():
+        wgroup.name = form.name.data
+        wgroup.authoriser = form.authoriser.data
+
+        db.session.commit()
+
+        return redirect(url_for("wgroups_index"))
+
+    form.name.data = wgroup.name
+    form.authoriser.data = wgroup.authoriser
+
+    return render_template("wgroups/update.html", wgroup_id=wgroup_id, form=form)      

@@ -7,3 +7,11 @@ class WgroupForm(FlaskForm):
 
     class Meta:
         csrf = False
+
+class WgroupUpdateForm(FlaskForm):
+    name = StringField("Työryhmän nimi", [validators.Length(min=3)])
+    authoriser = StringField("Työryhmän oikeushyväksyjä", [validators.InputRequired()])
+    active = BooleanField("Työryhmä aktiivinen")
+
+    class Meta:
+        csrf = False

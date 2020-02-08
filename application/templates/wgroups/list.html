@@ -9,6 +9,7 @@
       <th>Aktiivinen</th>
       <th>Luotu</th>
       <th>Muokattu</th>
+      <th>Lopetettu</th>
     </tr>
     {% for wgroup in wgroups %}
     <tr>
@@ -18,10 +19,16 @@
       <td>{{ wgroup.active }}</td>
       <td>{{ wgroup.date_created }}</td>
       <td>{{ wgroup.date_modified }}</td>
+      <td>{{ wgroup.date_ended }}</td>
       {% if current_user.is_authenticated %}
       <td>
         <form method="POST" action="{{ url_for('wgroups_set_end', wgroup_id=wgroup.id) }}">
           <input type="submit" value="Lopeta työryhmä"/>
+        </form>
+      </td>
+      <td>
+        <form method="GET" action="{{ url_for('wgroups_update', wgroup_id=wgroup.id) }}">
+          <input type="submit" value="Muokkaa tietoja"/>
         </form>
       </td>
       {% endif %}
