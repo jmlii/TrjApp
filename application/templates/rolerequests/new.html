@@ -7,12 +7,12 @@
             <td>
                 {{ form.request_type.label }}
             </td>            
-    {% for subfield in form.request_type %}
-    <tr>
-        <td>{{ subfield }}</td>
-        <td>{{ subfield.label }}</td>
-    </tr>
-    {% endfor %}
+                {% for subfield in form.request_type %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                {% endfor %}
             </td>
             <td>
                 <ul>
