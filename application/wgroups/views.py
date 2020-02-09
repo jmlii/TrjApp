@@ -35,22 +35,30 @@ def wgroups_create():
 @app.route("/wgroups/end<wgroup_id>/", methods=["POST"])
 @login_required
 def wgroups_set_end(wgroup_id):
-    wg = Wgroup.query.get(wgroup_id)
-    wg.active = False
-    wg.date_ended = db.func.current_timestamp()
+    wgroup = Wgroup.query.get(wgroup_id)
+    wgroup.active = False
+    wgroup.date_ended = db.func.current_timestamp()
     db.session().commit()
 
     return redirect(url_for("wgroups_index"))
 
 @app.route("/wgroups/update<wgroup_id>/", methods=["GET", "POST"])
+@login_required
 def wgroups_update(wgroup_id):
     
     wgroup = Wgroup.query.get(wgroup_id)
     form = WgroupUpdateForm(request.form)
 
+    active_old = wgroup.active
+
     if request.method=="POST" and form.validate():
         wgroup.name = form.name.data
         wgroup.authoriser = form.authoriser.data
+        wgroup.active = form.active.data
+        if active_old != wgroup.active and wgroup.active == False:
+            wgroup.date_ended = db.func.current_timestamp()
+        if active_old != wgroup.active and wgroup.active == True:
+            wgroup.date_ended = None
 
         db.session.commit()
 
@@ -58,5 +66,6 @@ def wgroups_update(wgroup_id):
 
     form.name.data = wgroup.name
     form.authoriser.data = wgroup.authoriser
+    form.active.data = wgroup.active
 
     return render_template("wgroups/update.html", wgroup_id=wgroup_id, form=form)      

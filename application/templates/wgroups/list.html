@@ -22,13 +22,13 @@
       <td>{{ wgroup.date_ended }}</td>
       {% if current_user.is_authenticated %}
       <td>
-        <form method="POST" action="{{ url_for('wgroups_set_end', wgroup_id=wgroup.id) }}">
-          <input type="submit" value="Lopeta työryhmä"/>
+        <form method="GET" action="{{ url_for('wgroups_update', wgroup_id=wgroup.id) }}">
+          <input type="submit" value="Muokkaa tietoja"/>
         </form>
       </td>
       <td>
-        <form method="GET" action="{{ url_for('wgroups_update', wgroup_id=wgroup.id) }}">
-          <input type="submit" value="Muokkaa tietoja"/>
+        <form method="POST" action="{{ url_for('wgroups_set_end', wgroup_id=wgroup.id) }}">
+          <input type="submit" value="Lopeta työryhmä", onclick="return confirm('Haluatko lopettaa työryhmän ja merkitä sen epäaktiiviseksi?')"/>
         </form>
       </td>
       {% endif %}
