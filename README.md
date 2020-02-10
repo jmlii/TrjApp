@@ -27,9 +27,19 @@ Käyttäjät pystyvät myös hakemaan käyttöoikeuksia uusiin työryhmiin, työ
 
 [Linkki tarkempiin käyttötapauksiin](../master/documentation/kayttotapaukset.md) 
 
-### Testitunnus sovelluksen testaamiseen
-käyttäjätunnus: testaaja
+### Testitunnukset sovelluksen testaamiseen
+**Peruskäyttäjä:**
+
+käyttäjätunnus: perustesti
+
 salasana: salasana
+
+**Pääkäyttäjä:**
+
+käyttäjätunnus: admintesti
+
+salasana: salasana
+
 
 ## Tietokantakaavio
 
