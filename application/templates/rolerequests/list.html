@@ -1,9 +1,12 @@
 {% extends "layout.html" %}
 
 {% block body %}
+  <h4> Jäsenyyshakemukset</h4>
   <table>
     <tr>
+      {% if current_user.permission_id == 2 %}  
       <th>Id</th>
+      {% endif %}
       <th>Pyynnön tyyppi</th>
       <th>Käyttäjän id</th>
       <th>Työryhmän id</th>
@@ -15,7 +18,9 @@
     </tr>
     {% for rolerequest in rolerequests %}
     <tr>
+      {% if current_user.permission_id == 2 %}
       <td>{{ rolerequest.id }}</td>
+      {% endif %}
       <td>{{ rolerequest.request_type }}</td>
       <td>{{ rolerequest.account_id }}</td>
       <td>{{ rolerequest.wgroup_id }}</td>
@@ -24,7 +29,7 @@
       <td>{{ rolerequest.rejected }}</td>
       <td>{{ rolerequest.executed }}</td>
       <td>{{ rolerequest.date_created }}</td>
-      {% if current_user.is_authenticated %}
+      {% if current_user.permission_id == 2 %}
       <td>
         <form method="POST" action="{{ url_for('rolerequests_approve', rolerequest_id=rolerequest.id )}}">
             <input type="submit" value="Merkitse hyväksytyksi" onclick="return confirm('Haluatko merkitä pyynnön hyväksytyksi?')">

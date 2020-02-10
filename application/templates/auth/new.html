@@ -64,8 +64,28 @@
             </td>
         </tr>
         <tr>
+            <td>
+                {{ form.permission_id.label }}
+            </td>
+            <td>
+                {% for subfield in form.permission_id %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                {% endfor %}
+            </td>
+            <td>
+                <ul>
+                    {% for error in form.permission_id.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
             <td colspan="2">
-                <input type="submit" value="Add a new user"/>
+                <input type="submit" value="Lisää uusi käyttäjä"/>
             </td>
         </tr>
     </table>

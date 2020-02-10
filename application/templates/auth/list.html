@@ -5,6 +5,7 @@
     <tr>
       <th>Id</th>
       <th>Käyttäjätunnus</th>
+      <th>Käyttäjätaso</th>
       <th>Tunnus aktiivinen</th>
       <th>Etunimi</th>
       <th>Sukunimi</th>
@@ -15,6 +16,7 @@
     <tr>
       <td>{{ user.id }}</td>
       <td>{{ user.username }}</td>
+      <td>{{ user.permission_id }}</td>
       <td>{{ user.account_active }}</td>
       <td>{{ user.first_name }}</td>
       <td>{{ user.last_name }}</td>
@@ -27,10 +29,10 @@
         </form>
       </td>
       <td>
-        <form method="POST" action="{{ url_for('users_delete', user_id=user.id )}}">
+        <form method="POST" action="{{ url_for('users_delete', user_id=user.id) }}">
           <input type="submit" value="Poista käyttäjätili" onclick="return confirm('Oletko täysin varma, että haluat poistaa käyttäjätilin ja kaikki käyttäjän tiedot tietokannasta?')">
         </form>
-        </td>
+      </td>
       {% endif %}
     </tr>
     {% endfor %}

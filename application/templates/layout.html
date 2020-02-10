@@ -17,53 +17,56 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       
+
+
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
+          {% if current_user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('wgroups_index') }}" >
+              Selaa työryhmiä
+            </a> 
+          </li>
+          {% endif %}
+          {% if current_user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+            Työryhmäjäsenyydet
+            </a>           
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{{ url_for('rolerequests_form') }}">Hae jäsenyyttä</a>              
+              <a class="dropdown-item" href="{{ url_for('rolerequests_my_index') }}">Omat hakemukset</a>
+            </div>
+          </li>
+          {% endif %}
+          {% if current_user.permission_id == 2 %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Käyttäjät
+              Ylläpitäjän toiminnot
             </a> 
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{{ url_for('users_index') }}">Listaa käyttäjät</a>
-              {% if current_user.is_authenticated %}
+              <a class="dropdown-item" href="{{ url_for('users_index') }}">Listaa käyttäjät</a>              
               <a class="dropdown-item" href="{{ url_for('users_form') }}">Lisää uusi käyttäjä</a>
-              {% endif %}
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Työryhmät
-            </a> 
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="{{ url_for('wgroups_index') }}">Listaa työryhmät</a>
-              {% if current_user.is_authenticated %}
               <a class="dropdown-item" href="{{ url_for('wgroups_form') }}">Lisää uusi työryhmä</a>
-              {% endif %}
+              <a class="dropdown-item" href="{{ url_for('rolerequests_index') }} ">Listaa jäsenyyshakemukset</a>
+              <a class="dropdown-item" href="{{ url_for('rolerequests_form2') }} ">Lisää uusi jäsenyyshakemus toiselle käyttäjälle</a>
             </div>
           </li>
+          {% endif %}
+          {% if current_user.permission_id == 2 %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Roolit
+              Tietokannan rakenteet
             </a> 
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{{ url_for('roles_index') }} ">Listaa roolit</a>
-              {% if current_user.is_authenticated %}
+              <a class="dropdown-item" href="{{ url_for('roles_index') }} ">Listaa työryhmien roolit</a>
               <a class="dropdown-item" href="{{ url_for('roles_form') }} ">Lisää uusi rooli</a>
-              {% endif %}
+              <a class="dropdown-item" href="{{ url_for('permissions_index') }} ">Listaa sovelluksen käyttäjätasot</a>
+              <a class="dropdown-item" href="{{ url_for('permissions_form') }} ">Lisää uusi käyttäjätaso</a>
             </div>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Jäsenyyshakemukset
-            </a> 
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{{ url_for('rolerequests_index') }} ">Listaa hakemukset</a>
-              {% if current_user.is_authenticated %}
-              <a class="dropdown-item" href="{{ url_for('rolerequests_form') }} ">Lisää uusi hakemus itselle</a>
-              <a class="dropdown-item" href="{{ url_for('rolerequests_form2') }} ">Lisää uusi hakemus toiselle käyttäjälle</a>
-              {% endif %}
-            </div>
-          </li>          
+          {% endif %}         
         </ul>
 
         <div class="form-inline mt-2 mt-md-0">                    
@@ -87,9 +90,9 @@
       </p>
       {% endblock %}
       {% if not current_user.is_authenticated %}
-      <p>
-        <p></p>
-        Kirjaudu sisään nähdäksesi kaikki toiminnot. 
+      <p><p>
+      </p>
+        Kirjaudu sisään käyttääksesi sovellusta. 
       </p>
       {% endif %}
     </main>

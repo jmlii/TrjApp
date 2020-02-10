@@ -1,29 +1,24 @@
 from application import db
 from application.models import Base 
 
-class User(Base): #(db.Model):
+class User(Base): 
 
     __tablename__ = "account"
 
-    # id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(144), nullable=False)
-    last_name = db.Column(db.String(144), nullable=False)
-    username = db.Column(db.String(144), nullable=False)
-    password = db.Column(db.String(144), nullable=False)
+    first_name = db.Column(db.String(64), nullable=False)
+    last_name = db.Column(db.String(64), nullable=False)
+    username = db.Column(db.String(64), nullable=False, unique=True)
+    password = db.Column(db.String(64), nullable=False)
     account_active = db.Column(db.Boolean, nullable=False, default=True)
-    # date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    # date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
-    #    onupdate=db.func.current_timestamp())
     date_inactivated = db.Column(db.DateTime)
 
-    rolerequests = db.relationship("Rolerequest", backref='account', lazy=True)
+    permission_id = db.Column(db.Integer, db.ForeignKey('permission.id'), 
+        nullable=False)
 
+    rolerequests = db.relationship("Rolerequest", backref='account', lazy=True)
     
-    def __init__(self, first_name, last_name, username, password):
-        self.first_name = first_name
-        self.last_name = last_name
+    def __init__(self, username):
         self.username = username
-        self.password = password
     
     def get_id(self):
         return self.id
@@ -37,3 +32,5 @@ class User(Base): #(db.Model):
     def is_authenticated(self):
         return True
 
+    def permissions(self):
+        return [str(self.permission_id)]

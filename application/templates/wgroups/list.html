@@ -1,15 +1,18 @@
 {% extends "layout.html" %}
 
 {% block body %}
+  <h4>Työryhmät</h4>
   <table>
     <tr>
-      <th>Id</th>
+      <th>Id</th>      
       <th>Työryhmä</th>
       <th>Oikeushyväksyjä</th>
       <th>Aktiivinen</th>
+      {% if current_user.permission_id == 2 %}
       <th>Luotu</th>
       <th>Muokattu</th>
       <th>Lopetettu</th>
+      {% endif %}
     </tr>
     {% for wgroup in wgroups %}
     <tr>
@@ -17,10 +20,12 @@
       <td>{{ wgroup.name }}</td>
       <td>{{ wgroup.authoriser }}</td>
       <td>{{ wgroup.active }}</td>
+      {% if current_user.permission_id == 2 %}
       <td>{{ wgroup.date_created }}</td>
       <td>{{ wgroup.date_modified }}</td>
       <td>{{ wgroup.date_ended }}</td>
-      {% if current_user.is_authenticated %}
+      {% endif %}
+      {% if current_user.permission_id == 2 %}
       <td>
         <form method="GET" action="{{ url_for('wgroups_update', wgroup_id=wgroup.id) }}">
           <input type="submit" value="Muokkaa tietoja"/>
@@ -36,12 +41,12 @@
     {% endfor %}
   </table>
 
-  {% if current_user.is_authenticated %}
+  {% if current_user.permission_id == 2 %}
 
   {% if count_new_rolerequests is defined %}
   <table>
     <p></p>
-    <p> Työryhmien uusien jäsenyyspyyntöjen lukumäärä: </p>
+    <p><b>Työryhmien uusien jäsenyyspyyntöjen lukumäärä: </b></p>
     <tr>
       <th>Työryhmä</th>
       <th>Uusia pyyntöjä</th>
@@ -58,7 +63,7 @@
   {% if count_approved_rolerequests is defined %}
   <table>
     <p></p>
-    <p> Työryhmien hyväksyttyjen, käsittelyä odottavien jäsenyyspyyntöjen lukumäärä: </p>
+    <p><b>Työryhmien hyväksyttyjen, käsittelyä odottavien jäsenyyspyyntöjen lukumäärä: </b></p>
     <tr>
       <th>Työryhmä</th>
       <th>Odottavia pyyntöjä</th>

@@ -1,10 +1,12 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import login_required
-from application import app, db
+from flask_login import current_user
+from application import app, db, login_required
 from application.wgroups.models import Wgroup
 from application.wgroups.forms import WgroupForm, WgroupUpdateForm
 
 @app.route("/wgroups/", methods=["GET"])
+@login_required
 def wgroups_index():
     return render_template("wgroups/list.html", 
         wgroups = Wgroup.query.all(), 
@@ -12,12 +14,12 @@ def wgroups_index():
         count_approved_rolerequests = Wgroup.count_rolerequests_per_wgroup(True, False, False))
 
 @app.route("/wgroups/new/")
-@login_required
+@login_required(permission="2")
 def wgroups_form():
     return render_template("wgroups/new.html", form = WgroupForm())
 
 @app.route("/wgroups/", methods=["POST"])
-@login_required
+@login_required(permission="2")
 def wgroups_create():
     form = WgroupForm(request.form)
 
@@ -33,7 +35,7 @@ def wgroups_create():
     return redirect(url_for("wgroups_index"))
 
 @app.route("/wgroups/end<wgroup_id>/", methods=["POST"])
-@login_required
+@login_required(permission="2")
 def wgroups_set_end(wgroup_id):
     wgroup = Wgroup.query.get(wgroup_id)
     wgroup.active = False
@@ -43,7 +45,7 @@ def wgroups_set_end(wgroup_id):
     return redirect(url_for("wgroups_index"))
 
 @app.route("/wgroups/update<wgroup_id>/", methods=["GET", "POST"])
-@login_required
+@login_required(permission="2")
 def wgroups_update(wgroup_id):
     
     wgroup = Wgroup.query.get(wgroup_id)
