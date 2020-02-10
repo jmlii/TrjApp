@@ -6,7 +6,7 @@
 
 ## Käyttäjätiedot:
 * Sovellukseen voidaan lisätä kahden tasoisia käyttäjiä: peruskäyttäjiä ja pääkäyttäjiä.
-* Pääkäyttäjä pystyy lisäämään uuden käyttäjän sovellukseen: etunimi, sukunimi, käyttöoikeustaso; sovellus merkitsee oletuksena lisättävän käyttäjän aktiiviseksi ja tallentaa luomisajankohdan automaattisesti.
+* Pääkäyttäjä pystyy lisäämään uuden käyttäjän sovellukseen: etunimi, sukunimi, käyttäjänimi, salasana, käyttöoikeustaso; sovellus merkitsee oletuksena lisättävän käyttäjän aktiiviseksi ja tallentaa luomisajankohdan automaattisesti.
 * Pääkäyttäjä pystyy muokkaamaan käyttäjän nimiä ja käyttöoikeustasoa.
 * Pääkäyttäjä pystyy muuttamaan käyttäjän epäaktiiviseksi, ja päättämisajankohta tallentuu automaattisesti. 
 * Käyttäjän tietoja muokatessa muokkausajankohta tallentuu automaattisesti.
@@ -21,13 +21,13 @@
 * Työryhmillä on kolme jäsenyystasoa: selaaja, muokkaaja, hallinnoija. Näillä tasoilla ei ole merkitystä tämän sovelluksen käytön kannalta, vaan ne viittaavat toisen sovelluksen käyttöoikeustasoihin. Jäsenyystasotiedon on kuitenkin löydyttävä kaikilta työryhmän jäseniltä.
 * Pääkäyttäjä pystyy lisäämään järjestelmään uusia jäsenyystasoja.
 * Pääkäyttäjä pystyy muokkaamaan jäsenyystasojen nimiä.
-* Kaikki käyttäjät pystyvät selaamaan aktiivisten työryhmien perustietoja (nimi, hyväksyjä, perustamispäivä) ja jäsenten nimiä ja jäsenyystasoja.  
+* Kaikki käyttäjät pystyvät selaamaan aktiivisten työryhmien perustietoja (nimi, hyväksyjä) ja jäsenten nimiä ja jäsenyystasoja.  
 * Pääkäyttäjä pystyy selaamaan myös päättyneiden työryhmien tietoja ja niissä olleita jäseniä.  
 
 ## Jäsenyyshakemukset työryhmiin:
 * Käyttäjät pystyvät tekemään jäsenyyshakemuksia työryhmiin.
 * Pääkäyttäjät voivat tehdä jäsenyyshakemuksia myös toisille käyttäjille.
-* Käyttäjät pystyvät hakemaan työryhmän jäsenyystason muutosta työryhmiin, joissa heillä on jäsenyys.
+* Käyttäjät pystyvät hakemaan työryhmän jäsenyystason muutosta työryhmiin.
 * Käyttäjät voivat hakea työryhmän jäsenyyden poistoa. 
 * Jäsenyyshakemuksessa on oltava tiedot käyttäjästä, työryhmästä, haettavasta jäsenyystasosta, hakemustyyppi (uusi hakemus, muokkaus, jäsenyyden poisto) ja perustelut. Hakemuksen tallentamisajankohdan tulee tallentua luontiajankohdaksi automaattisesti. 
 * Käyttäjä ei pysty muokkaamaan hakemusta tallennettuaan sen. 
