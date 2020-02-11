@@ -8,12 +8,11 @@ from application import app, db
 
 
 class RolerequestForm(FlaskForm):
-    
     request_type = RadioField("Pyynnön tyyppi", 
         [validators.InputRequired()], choices=[('New', 'Uusi rooli'), 
         ('Modify', 'Muokkaus'), ('Remove', 'Poisto')])
-    wgroup_id = IntegerField("Työryhmän id", [validators.InputRequired()])
-    role_id = SelectField("Rooli", choices=[('1', 'Reader'), ('2', 'Editor'), ('3', 'Manager')])
+    wgroup_id = SelectField("Työryhmä", choices=[], coerce=int)
+    role_id = SelectField("Rooli", choices=[], coerce=int)
     justification = StringField("Perustelut", [validators.Length(min=3)])
 
     class Meta:
@@ -22,13 +21,12 @@ class RolerequestForm(FlaskForm):
 
 
 class RolerequestForm2(FlaskForm):
-    
     request_type = RadioField("Pyynnön tyyppi", 
         [validators.InputRequired()], choices=[('New', 'Uusi rooli'), 
         ('Modify', 'Muokkaus'), ('Remove', 'Poisto')])
-    account_id = IntegerField("Käyttäjän id", [validators.InputRequired()])
-    wgroup_id = IntegerField("Työryhmän id", [validators.InputRequired()])
-    role_id = SelectField("Rooli", choices=[('1', 'Reader'), ('2', 'Editor'), ('3', 'Manager')])
+    account_id = SelectField("Käyttäjä", choices=[], coerce=int)
+    wgroup_id = SelectField("Työryhmä", choices=[], coerce=int)
+    role_id = SelectField("Rooli", choices=[], coerce=int)
     justification = StringField("Perustelut", [validators.Length(min=3)])
 
     class Meta:

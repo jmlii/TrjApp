@@ -3,6 +3,9 @@ from flask_login import login_required, current_user
 from application import app, db, login_required
 from application.rolerequests.models import Rolerequest
 from application.rolerequests.forms import RolerequestForm, RolerequestForm2
+from application.wgroups.models import Wgroup
+from application.roles.models import Role
+from application.auth.models import User
 
 # Pyyntöjen listaaminen
 @app.route("/rolerequests/", methods=["GET"])
@@ -19,13 +22,18 @@ def rolerequests_my_index():
 @app.route("/rolerequests/new/")
 @login_required
 def rolerequests_form():
-    return render_template("rolerequests/new.html", form=RolerequestForm())
+    form = RolerequestForm()
+    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.order_by("name")]
+    form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
+    return render_template("rolerequests/new.html", form=form)
 
 # Uuden roolipyynnön itselle tallentaminen lomakkeelta tietokantaan
 @app.route("/rolerequests/", methods=["POST"])
 @login_required
 def rolerequests_create():
-    form = RolerequestForm(request.form)
+    form = RolerequestForm()
+    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.order_by("name")]
+    form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
 
     if not form.validate():
         return render_template("rolerequests/new.html", form=form)
@@ -45,14 +53,21 @@ def rolerequests_create():
 @app.route("/rolerequests/new2/")
 @login_required(permission="2")
 def rolerequests_form2():
-    return render_template("rolerequests/new2.html", form=RolerequestForm2())
-
+    form = RolerequestForm2()
+    form.account_id.choices = [(user.id, user.username) for user in User.query.order_by("username")]
+    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.order_by("name")]
+    form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
+    return render_template("rolerequests/new2.html", form=form)
+   
 # Uuden roolipyynnön toiselle käyttäjälle tallentaminen lomakkeelta tietokantaan
 @app.route("/rolerequests/2", methods=["POST"])
 @login_required(permission="2")
 def rolerequests_create2():
     form = RolerequestForm2(request.form)
-
+    form.account_id.choices = [(user.id, user.username) for user in User.query.order_by("username")]
+    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.order_by("name")]
+    form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
+    
     if not form.validate():
         return render_template("rolerequests/new2.html", form=form)
 
