@@ -4,7 +4,9 @@ from flask_login import current_user
 from application import app, db, login_required
 from application.wgroups.models import Wgroup
 from application.wgroups.forms import WgroupForm, WgroupUpdateForm
+from application.permissions.models import Permission
 
+# Työryhmien listaaminen
 @app.route("/wgroups/", methods=["GET"])
 @login_required
 def wgroups_index():
@@ -13,13 +15,15 @@ def wgroups_index():
         count_new_rolerequests = Wgroup.count_rolerequests_per_wgroup(False, False, False),
         count_approved_rolerequests = Wgroup.count_rolerequests_per_wgroup(True, False, False))
 
+# Uuden työryhmän lisääminen
 @app.route("/wgroups/new/")
-@login_required(permission="2")
+@login_required(permission="admin")
 def wgroups_form():
     return render_template("wgroups/new.html", form = WgroupForm())
 
+# Luodun työryhmän tiedot tietokantaan
 @app.route("/wgroups/", methods=["POST"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def wgroups_create():
     form = WgroupForm(request.form)
 
@@ -34,8 +38,9 @@ def wgroups_create():
 
     return redirect(url_for("wgroups_index"))
 
+# Työryhmän päättäminen
 @app.route("/wgroups/end<wgroup_id>/", methods=["POST"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def wgroups_set_end(wgroup_id):
     wgroup = Wgroup.query.get(wgroup_id)
     wgroup.active = False
@@ -44,8 +49,9 @@ def wgroups_set_end(wgroup_id):
 
     return redirect(url_for("wgroups_index"))
 
+# Työryhmän perustietojen muokkaaminen
 @app.route("/wgroups/update<wgroup_id>/", methods=["GET", "POST"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def wgroups_update(wgroup_id):
     
     wgroup = Wgroup.query.get(wgroup_id)

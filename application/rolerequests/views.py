@@ -7,12 +7,13 @@ from application.wgroups.models import Wgroup
 from application.roles.models import Role
 from application.auth.models import User
 
-# Pyyntöjen listaaminen
+# Roolipyyntöjen listaaminen
 @app.route("/rolerequests/", methods=["GET"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def rolerequests_index():
     return render_template("rolerequests/list.html", rolerequests = Rolerequest.query.all())
 
+# Omien roolipyyntöjen listaaminen
 @app.route("/rolerequests/my/", methods=["GET"])
 @login_required
 def rolerequests_my_index():    
@@ -51,7 +52,7 @@ def rolerequests_create():
 
 # Uuden roolipyynnön toiselle käyttäjälle lähettäminen
 @app.route("/rolerequests/new2/")
-@login_required(permission="2")
+@login_required(permission="admin")
 def rolerequests_form2():
     form = RolerequestForm2()
     form.account_id.choices = [(user.id, user.username) for user in User.query.order_by("username")]
@@ -61,7 +62,7 @@ def rolerequests_form2():
    
 # Uuden roolipyynnön toiselle käyttäjälle tallentaminen lomakkeelta tietokantaan
 @app.route("/rolerequests/2", methods=["POST"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def rolerequests_create2():
     form = RolerequestForm2(request.form)
     form.account_id.choices = [(user.id, user.username) for user in User.query.order_by("username")]
@@ -84,7 +85,7 @@ def rolerequests_create2():
 
 # Roolipyynnön hyväksyminen
 @app.route("/rolerequests/approve<rolerequest_id>/", methods=["POST"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def rolerequests_approve(rolerequest_id):
     rolerequest = Rolerequest.query.get(rolerequest_id)
     rolerequest.approved = True
@@ -97,7 +98,7 @@ def rolerequests_approve(rolerequest_id):
 
 # Roolipyynnön hylkääminen
 @app.route("/rolerequests/reject<rolerequest_id>/", methods=["POST"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def rolerequests_reject(rolerequest_id):
     rolerequest = Rolerequest.query.get(rolerequest_id)
     rolerequest.rejected = True
@@ -110,7 +111,7 @@ def rolerequests_reject(rolerequest_id):
 
 # Roolipyynnön merkitseminen toteutetuksi
 @app.route("/rolerequests/set_executed<rolerequest_id>/", methods=["POST"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def rolerequests_set_executed(rolerequest_id):
     rolerequest = Rolerequest.query.get(rolerequest_id)
     rolerequest.executed = True     

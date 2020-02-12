@@ -1,5 +1,6 @@
 from application import db
 from application.models import Base 
+from application.permissions.models import Permission
 
 class User(Base): 
 
@@ -32,5 +33,10 @@ class User(Base):
     def is_authenticated(self):
         return True
 
+    def permission_name(self):
+        permission = Permission.query.filter_by(id=self.permission_id).first()
+        return permission.name
+
     def permissions(self):
-        return [str(self.permission_id)]
+        permission = Permission.query.filter_by(id=self.permission_id).first()
+        return [permission.name]

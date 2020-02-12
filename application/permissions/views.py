@@ -6,20 +6,20 @@ from application.permissions.forms import PermissionForm
 
 # Käyttäjätasojen listaaminen
 @app.route("/permissions/", methods=["GET"])
-@login_required
+@login_required(permission="admin")
 def permissions_index():
     return render_template("permissions/list.html", 
     permissions = Permission.query.all())
 
 # Uuden käyttäjätason lisäämislomake
 @app.route("/permissions/new/")
-@login_required(permission="2")
+@login_required(permission="admin")
 def permissions_form():
     return render_template("permissions/new.html", form=PermissionForm())
 
 # Uuden käyttäjätason tallentaminen lomakkeelta tietokantaan
 @app.route("/permissions/", methods=["POST"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def permissions_create():
     form = PermissionForm(request.form)
 
@@ -35,7 +35,7 @@ def permissions_create():
 
 # Käyttäjätason poistaminen tietokannasta
 @app.route("/permissions/delete<permission_id>/", methods=["POST"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def permissions_delete(permission_id):
     permission = Permission.query.get(permission_id)
      

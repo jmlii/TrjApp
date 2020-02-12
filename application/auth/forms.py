@@ -11,11 +11,11 @@ class LoginForm(FlaskForm):
 
 # uuden käyttäjän lisääminen
 class UserForm(FlaskForm):
-    first_name = StringField("Etunimi", [validators.Length(min=1)])
-    last_name = StringField("Sukunimi", [validators.Length(min=1)])
-    username = StringField("Käyttäjätunnus", [validators.Length(min=8)])
-    password = PasswordField("Salasana", [validators.Length(min=6)])
-    permission_id = RadioField("Käyttäjätaso", [validators.InputRequired()], choices=[('1', 'Peruskäyttäjä'), ('2', 'Pääkäyttäjä')])
+    first_name = StringField("Etunimi", [validators.Length(min=1, max=64)])
+    last_name = StringField("Sukunimi", [validators.Length(min=1, max=64)])
+    username = StringField("Käyttäjätunnus", [validators.Length(min=8, max=64)])
+    password = PasswordField("Salasana", [validators.Length(min=6, max=64)])
+    permission_id = RadioField("Käyttäjätaso", choices=[], coerce=int)
 
     class Meta:
         csrf = False

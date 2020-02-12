@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 
 {% block body %}
+{{ error }}
 <form method="POST" action="{{ url_for('users_create') }}">
+    <h4>Lisää uusi käyttäjä</h4>
     <table>
         <tr>
             <td>

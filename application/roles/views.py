@@ -6,19 +6,19 @@ from application.roles.forms import RoleForm
 
 # Roolien listaaminen
 @app.route("/roles/", methods=["GET"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def roles_index():
     return render_template("roles/list.html", roles = Role.query.all())
 
 # Uuden roolin lisäämislomake
 @app.route("/roles/new/")
-@login_required(permission="2")
+@login_required(permission="admin")
 def roles_form():
     return render_template("roles/new.html", form=RoleForm())
 
 # Uuden roolin tallentaminen lomakkeelta tietokantaan
 @app.route("/roles/", methods=["POST"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def roles_create():
     form = RoleForm(request.form)
 
@@ -34,7 +34,7 @@ def roles_create():
 
 # Roolin poistaminen tietokannasta
 @app.route("/roles/delete<role_id>/", methods=["POST"])
-@login_required(permission="2")
+@login_required(permission="admin")
 def roles_delete(role_id):
     role = Role.query.get(role_id)
      
