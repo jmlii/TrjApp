@@ -22,7 +22,7 @@
       <td>{{ user.last_name }}</td>
       <td>{{ user.date_created }}</td>
       <td>{{ user.date_modified }}</td>
-      {% if current_user.is_authenticated %}
+      {% if current_user.permission_name() == "admin" %}
       <td>
         <form method="POST" action="{{ url_for('users_inactivate', user_id=user.id) }}">
           <input type="submit" value="Muuta epäaktiiviseksi"/>

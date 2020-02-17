@@ -8,7 +8,7 @@
       <th>Työryhmä</th>
       <th>Oikeushyväksyjä</th>
       <th>Aktiivinen</th>
-      {% if current_user.permission_id == 2 %}
+      {% if current_user.permission_name() == "admin" %}
       <th>Luotu</th>
       <th>Muokattu</th>
       <th>Lopetettu</th>
@@ -20,12 +20,12 @@
       <td>{{ wgroup.name }}</td>
       <td>{{ wgroup.authoriser }}</td>
       <td>{{ wgroup.active }}</td>
-      {% if current_user.permission_id == 2 %}
+      {% if current_user.permission_name() == "admin" %}
       <td>{{ wgroup.date_created }}</td>
       <td>{{ wgroup.date_modified }}</td>
       <td>{{ wgroup.date_ended }}</td>
       {% endif %}
-      {% if current_user.permission_id == 2 %}
+      {% if current_user.permission_name() == "admin" %}
       <td>
         <form method="GET" action="{{ url_for('wgroups_update', wgroup_id=wgroup.id) }}">
           <input type="submit" value="Muokkaa tietoja"/>
@@ -41,7 +41,7 @@
     {% endfor %}
   </table>
 
-  {% if current_user.permission_id == 2 %}
+  {% if current_user.permission_name() == "admin" %}
 
   {% if count_new_rolerequests is defined %}
   <table>

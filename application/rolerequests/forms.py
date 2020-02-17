@@ -1,11 +1,10 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
-from wtforms import RadioField, IntegerField, SelectField, StringField, validators
+from wtforms import RadioField, SelectField, StringField, validators
 from application.wgroups.models import Wgroup
 from application.roles.models import Role
 from application.auth.models import User
 from application import app, db
-
 
 class RolerequestForm(FlaskForm):
     request_type = RadioField("Pyynnön tyyppi", 
@@ -17,8 +16,6 @@ class RolerequestForm(FlaskForm):
 
     class Meta:
         csrf = False
-
-
 
 class RolerequestForm2(FlaskForm):
     request_type = RadioField("Pyynnön tyyppi", 

@@ -4,7 +4,7 @@
   <h4> Jäsenyyshakemukset</h4>
   <table>
     <tr>
-      {% if current_user.permission_id == 2 %}  
+      {% if current_user.permission_name() == "admin" %}  
       <th>Id</th>
       {% endif %}
       <th>Pyynnön tyyppi</th>
@@ -18,7 +18,7 @@
     </tr>
     {% for rolerequest in rolerequests %}
     <tr>
-      {% if current_user.permission_id == 2 %}
+      {% if current_user.permission_name() == "admin" %}
       <td>{{ rolerequest.id }}</td>
       {% endif %}
       <td>{{ rolerequest.request_type }}</td>
@@ -29,23 +29,22 @@
       <td>{{ rolerequest.rejected }}</td>
       <td>{{ rolerequest.executed }}</td>
       <td>{{ rolerequest.date_created }}</td>
-      {% if current_user.permission_id == 2 %}
+      {% if current_user.permission_name() == "admin" %}
       <td>
-        <form method="POST" action="{{ url_for('rolerequests_approve', rolerequest_id=rolerequest.id )}}">
+        <form method="POST" action="{{ url_for('rolerequests_approve', rolerequest_id=rolerequest.id) }}">
             <input type="submit" value="Merkitse hyväksytyksi" onclick="return confirm('Haluatko merkitä pyynnön hyväksytyksi?')">
         </form>
       </td>
       <td>
-        <form method="POST" action="{{ url_for('rolerequests_reject', rolerequest_id=rolerequest.id )}}">
+        <form method="POST" action="{{ url_for('rolerequests_reject', rolerequest_id=rolerequest.id) }}">
             <input type="submit" value="Merkitse hylätyksi" onclick="return confirm('Haluatko merkitä pyynnön hylätyksi?')">
         </form>
       </td>
-    </td>
-    <td>
-      <form method="POST" action="{{ url_for('rolerequests_set_executed', rolerequest_id=rolerequest.id )}}">
+      <td>
+        <form method="POST" action="{{ url_for('rolerequests_set_executed', rolerequest_id=rolerequest.id) }}">
           <input type="submit" value="Merkitse toteutetuksi" onclick="return confirm('Haluatko merkitä pyynnön toteutetuksi?')">
-      </form>
-    </td>
+        </form>
+      </td>
       {% endif %}
     </tr>
     {% endfor %}

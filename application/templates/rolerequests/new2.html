@@ -6,15 +6,13 @@
         <tr>
             <td>
                 {{ form.request_type.label }}
-            </td>
-            
-    {% for subfield in form.request_type %}
-    <tr>
-        <td>{{ subfield }}</td>
-        <td>{{ subfield.label }}</td>
-    </tr>
-    {% endfor %}
-            </td>
+            </td>            
+                {% for subfield in form.request_type %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                {% endfor %}
             <td>
                 <ul>
                     {% for error in form.request_type.errors %}
@@ -52,7 +50,6 @@
                     {% endfor %}
                 </ul>
             </td>
-
         </tr>
         <tr>
             <td>

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<p><b>Päivitä työryhmän perustietoja</b></p>
+<h4>Päivitä työryhmän perustietoja</h4>
 <form method="POST" action="{{ url_for('wgroups_update', wgroup_id=wgroup_id) }}">
     <table>
         <tr>

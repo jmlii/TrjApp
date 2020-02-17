@@ -10,13 +10,11 @@
     <tr>
       <td>{{ permission.id }}</td>
       <td>{{ permission.name }}</td>
-      {% if current_user.is_authenticated %}
       <td>        
         <form method="POST" action="{{ url_for('permissions_delete', permission_id=permission.id) }}">
             <input type="submit" value="Poista käyttäjätaso" onclick="return confirm('Oletko täysin varma, että haluat poistaa tämän käyttäjätason tietokannasta?')">
         </form>
       </td>
-      {% endif %}
     </tr>
     {% endfor %}
   </table>
