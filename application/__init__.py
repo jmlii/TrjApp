@@ -53,14 +53,14 @@ def login_required(_func=None, *, permission="ANY"):
 # Ladataan sovelluksen sisältö
 from application import views
 
-from application.wgroups import models
-from application.wgroups import views
-
 from application.permissions import models
 from application.permissions import views
 
 from application.auth import models
 from application.auth import views
+
+from application.wgroups import models
+from application.wgroups import views
 
 from application.roles import models
 from application.roles import views
@@ -68,6 +68,8 @@ from application.roles import views
 from application.rolerequests import models
 from application.rolerequests import views
 
+from application.userwgrouproles import models
+from application.userwgrouproles import views
 
 # Kirjautumisen osa 2
 from application.auth.models import User 

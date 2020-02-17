@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <h4> Jäsenyydet</h4>
+  <table>
+    <tr>
+      <th>Käyttäjän id</th>
+      <th>Työryhmän id</th>
+      <th>Roolin id</th>
+      <th>Luotu</th>
+      <th>Päättynyt</th>
+    </tr>
+    {% for membership in memberships %}
+    <tr>
+      <td>{{ membership.account_id }}</td>
+      <td>{{ membership.wgroup_id }}</td>
+      <td>{{ membership.role_id }}</td>
+      <td>{{ membership.date_created }}</td>
+      <td>{{ membership.date_ended }}</td>
+      <td>
+        <form method="POST" action="{{ url_for('memberships_end', account_id=membership.account_id, wgroup_id=membership.wgroup_id, role_id=membership.role_id) }}">
+            <input type="submit" value="Merkitse päättyneeksi" onclick="return confirm('Haluatko merkitä jäsenyyden päättyneeksi?')">
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
