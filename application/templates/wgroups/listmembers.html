@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{{ error }}
+  {% if wgroup is defined %}
+  <h4>{{wgroup.name}}</h4>
+  <h5>Työryhmän jäsenet</h5>
+  {% endif %}
+  {% if list_members is defined %}
+  <table>
+    <tr>
+      <th>Sukunimi</th>
+      <th>Etunimi</th>
+      <th>Käyttäjätunnus</th>
+      <th>Jäsenyystaso</th>
+    </tr>
+    {% for member in list_members %}
+    <tr>
+      <td>{{member.last_name}}</td>
+      <td>{{member.first_name}}</td>
+      <td>{{member.username}}</td> 
+      <td>{{member.role}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+{% endblock %}

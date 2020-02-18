@@ -37,6 +37,11 @@
         </form>
       </td>
       {% endif %}
+      <td>
+        <form method="GET" action="{{ url_for('wgroups_members', wgroup_id=wgroup.id) }}">
+          <input type="submit" value="Näytä jäsenet"/>
+        </form>
+      </td>
     </tr>
     {% endfor %}
   </table>

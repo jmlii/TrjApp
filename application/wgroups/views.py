@@ -77,3 +77,15 @@ def wgroups_update(wgroup_id):
     form.active.data = wgroup.active
 
     return render_template("wgroups/update.html", wgroup_id=wgroup_id, form=form)      
+
+# Työryhmän jäsenten listaaminen
+@app.route("/wgroups/members<wgroup_id>/", methods=["GET"])
+@login_required
+def wgroups_members(wgroup_id):
+    wgroup = Wgroup.query.get(wgroup_id)
+
+    if not wgroup or wgroup.active == False:
+        return render_template("wgroups/listmembers.html", error = "Työryhmää ei löydy.")
+
+    return render_template("wgroups/listmembers.html", wgroup = wgroup,
+    list_members = Wgroup.list_members(wgroup_id))

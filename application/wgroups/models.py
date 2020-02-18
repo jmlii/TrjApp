@@ -10,10 +10,10 @@ class Wgroup(Base):
 
     rolerequests = db.relationship("Rolerequest", backref='wgroup', lazy=True)
 
+    users = db.relationship("Membership", backref="wgroup")
 
     def __init__(self, name): 
         self.name = name
-
 
     @staticmethod
     def count_rolerequests_per_wgroup(approved, rejected, executed):
@@ -27,4 +27,20 @@ class Wgroup(Base):
         response = []
         for row in res:
             response.append({"name":row[0], "number":row[1]})
+        return response
+
+    @staticmethod
+    def list_members(wgroup_id):
+        stmt = text("SELECT Account.last_name, Account.first_name, Account.username, Role.name"
+        " FROM Account"
+        " JOIN UserWgroupRole ON Account.id = UserWgroupRole.account_id"
+        " JOIN Role ON UserWgroupRole.role_id = Role.id"
+        " JOIN Wgroup on UserWgroupRole.wgroup_id = Wgroup.id"
+        " WHERE Wgroup.id = :wgroup_id AND UserWgroupRole.date_ended IS NULL"
+        " ORDER BY Account.last_name, Account.first_name").params(wgroup_id=wgroup_id)
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"last_name":row[0], "first_name":row[1], "username":row[2], "role":row[3]})
         return response
