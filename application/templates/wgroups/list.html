@@ -3,20 +3,16 @@
 {% block body %}
   <h4>Työryhmät</h4>
   {% if current_user.permission_name() == "admin" %}  
-  <form method="GET" action="{{ url_for('wgroups_form') }}">
-    <input type="submit" value="Lisää uusi työryhmä">
-  {% endif %}
+  <a href="{{ url_for('wgroups_form') }}">Lisää uusi työryhmä</a>
   <table>
     <tr>
       <th>Id</th>      
       <th>Työryhmä</th>
       <th>Oikeushyväksyjä</th>
       <th>Aktiivinen</th>
-      {% if current_user.permission_name() == "admin" %}
       <th>Luotu</th>
       <th>Muokattu</th>
       <th>Lopetettu</th>
-      {% endif %}
     </tr>
     {% for wgroup in wgroups %}
     <tr>
@@ -24,12 +20,9 @@
       <td>{{ wgroup.name }}</td>
       <td>{{ wgroup.authoriser }}</td>
       <td>{{ wgroup.active }}</td>
-      {% if current_user.permission_name() == "admin" %}
       <td>{{ wgroup.date_created }}</td>
       <td>{{ wgroup.date_modified }}</td>
       <td>{{ wgroup.date_ended }}</td>
-      {% endif %}
-      {% if current_user.permission_name() == "admin" %}
       <td>
         <form method="GET" action="{{ url_for('wgroups_update', wgroup_id=wgroup.id) }}">
           <input type="submit" value="Muokkaa tietoja"/>
@@ -40,7 +33,6 @@
           <input type="submit" value="Lopeta työryhmä", onclick="return confirm('Haluatko lopettaa työryhmän ja merkitä sen epäaktiiviseksi?')"/>
         </form>
       </td>
-      {% endif %}
       <td>
         <form method="GET" action="{{ url_for('wgroups_members', wgroup_id=wgroup.id) }}">
           <input type="submit" value="Näytä jäsenet"/>
@@ -49,6 +41,31 @@
     </tr>
     {% endfor %}
   </table>
+  {% endif %}
+
+  {% if current_user.permission_name() != "admin" %}  
+   <table>
+    <tr>
+      <th>Id</th>      
+      <th>Työryhmä</th>
+      <th>Oikeushyväksyjä</th>
+    </tr>
+    {% for wgroup in wgroups %}
+    {% if wgroup.active==True %}    
+    <tr>
+      <td>{{ wgroup.id }}</td>
+      <td>{{ wgroup.name }}</td>
+      <td>{{ wgroup.authoriser }}</td>
+      <td>
+        <form method="GET" action="{{ url_for('wgroups_members', wgroup_id=wgroup.id) }}">
+          <input type="submit" value="Näytä jäsenet"/>
+        </form>
+      </td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+  </table>
+  {% endif %}
 
   {% if current_user.permission_name() == "admin" %}
 

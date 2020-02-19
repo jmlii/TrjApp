@@ -84,8 +84,13 @@ def wgroups_update(wgroup_id):
 def wgroups_members(wgroup_id):
     wgroup = Wgroup.query.get(wgroup_id)
 
-    if not wgroup or wgroup.active == False:
-        return render_template("wgroups/listmembers.html", error = "Työryhmää ei löydy.")
+    if current_user.permission_name() != "admin":
+        if not wgroup or wgroup.active == False:
+            return render_template("wgroups/listmembers.html", error = "Työryhmää ei löydy tai se on lopetettu.")
+
+    if current_user.permission_name() == "admin":
+        if not wgroup:
+            return render_template("wgroups/listmembers.html", error = "Työryhmää ei löydy.")
 
     return render_template("wgroups/listmembers.html", wgroup = wgroup,
-    list_members = Wgroup.list_members(wgroup_id))
+        list_members = Wgroup.list_members(wgroup_id))
