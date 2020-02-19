@@ -2,6 +2,10 @@
 
 {% block body %}
   <h4>Työryhmät</h4>
+  {% if current_user.permission_name() == "admin" %}  
+  <form method="GET" action="{{ url_for('wgroups_form') }}">
+    <input type="submit" value="Lisää uusi työryhmä">
+  {% endif %}
   <table>
     <tr>
       <th>Id</th>      

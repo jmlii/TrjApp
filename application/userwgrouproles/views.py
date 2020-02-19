@@ -13,12 +13,6 @@ from application.auth.models import User
 def memberships_index():
     return render_template("userwgrouproles/list.html", memberships = Membership.query.all())
 
-# Omien jäsenyyksien listaaminen
-@app.route("/memberships/my/", methods=["GET"])
-@login_required
-def memberships_my_index():    
-    return render_template("userwgrouproles/list.html", memberships = Membership.query.filter_by(account_id = current_user.id))
-
 # Uuden jäsenyyden lisääminen
 @app.route("/memberships/new/")
 @login_required(permission="admin")
@@ -50,7 +44,6 @@ def memberships_create():
     db.session().commit()
 
     return redirect(url_for("memberships_index"))
-
 
 # Jäsenyyden lopettaminen
 @app.route("/memberships/end<account_id>-<wgroup_id>-<role_id>/", methods=["POST"])

@@ -7,33 +7,33 @@ from application.wgroups.models import Wgroup
 from application.roles.models import Role
 from application.auth.models import User
 
-# Roolipyyntöjen listaaminen
+# Jäsenyyspyyntöjen listaaminen
 @app.route("/rolerequests/", methods=["GET"])
 @login_required(permission="admin")
 def rolerequests_index():
     return render_template("rolerequests/list.html", rolerequests = Rolerequest.query.all())
 
-# Omien roolipyyntöjen listaaminen
+# Omien jäsenyyspyyntöjen listaaminen
 @app.route("/rolerequests/my/", methods=["GET"])
 @login_required
 def rolerequests_my_index():    
     return render_template("rolerequests/list.html", rolerequests = Rolerequest.query.filter_by(account_id = current_user.id))
 
-# Uuden roolipyynnön itselle lähettäminen
+# Uuden jäsenyyspyynnön itselle lähettäminen
 @app.route("/rolerequests/new/")
 @login_required
 def rolerequests_form():
     form = RolerequestForm()
-    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.order_by("name")]
+    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.filter_by(active=True).order_by("name")]
     form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
     return render_template("rolerequests/new.html", form=form)
 
-# Uuden roolipyynnön itselle tallentaminen lomakkeelta tietokantaan
+# Uuden jäsenyyspyynnön itselle tallentaminen lomakkeelta tietokantaan
 @app.route("/rolerequests/", methods=["POST"])
 @login_required
 def rolerequests_create():
     form = RolerequestForm()
-    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.order_by("name")]
+    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.filter_by(active=True).order_by("name")]
     form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
 
     if not form.validate():
@@ -50,23 +50,23 @@ def rolerequests_create():
 
     return redirect(url_for("rolerequests_my_index"))
 
-# Uuden roolipyynnön toiselle käyttäjälle lähettäminen
+# Uuden jäsenyyspyynnön toiselle käyttäjälle lähettäminen
 @app.route("/rolerequests/new2/")
 @login_required(permission="admin")
 def rolerequests_form2():
     form = RolerequestForm2()
-    form.account_id.choices = [(user.id, user.username) for user in User.query.order_by("username")]
-    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.order_by("name")]
+    form.account_id.choices = [(user.id, user.username) for user in User.query.filter_by(account_active=True).order_by("username")]
+    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.filter_by(active=True).order_by("name")]
     form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
     return render_template("rolerequests/new2.html", form=form)
    
-# Uuden roolipyynnön toiselle käyttäjälle tallentaminen lomakkeelta tietokantaan
+# Uuden jäsenyyspyynnön toiselle käyttäjälle tallentaminen lomakkeelta tietokantaan
 @app.route("/rolerequests/2", methods=["POST"])
 @login_required(permission="admin")
 def rolerequests_create2():
     form = RolerequestForm2(request.form)
-    form.account_id.choices = [(user.id, user.username) for user in User.query.order_by("username")]
-    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.order_by("name")]
+    form.account_id.choices = [(user.id, user.username) for user in User.query.filter_by(account_active=True).order_by("username")]
+    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.filter_by(active=True).order_by("name")]
     form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
     
     if not form.validate():
@@ -83,7 +83,7 @@ def rolerequests_create2():
 
     return redirect(url_for("rolerequests_index"))
 
-# Roolipyynnön hyväksyminen
+# Jäsenyyspyynnön hyväksyminen
 @app.route("/rolerequests/approve<rolerequest_id>/", methods=["POST"])
 @login_required(permission="admin")
 def rolerequests_approve(rolerequest_id):
@@ -95,8 +95,7 @@ def rolerequests_approve(rolerequest_id):
 
     return redirect(url_for("rolerequests_index"))
 
-
-# Roolipyynnön hylkääminen
+# Jäsenyyspyynnön hylkääminen
 @app.route("/rolerequests/reject<rolerequest_id>/", methods=["POST"])
 @login_required(permission="admin")
 def rolerequests_reject(rolerequest_id):
@@ -108,8 +107,7 @@ def rolerequests_reject(rolerequest_id):
 
     return redirect(url_for("rolerequests_index"))
 
-
-# Roolipyynnön merkitseminen toteutetuksi
+# Jäsenyyspyynnön merkitseminen toteutetuksi
 @app.route("/rolerequests/set_executed<rolerequest_id>/", methods=["POST"])
 @login_required(permission="admin")
 def rolerequests_set_executed(rolerequest_id):
