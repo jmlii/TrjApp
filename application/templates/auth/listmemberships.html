@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{{ error }}
+  {% if user is defined %}
+  <h4>{{user.last_name}} {{user.first_name}}</h4>
+  <h5>Työryhmäjäsenyydet</h5>
+  {% endif %}
+  {% if list_memberships is defined %}
+  <table>
+    <tr>
+      <th>Työryhmä</th>
+      <th>Rooli</th>
+      <th>Alkanut</th>
+    </tr>
+    {% for membership in list_memberships %}
+    <tr>
+      <td>{{membership.wgroup}}</td>
+      <td>{{membership.role}}</td>
+      <td>{{membership.date_created}}</td> 
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+{% endblock %}

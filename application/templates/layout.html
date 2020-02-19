@@ -22,7 +22,7 @@
           {% if current_user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('wgroups_index') }}" >
-              Selaa työryhmiä
+              Työryhmät
             </a> 
           </li>
           {% endif %}
@@ -32,6 +32,7 @@
             Työryhmäjäsenyydet
             </a>           
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{{ url_for('my_memberships') }}">Omat jäsenyydet</a>             
               <a class="dropdown-item" href="{{ url_for('rolerequests_form') }}">Hae jäsenyyttä</a>              
               <a class="dropdown-item" href="{{ url_for('rolerequests_my_index') }}">Omat hakemukset</a>
             </div>
@@ -49,6 +50,8 @@
               <a class="dropdown-item" href="{{ url_for('wgroups_form') }}">Lisää uusi työryhmä</a>
               <a class="dropdown-item" href="{{ url_for('rolerequests_index') }} ">Listaa jäsenyyshakemukset</a>
               <a class="dropdown-item" href="{{ url_for('rolerequests_form2') }} ">Lisää uusi jäsenyyshakemus toiselle käyttäjälle</a>
+              <a class="dropdown-item" href="{{ url_for('memberships_index') }} ">Listaa työryhmäjäsenyydet</a>
+              <a class="dropdown-item" href="{{ url_for('memberships_form') }} ">Lisää uusi jäsenyys</a>
             </div>
           </li>
           {% endif %}

@@ -1,36 +1,45 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<h4>Käyttäjät</h4>
+{% if current_user.permission_name() == "admin" %}
+<a href="{{ url_for('users_form') }}">Lisää uusi käyttäjä</a>
+{% endif %}
   <table>
     <tr>
       <th>Id</th>
+      <th>Sukunimi</th>
+      <th>Etunimi</th>
       <th>Käyttäjätunnus</th>
       <th>Käyttäjätaso</th>
       <th>Tunnus aktiivinen</th>
-      <th>Etunimi</th>
-      <th>Sukunimi</th>
       <th>Luotu</th>
       <th>Muokattu</th>
     </tr>
     {% for user in users %}
     <tr>
       <td>{{ user.id }}</td>
+      <td>{{ user.last_name }}</td>
+      <td>{{ user.first_name }}</td>
       <td>{{ user.username }}</td>
       <td>{{ user.permission_id }}</td>
       <td>{{ user.account_active }}</td>
-      <td>{{ user.first_name }}</td>
-      <td>{{ user.last_name }}</td>
       <td>{{ user.date_created }}</td>
       <td>{{ user.date_modified }}</td>
       {% if current_user.permission_name() == "admin" %}
       <td>
-        <form method="POST" action="{{ url_for('users_inactivate', user_id=user.id) }}">
-          <input type="submit" value="Muuta epäaktiiviseksi"/>
+        <form method="GET" action="{{ url_for('users_update', user_id=user.id) }}">
+          <input type="submit" value="Päivitä tietoja"/>
         </form>
       </td>
       <td>
         <form method="POST" action="{{ url_for('users_delete', user_id=user.id) }}">
           <input type="submit" value="Poista käyttäjätili" onclick="return confirm('Oletko täysin varma, että haluat poistaa käyttäjätilin ja kaikki käyttäjän tiedot tietokannasta?')">
+        </form>
+      </td>
+      <td>
+        <form method="GET" action="{{ url_for('users_memberships', user_id=user.id) }}">
+          <input type="submit" value="Listaa jäsenyydet">
         </form>
       </td>
       {% endif %}

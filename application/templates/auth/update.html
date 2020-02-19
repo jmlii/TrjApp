@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{{ error }}
+<form method="POST" action="{{ url_for('users_update', user_id=user_id) }}">
+    <h4>Päivitä käyttäjän tietoja</h4>
+    <table>
+        <tr>
+            <td>
+                Käyttäjän id-tunniste
+            </td>
+            <td>
+                {{ user.id }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.first_name.label }}
+            </td>
+            <td>
+                {{ form.first_name }}
+            </td>
+            <td>
+                <ul>
+                    {% for error in form.first_name.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.last_name.label }}
+            </td>
+            <td>
+                {{ form.last_name }}
+            </td>
+            <td>
+                <ul>
+                    {% for error in form.last_name.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.username.label }}
+            </td>
+            <td>
+                {{ form.username }}
+            </td>
+            <td>
+                <ul>
+                    {% for error in form.username.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.permission_id.label }}
+            </td>
+            <td>
+                {% for subfield in form.permission_id %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                {% endfor %}
+            </td>
+            <td>
+                <ul>
+                    {% for error in form.permission_id.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.account_active.label }}
+            </td>
+            <td>
+                {{ form.account_active }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" name = "update_user" value="Päivitä käyttäjän tiedot"/>
+            </td>            
+        </tr>
+        <tr>
+            <td>
+                <a href="{{ url_for('users_updatepassword', user_id=user_id) }}">Vaihda salasana</a>
+            </td>            
+        </tr>        
+    </table>
+</form>
+{% endblock %}
