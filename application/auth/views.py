@@ -137,9 +137,14 @@ def users_updatepassword(user_id):
 def users_memberships(user_id):
     user = User.query.get(user_id)
     
-    if not user or user.account_active == False:
-        return render_template("auth/listmemberships.html", error = "Käyttäjää ei löydy.")
+    if current_user.permission_name() != "admin":
+        if not user or user.account_active == False:
+            return render_template("auth/listmemberships.html", error = "Käyttäjää ei löydy tai käyttäjä ei ole aktiivinen.")
     
+    if current_user.permission_name() == "admin":
+        if not user:
+            return render_template("auth/listmemberships.html", error = "Käyttäjää ei löydy.")
+
     return render_template("auth/listmemberships.html", user=user, 
     list_memberships = User.list_memberships(user_id))
 

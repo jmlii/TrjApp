@@ -3,7 +3,7 @@
 {% block body %}
   <h4> Avoimet jäsenyyshakemukset</h4>
   <a href="{{ url_for('rolerequests_index_closed') }}">Näytä suljetut hakemukset</a>
-  
+  <br><a href="{{ url_for('rolerequests_index') }}" >Näytä kaikki hakemukset</a>
   {% if open_rolerequests is defined %} 
   <table>
     <tr>

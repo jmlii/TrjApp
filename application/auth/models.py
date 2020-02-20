@@ -44,7 +44,7 @@ class User(Base):
 
     @staticmethod
     def list_memberships(user_id):
-        stmt = text("SELECT Wgroup.name, Role.name, Wgroup.date_created"
+        stmt = text("SELECT Wgroup.name, Role.name, UserWgroupRole.date_created"
         " FROM Wgroup"
         " JOIN UserWgroupRole ON Wgroup.id = UserWgroupRole.wgroup_id"
         " JOIN Role ON UserWgroupRole.role_id = Role.id"

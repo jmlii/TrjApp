@@ -11,8 +11,8 @@ from application.auth.models import User
 @app.route("/memberships/", methods=["GET"])
 @login_required(permission="admin")
 def memberships_index():
-    return render_template("userwgrouproles/list.html", memberships = Membership.query.all())
-
+    return render_template("userwgrouproles/list.html", memberships = Membership.list_memberships())
+   
 # Uuden jäsenyyden lisääminen
 @app.route("/memberships/new/")
 @login_required(permission="admin")
