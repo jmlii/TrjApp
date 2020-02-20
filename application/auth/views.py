@@ -29,7 +29,7 @@ def auth_logout():
 @app.route("/users/", methods=["GET"])
 @login_required()
 def users_index():
-    return render_template("auth/list.html", users = User.query.all())
+    return render_template("auth/list.html", users = User.query.order_by("last_name"))
 
 # Uuden käyttäjän luominen
 @app.route("/users/new/")

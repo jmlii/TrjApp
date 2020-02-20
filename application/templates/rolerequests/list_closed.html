@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <h4> Suljetut jäsenyyshakemukset</h4>
+  <a href="{{ url_for('rolerequests_index_open') }}">Näytä avoimet hakemukset</a>
+  {% if closed_rolerequests is defined %} 
+  <table>
+    <tr>
+      {% if current_user.permission_name() == "admin" %}
+      <th>Id</th>
+      {% endif %}
+      <th>Pyynnön tyyppi</th>
+      <th>Käyttäjä</th>
+      <th>Työryhmä</th>
+      <th>Rooli</th>
+      <th>Perustelut</th>
+      <th>Hyväksyjä</th>
+      <th>Hyväksytty</th>
+      <th>Hyväksynnän ajankohta</th>
+      <th>Hylätty</th>
+      <th>Hylkäyksen ajakohta</th>
+      <th>Toteutettu</th>
+      <th>Luotu</th>
+      <th>Muokattu</th>
+    </tr>
+    {% for rolerequest in closed_rolerequests %}
+    <tr>
+      {% if current_user.permission_name() == "admin" %}
+      <td>{{ rolerequest.id }}</td>
+      {% endif %}
+      <td>{{ rolerequest.request_type }}</td>
+      <td>{{ rolerequest.user }}</td>
+      <td>{{ rolerequest.wgroup }}</td>
+      <td>{{ rolerequest.role }}</td>
+      <td>{{ rolerequest.justification }}</td>
+      <td>{{ rolerequest.authoriser }}</td>
+      <td>{{ rolerequest.approved }}</td>
+      <td>{{ rolerequest.date_approved }}</td>
+      <td>{{ rolerequest.rejected }}</td>
+      <td>{{ rolerequest.date_rejected }}</td>
+      <td>{{ rolerequest.executed }}</td>
+      <td>{{ rolerequest.date_created }}</td>
+      <td>{{ rolerequest.date_modified }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
+{% endblock %}

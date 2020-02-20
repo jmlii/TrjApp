@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 
 {% block body %}
-
-  <h4> Jäsenyyshakemukset</h4>
- 
-  {% if rolerequests is defined %} 
+  <h4> Avoimet jäsenyyshakemukset</h4>
+  <a href="{{ url_for('rolerequests_index_closed') }}">Näytä suljetut hakemukset</a>
+  
+  {% if open_rolerequests is defined %} 
   <table>
     <tr>
       {% if current_user.permission_name() == "admin" %}
@@ -17,21 +17,15 @@
       <th>Perustelut</th>
       <th>Hyväksyjä</th>
       <th>Hyväksytty</th>
-      {% if current_user.permission_name() == "admin" %}
       <th>Hyväksynnän ajankohta</th>
-      {% endif %}
       <th>Hylätty</th>
-      {% if current_user.permission_name() == "admin" %}
       <th>Hylkäyksen ajakohta</th>
-      {% endif %}
       <th>Toteutettu</th>
       <th>Luotu</th>
       <th>Muokattu</th>
-      {% if current_user.permission_name() == "admin" %}
       <th>Muuta tilaa</th>
-      {% endif %}
     </tr>
-    {% for rolerequest in rolerequests %}
+    {% for rolerequest in open_rolerequests %}
     <tr>
       {% if current_user.permission_name() == "admin" %}
       <td>{{ rolerequest.id }}</td>
@@ -43,18 +37,13 @@
       <td>{{ rolerequest.justification }}</td>
       <td>{{ rolerequest.authoriser }}</td>
       <td>{{ rolerequest.approved }}</td>
-      {% if current_user.permission_name() == "admin" %}
       <td>{{ rolerequest.date_approved }}</td>
-      {% endif %}
       <td>{{ rolerequest.rejected }}</td>
-      {% if current_user.permission_name() == "admin" %}
       <td>{{ rolerequest.date_rejected }}</td>
-      {% endif %}
       <td>{{ rolerequest.executed }}</td>
       <td>{{ rolerequest.date_created }}</td>
       <td>{{ rolerequest.date_modified }}</td>
       {% if current_user.permission_name() == "admin" %}
-      {% if rolerequest.executed == False %}
       <td>
         <form method="POST" action="{{ url_for('rolerequests_approve', rolerequest_id=rolerequest.id) }}">
             <input type="submit" value="Hyväksytty" onclick="return confirm('Haluatko merkitä pyynnön hyväksytyksi?')">
@@ -76,10 +65,10 @@
         </form>
       </td>
       {% endif %}
-      {% endif %}
     </tr>
     {% endfor %}
   </table>
   {% endif %}
+
 
 {% endblock %}

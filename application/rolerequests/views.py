@@ -11,13 +11,30 @@ from application.auth.models import User
 @app.route("/rolerequests/", methods=["GET"])
 @login_required(permission="admin")
 def rolerequests_index():
-    return render_template("rolerequests/list.html", rolerequests = Rolerequest.query.all())
+    return render_template("rolerequests/list.html", 
+        rolerequests = Rolerequest.list_rolerequests())
+
+# Avoimien jäsenyyspyyntöjen listaaminen
+@app.route("/rolerequests/open", methods=["GET"])
+@login_required(permission="admin")
+def rolerequests_index_open():
+    return render_template("rolerequests/list_open.html", 
+        open_rolerequests = Rolerequest.list_rolerequests_per_state(False))
+
+# Suljettujen jäsenyyspyyntöjen listaaminen
+@app.route("/rolerequests/closed", methods=["GET"])
+@login_required(permission="admin")
+def rolerequests_index_closed():
+    return render_template("rolerequests/list_closed.html", 
+        closed_rolerequests = Rolerequest.list_rolerequests_per_state(True))
 
 # Omien jäsenyyspyyntöjen listaaminen
 @app.route("/rolerequests/my/", methods=["GET"])
 @login_required
-def rolerequests_my_index():    
-    return render_template("rolerequests/list.html", rolerequests = Rolerequest.query.filter_by(account_id = current_user.id))
+def rolerequests_my_index():   
+    current_user_id = current_user.id 
+    return render_template("rolerequests/list.html", 
+        rolerequests = Rolerequest.list_rolerequests_my(current_user_id))
 
 # Uuden jäsenyyspyynnön itselle lähettäminen
 @app.route("/rolerequests/new/")
@@ -81,7 +98,7 @@ def rolerequests_create2():
     db.session().add(rolerequest2)
     db.session().commit()
 
-    return redirect(url_for("rolerequests_index"))
+    return redirect(url_for("rolerequests_index_open"))
 
 # Jäsenyyspyynnön hyväksyminen
 @app.route("/rolerequests/approve<rolerequest_id>/", methods=["POST"])
@@ -93,7 +110,7 @@ def rolerequests_approve(rolerequest_id):
 
     db.session().commit()
 
-    return redirect(url_for("rolerequests_index"))
+    return redirect(url_for("rolerequests_index_open"))
 
 # Jäsenyyspyynnön hylkääminen
 @app.route("/rolerequests/reject<rolerequest_id>/", methods=["POST"])
@@ -102,10 +119,11 @@ def rolerequests_reject(rolerequest_id):
     rolerequest = Rolerequest.query.get(rolerequest_id)
     rolerequest.rejected = True
     rolerequest.date_rejected = db.func.current_timestamp()
+    rolerequest.executed = True
      
     db.session().commit()
 
-    return redirect(url_for("rolerequests_index"))
+    return redirect(url_for("rolerequests_index_closed"))
 
 # Jäsenyyspyynnön merkitseminen toteutetuksi
 @app.route("/rolerequests/set_executed<rolerequest_id>/", methods=["POST"])
@@ -116,4 +134,13 @@ def rolerequests_set_executed(rolerequest_id):
 
     db.session().commit()
 
-    return redirect(url_for("rolerequests_index"))
+    return redirect(url_for("rolerequests_index_closed"))
+
+# Jäsenyyspyynnön poistaminen tietokannasta
+@app.route("/rolerequests_delete<rolerequest_id>/", methods=["POST"])
+@login_required(permission="admin")
+def rolerequest_delete(rolerequest_id):
+    rolerequest = Rolerequest.query.get(rolerequest_id)
+    db.session().delete(rolerequest)
+    db.session().commit()
+    return redirect(url_for("rolerequests_index_open"))

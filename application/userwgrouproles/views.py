@@ -18,8 +18,8 @@ def memberships_index():
 @login_required(permission="admin")
 def memberships_form():
     form = MembershipForm()
-    form.account_id.choices = [(user.id, user.username) for user in User.query.order_by("username")]
-    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.order_by("name")]
+    form.account_id.choices = [(user.id, user.username) for user in User.query.filter_by(account_active=True).order_by("username")]
+    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.filter_by(active=True).order_by("name")]
     form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
     return render_template("userwgrouproles/new.html", form=form)
    
@@ -28,8 +28,8 @@ def memberships_form():
 @login_required(permission="admin")
 def memberships_create():
     form = MembershipForm(request.form)
-    form.account_id.choices = [(user.id, user.username) for user in User.query.order_by("username")]
-    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.order_by("name")]
+    form.account_id.choices = [(user.id, user.username) for user in User.query.filter_by(account_active=True).order_by("username")]
+    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.filter_by(active=True).order_by("name")]
     form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
     
     if not form.validate():
