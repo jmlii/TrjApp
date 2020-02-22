@@ -2,9 +2,24 @@
 
 {% block body %}
   <h4> Avoimet jäsenyyshakemukset</h4>
-  <a href="{{ url_for('rolerequests_index_closed') }}">Näytä suljetut hakemukset</a>
-  <br><a href="{{ url_for('rolerequests_index') }}" >Näytä kaikki hakemukset</a>
-  {% if open_rolerequests is defined %} 
+
+  <table>
+    <tr>
+      <td><a href="{{ url_for('rolerequests_index_closed') }}">Näytä suljetut hakemukset</a></td>
+      <td></td>
+      <td><a href="{{ url_for('rolerequests_form') }}">Lisää uusi jäsenyyshakemus</a></td>
+    </tr>
+    <tr>
+      <td><a href="{{ url_for('rolerequests_index') }}" >Näytä kaikki hakemukset</a></td>
+      <td></td>
+      <td>
+      {% if current_user.permission_name() == "admin" %}
+        <a href="{{ url_for('rolerequests_form2') }}">Lisää uusi jäsenyyshakemus toiselle käyttäjälle</a>
+      {% endif %}
+      </td>
+    </tr>
+  </table>
+
   <table>
     <tr>
       {% if current_user.permission_name() == "admin" %}
@@ -25,7 +40,7 @@
       <th>Muokattu</th>
       <th>Muuta tilaa</th>
     </tr>
-    {% for rolerequest in open_rolerequests %}
+    {% for rolerequest in rolerequests.items %}
     <tr>
       {% if current_user.permission_name() == "admin" %}
       <td>{{ rolerequest.id }}</td>
@@ -68,7 +83,28 @@
     </tr>
     {% endfor %}
   </table>
-  {% endif %}
-
+  
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      {% if rolerequests.has_prev %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('rolerequests_index_open', page=rolerequests.prev_num) }}">Edellinen</a>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link btn disabled" href="#">Edellinen</a>
+      </li>
+      {% endif %}
+      {% if rolerequests.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('rolerequests_index_open', page=rolerequests.next_num) }}">Seuraava</a>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link btn disabled" href="#">Seuraava</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
 
 {% endblock %}

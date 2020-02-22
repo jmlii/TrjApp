@@ -11,30 +11,81 @@ from application.auth.models import User
 @app.route("/rolerequests/", methods=["GET"])
 @login_required(permission="admin")
 def rolerequests_index():
+    page=request.args.get('page', 1, type=int)
+    rolerequests= Rolerequest.query.from_self(Rolerequest.id, Rolerequest.request_type, \
+        User.username.label('user'), Wgroup.name.label('wgroup'), Role.name.label('role'), \
+        Rolerequest.justification, Wgroup.authoriser, Rolerequest.approved, Rolerequest.date_approved, \
+        Rolerequest.rejected, Rolerequest.date_rejected, Rolerequest.executed, \
+        Rolerequest.date_created, Rolerequest.date_modified).\
+        join(User, Rolerequest.account_id == User.id).\
+        join(Wgroup, Rolerequest.wgroup_id == Wgroup.id).\
+        join(Role, Rolerequest.role_id == Role.id).\
+        order_by(Rolerequest.date_created.desc()).\
+        paginate(page=page, per_page=10, error_out=False)
+    
     return render_template("rolerequests/list.html", 
-        rolerequests = Rolerequest.list_rolerequests())
+        rolerequests = rolerequests)
 
 # Avoimien jäsenyyspyyntöjen listaaminen
 @app.route("/rolerequests/open", methods=["GET"])
 @login_required(permission="admin")
 def rolerequests_index_open():
+    page=request.args.get('page', 1, type=int)
+    rolerequests= Rolerequest.query.from_self(Rolerequest.id, Rolerequest.request_type, \
+        User.username.label('user'), Wgroup.name.label('wgroup'), Role.name.label('role'), \
+        Rolerequest.justification, Wgroup.authoriser, Rolerequest.approved, Rolerequest.date_approved, \
+        Rolerequest.rejected, Rolerequest.date_rejected, Rolerequest.executed, \
+        Rolerequest.date_created, Rolerequest.date_modified).\
+        join(User, Rolerequest.account_id == User.id).\
+        join(Wgroup, Rolerequest.wgroup_id == Wgroup.id).\
+        join(Role, Rolerequest.role_id == Role.id).\
+        filter(Rolerequest.executed==False).\
+        order_by(Rolerequest.date_created).\
+        paginate(page=page, per_page=10, error_out=False)
+    
     return render_template("rolerequests/list_open.html", 
-        open_rolerequests = Rolerequest.list_rolerequests_per_state(False))
+        rolerequests = rolerequests)
 
 # Suljettujen jäsenyyspyyntöjen listaaminen
 @app.route("/rolerequests/closed", methods=["GET"])
 @login_required(permission="admin")
 def rolerequests_index_closed():
+    page=request.args.get('page', 1, type=int)
+    rolerequests= Rolerequest.query.from_self(Rolerequest.id, Rolerequest.request_type, \
+        User.username.label('user'), Wgroup.name.label('wgroup'), Role.name.label('role'), \
+        Rolerequest.justification, Wgroup.authoriser, Rolerequest.approved, Rolerequest.date_approved, \
+        Rolerequest.rejected, Rolerequest.date_rejected, Rolerequest.executed, \
+        Rolerequest.date_created, Rolerequest.date_modified).\
+        join(User, Rolerequest.account_id == User.id).\
+        join(Wgroup, Rolerequest.wgroup_id == Wgroup.id).\
+        join(Role, Rolerequest.role_id == Role.id).\
+        filter(Rolerequest.executed==True).\
+        order_by(Rolerequest.date_created.desc()).\
+        paginate(page=page, per_page=10, error_out=False)
+
     return render_template("rolerequests/list_closed.html", 
-        closed_rolerequests = Rolerequest.list_rolerequests_per_state(True))
+        rolerequests = rolerequests)
 
 # Omien jäsenyyspyyntöjen listaaminen
 @app.route("/rolerequests/my/", methods=["GET"])
 @login_required
-def rolerequests_my_index():   
+def rolerequests_my_index():  
     current_user_id = current_user.id 
+    page=request.args.get('page', 1, type=int)
+    rolerequests= Rolerequest.query.from_self(Rolerequest.id, Rolerequest.request_type, \
+        User.username.label('user'), Wgroup.name.label('wgroup'), Role.name.label('role'), \
+        Rolerequest.justification, Wgroup.authoriser, Rolerequest.approved, Rolerequest.date_approved, \
+        Rolerequest.rejected, Rolerequest.date_rejected, Rolerequest.executed, \
+        Rolerequest.date_created, Rolerequest.date_modified).\
+        join(User, Rolerequest.account_id == User.id).\
+        join(Wgroup, Rolerequest.wgroup_id == Wgroup.id).\
+        join(Role, Rolerequest.role_id == Role.id).\
+        filter(Rolerequest.account_id == current_user_id).\
+        order_by(Rolerequest.date_created.desc()).\
+        paginate(page=page, per_page=10, error_out=False)
+    
     return render_template("rolerequests/list.html", 
-        rolerequests = Rolerequest.list_rolerequests_my(current_user_id))
+        rolerequests = rolerequests, request_list = "my_requests")
 
 # Uuden jäsenyyspyynnön itselle lähettäminen
 @app.route("/rolerequests/new/")
@@ -64,7 +115,6 @@ def rolerequests_create():
 
     db.session().add(rolerequest)
     db.session().commit()
-
     return redirect(url_for("rolerequests_my_index"))
 
 # Uuden jäsenyyspyynnön toiselle käyttäjälle lähettäminen
@@ -96,8 +146,7 @@ def rolerequests_create2():
     rolerequest2.justification = form.justification.data
 
     db.session().add(rolerequest2)
-    db.session().commit()
-
+    db.session().commit() 
     return redirect(url_for("rolerequests_index_open"))
 
 # Jäsenyyspyynnön hyväksyminen
@@ -109,7 +158,6 @@ def rolerequests_approve(rolerequest_id):
     rolerequest.date_approved = db.func.current_timestamp()
 
     db.session().commit()
-
     return redirect(url_for("rolerequests_index_open"))
 
 # Jäsenyyspyynnön hylkääminen
@@ -119,10 +167,9 @@ def rolerequests_reject(rolerequest_id):
     rolerequest = Rolerequest.query.get(rolerequest_id)
     rolerequest.rejected = True
     rolerequest.date_rejected = db.func.current_timestamp()
-    rolerequest.executed = True
-     
-    db.session().commit()
+    rolerequest.executed = True 
 
+    db.session().commit()
     return redirect(url_for("rolerequests_index_closed"))
 
 # Jäsenyyspyynnön merkitseminen toteutetuksi
@@ -130,10 +177,9 @@ def rolerequests_reject(rolerequest_id):
 @login_required(permission="admin")
 def rolerequests_set_executed(rolerequest_id):
     rolerequest = Rolerequest.query.get(rolerequest_id)
-    rolerequest.executed = True     
+    rolerequest.executed = True 
 
     db.session().commit()
-
     return redirect(url_for("rolerequests_index_closed"))
 
 # Jäsenyyspyynnön poistaminen tietokannasta
@@ -142,5 +188,7 @@ def rolerequests_set_executed(rolerequest_id):
 def rolerequest_delete(rolerequest_id):
     rolerequest = Rolerequest.query.get(rolerequest_id)
     db.session().delete(rolerequest)
+
     db.session().commit()
     return redirect(url_for("rolerequests_index_open"))
+    

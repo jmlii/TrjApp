@@ -2,6 +2,7 @@
 
 {% block body %}
   <h4>Työryhmät</h4>
+
   {% if current_user.permission_name() == "admin" %}  
   <a href="{{ url_for('wgroups_form') }}">Lisää uusi työryhmä</a>
   <table>
@@ -14,7 +15,7 @@
       <th>Muokattu</th>
       <th>Lopetettu</th>
     </tr>
-    {% for wgroup in wgroups %}
+    {% for wgroup in wgroups.items %}
     <tr>
       <td>{{ wgroup.id }}</td>
       <td>{{ wgroup.name }}</td>
@@ -25,12 +26,7 @@
       <td>{{ wgroup.date_ended }}</td>
       <td>
         <form method="GET" action="{{ url_for('wgroups_update', wgroup_id=wgroup.id) }}">
-          <input type="submit" value="Muokkaa tietoja"/>
-        </form>
-      </td>
-      <td>
-        <form method="POST" action="{{ url_for('wgroups_set_end', wgroup_id=wgroup.id) }}">
-          <input type="submit" value="Lopeta työryhmä", onclick="return confirm('Haluatko lopettaa työryhmän ja merkitä sen epäaktiiviseksi?')"/>
+          <input type="submit" value="Päivitä tietoja"/>
         </form>
       </td>
       <td>
@@ -38,11 +34,18 @@
           <input type="submit" value="Näytä jäsenet"/>
         </form>
       </td>
+      <td>
+        {% if wgroup.active==True %} 
+        <form method="POST" action="{{ url_for('wgroups_set_end', wgroup_id=wgroup.id) }}">
+          <input type="submit" value="Lopeta työryhmä", onclick="return confirm('Haluatko lopettaa työryhmän ja merkitä sen epäaktiiviseksi?')"/>
+        </form>
+        {% endif %}
+      </td>
     </tr>
     {% endfor %}
   </table>
   {% endif %}
-
+  
   {% if current_user.permission_name() != "admin" %}  
    <table>
     <tr>
@@ -50,7 +53,7 @@
       <th>Työryhmä</th>
       <th>Oikeushyväksyjä</th>
     </tr>
-    {% for wgroup in wgroups %}
+    {% for wgroup in wgroups.items %}
     {% if wgroup.active==True %}    
     <tr>
       <td>{{ wgroup.id }}</td>
@@ -66,6 +69,29 @@
     {% endfor %}
   </table>
   {% endif %}
+
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      {% if wgroups.has_prev %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('wgroups_index', page=wgroups.prev_num) }}">Edellinen</a>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link btn disabled" href="#">Edellinen</a>
+      </li>
+      {% endif %}
+      {% if wgroups.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('wgroups_index', page=wgroups.next_num) }}">Seuraava</a>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link btn disabled" href="#">Seuraava</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
 
   {% if current_user.permission_name() == "admin" %}
 

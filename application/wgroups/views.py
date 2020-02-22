@@ -10,8 +10,11 @@ from application.permissions.models import Permission
 @app.route("/wgroups/", methods=["GET"])
 @login_required
 def wgroups_index():
-    return render_template("wgroups/list.html", 
-        wgroups = Wgroup.query.all(), 
+    page=request.args.get('page', 1, type=int)
+    wgroups =  Wgroup.query.paginate(page=page, per_page=10, error_out=False)  
+
+    return render_template("wgroups/list.html",
+        wgroups = wgroups,  
         count_new_rolerequests = Wgroup.count_rolerequests_per_wgroup(False, False, False),
         count_approved_rolerequests = Wgroup.count_rolerequests_per_wgroup(True, False, False))
 
@@ -35,7 +38,6 @@ def wgroups_create():
 
     db.session().add(wgroup)
     db.session().commit()
-
     return redirect(url_for("wgroups_index"))
 
 # Työryhmän päättäminen
@@ -69,7 +71,6 @@ def wgroups_update(wgroup_id):
             wgroup.date_ended = None
 
         db.session.commit()
-
         return redirect(url_for("wgroups_index"))
 
     form.name.data = wgroup.name

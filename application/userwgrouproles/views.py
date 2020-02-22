@@ -11,8 +11,16 @@ from application.auth.models import User
 @app.route("/memberships/", methods=["GET"])
 @login_required(permission="admin")
 def memberships_index():
-    return render_template("userwgrouproles/list.html", memberships = Membership.list_memberships())
-   
+    page=request.args.get('page', 1, type=int)
+    memberships = Membership.query.from_self(User.username.label('user_username'), \
+        Wgroup.name.label('wgroup_name'), Role.name.label('role_name'), \
+        Membership.date_created, Membership.date_ended, Membership.account_id, \
+        Membership.wgroup_id, Membership.role_id).join(User, User.id==Membership.account_id).\
+        join(Wgroup, Wgroup.id==Membership.wgroup_id).join(Role, Role.id==Membership.role_id).\
+        order_by(Membership.date_created.desc()).paginate(page=page, per_page=10, error_out=False)
+    
+    return render_template("userwgrouproles/list.html", memberships = memberships) 
+
 # Uuden jäsenyyden lisääminen
 @app.route("/memberships/new/")
 @login_required(permission="admin")
@@ -42,7 +50,6 @@ def memberships_create():
     
     db.session().add(membership)
     db.session().commit()
-
     return redirect(url_for("memberships_index"))
 
 # Jäsenyyden lopettaminen
@@ -50,10 +57,8 @@ def memberships_create():
 @login_required(permission="admin")
 def memberships_end(account_id, wgroup_id, role_id):
     
-    membership = Membership.query.filter_by(account_id=account_id, wgroup_id=wgroup_id, role_id=role_id).first()
+    membership = Membership.query.filter_by(account_id=account_id, wgroup_id=wgroup_id, role_id=role_id, date_ended=None).first()
     membership.date_ended = db.func.current_timestamp()
 
     db.session().commit()
-
-    return redirect(url_for("memberships_index"))
-
+    return redirect(url_for("memberships_index")) 

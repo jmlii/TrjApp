@@ -29,7 +29,10 @@ def auth_logout():
 @app.route("/users/", methods=["GET"])
 @login_required()
 def users_index():
-    return render_template("auth/list.html", users = User.query.order_by("last_name"))
+    page=request.args.get('page', 1, type=int)
+    users = User.query.order_by("last_name").paginate(page=page, per_page=10, error_out=False)
+
+    return render_template("auth/list.html", users=users)
 
 # Uuden käyttäjän luominen
 @app.route("/users/new/")

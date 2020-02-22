@@ -21,7 +21,7 @@
         <ul class="navbar-nav mr-auto">
           {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('wgroups_index') }}" >
+            <a class="nav-link" href="{{ url_for('wgroups_index', page_num=1) }}" >
               Työryhmät
             </a> 
           </li>
@@ -44,13 +44,13 @@
               Ylläpitäjän toiminnot
             </a> 
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{{ url_for('users_index') }}">Listaa käyttäjät</a>              
+              <a class="dropdown-item" href="{{ url_for('users_index') }}">Käyttäjät</a>              
               <a class="dropdown-item" href="{{ url_for('users_form') }}">Lisää uusi käyttäjä</a>
-              <a class="dropdown-item" href="{{ url_for('wgroups_index') }}">Listaa työryhmät</a>
+              <a class="dropdown-item" href="{{ url_for('wgroups_index') }}">Työryhmät</a>
               <a class="dropdown-item" href="{{ url_for('wgroups_form') }}">Lisää uusi työryhmä</a>
-              <a class="dropdown-item" href="{{ url_for('rolerequests_index_open') }} ">Listaa jäsenyyshakemukset</a>
+              <a class="dropdown-item" href="{{ url_for('rolerequests_index_open') }} ">Jäsenyyshakemukset</a>
               <a class="dropdown-item" href="{{ url_for('rolerequests_form2') }} ">Lisää uusi jäsenyyshakemus toiselle käyttäjälle</a>
-              <a class="dropdown-item" href="{{ url_for('memberships_index') }} ">Listaa työryhmäjäsenyydet</a>
+              <a class="dropdown-item" href="{{ url_for('memberships_index') }} ">Työryhmäjäsenyydet</a>
               <a class="dropdown-item" href="{{ url_for('memberships_form') }} ">Lisää uusi jäsenyys</a>
             </div>
           </li>
@@ -61,10 +61,8 @@
               Tietokannan rakenteet
             </a> 
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{{ url_for('roles_index') }} ">Listaa työryhmien roolit</a>
-              <a class="dropdown-item" href="{{ url_for('roles_form') }} ">Lisää uusi rooli</a>
-              <a class="dropdown-item" href="{{ url_for('permissions_index') }} ">Listaa sovelluksen käyttäjätasot</a>
-              <a class="dropdown-item" href="{{ url_for('permissions_form') }} ">Lisää uusi käyttäjätaso</a>
+              <a class="dropdown-item" href="{{ url_for('roles_index') }} ">Työryhmien roolit</a>
+              <a class="dropdown-item" href="{{ url_for('permissions_index') }} ">Sovelluksen käyttäjätasot</a>
             </div>
           </li>
           {% endif %}         
