@@ -18,26 +18,40 @@ class Wgroup(Base):
     @staticmethod
     def count_rolerequests_per_wgroup(approved, rejected, executed):
         stmt = text("SELECT Wgroup.name, COUNT(Wgroup.id) FROM Wgroup"
-        " JOIN Rolerequest on Wgroup.id = Rolerequest.wgroup_id"
-        " WHERE Rolerequest.approved = :approved AND Rolerequest.rejected = :rejected AND Rolerequest.executed = :executed"
-        " GROUP BY Wgroup.name"
-        " ORDER BY Wgroup.name").params(approved=approved, rejected=rejected, executed=executed)
-        res  = db.engine.execute(stmt)
+            " JOIN Rolerequest on Wgroup.id = Rolerequest.wgroup_id"
+            " WHERE Rolerequest.approved = :approved AND Rolerequest.rejected = :rejected AND Rolerequest.executed = :executed"
+            " GROUP BY Wgroup.name"
+            " ORDER BY Wgroup.name").params(approved=approved, rejected=rejected, executed=executed)
+        res = db.engine.execute(stmt)
 
         response = []
         for row in res:
             response.append({"name":row[0], "number":row[1]})
         return response
+    
+    @staticmethod 
+    def count_members(active):
+        stmt = text("SELECT Wgroup.name, COUNT(Wgroup.id) FROM Wgroup"
+            " JOIN UserWgroupRole ON Wgroup.id = UserWgroupRole.wgroup_id"
+            " WHERE Wgroup.active = :active"
+            " AND UserWgroupRole.wgroup_id IS NOT NULL AND UserWgroupRole.date_ended IS NULL"
+            " GROUP BY Wgroup.name").params(active=active)
+        res  = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"name":row[0], "number_members":row[1]})
+        return response
 
     @staticmethod
     def list_members(wgroup_id):
         stmt = text("SELECT Account.last_name, Account.first_name, Account.username, Role.name"
-        " FROM Account"
-        " JOIN UserWgroupRole ON Account.id = UserWgroupRole.account_id"
-        " JOIN Role ON UserWgroupRole.role_id = Role.id"
-        " JOIN Wgroup on UserWgroupRole.wgroup_id = Wgroup.id"
-        " WHERE Wgroup.id = :wgroup_id AND UserWgroupRole.date_ended IS NULL"
-        " ORDER BY Account.last_name, Account.first_name").params(wgroup_id=wgroup_id)
+            " FROM Account"
+            " JOIN UserWgroupRole ON Account.id = UserWgroupRole.account_id"
+            " JOIN Role ON UserWgroupRole.role_id = Role.id"
+            " JOIN Wgroup on UserWgroupRole.wgroup_id = Wgroup.id"
+            " WHERE Wgroup.id = :wgroup_id AND UserWgroupRole.date_ended IS NULL"
+            " ORDER BY Account.last_name, Account.first_name").params(wgroup_id=wgroup_id)
         res = db.engine.execute(stmt)
 
         response = []

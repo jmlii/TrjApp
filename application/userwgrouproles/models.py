@@ -1,5 +1,4 @@
 from application import db
-from sqlalchemy.sql import text
 
 class Membership(db.Model):
     __tablename__ = "userwgrouprole"

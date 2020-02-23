@@ -47,7 +47,6 @@
     {% endfor %}
   </table>
 
-
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
       {% if users.has_prev %}
@@ -70,5 +69,26 @@
       {% endif %}
     </ul>
   </nav>
+
+{% if count_memberships is defined %}
+<p></p>
+<p><b> Käyttäjillä työryhmiä:</b></p>
+<table>
+  <tr> 
+    <th>Sukunimi</th>
+    <th>Etunimi</th>
+    <th>Käyttäjätunnus</th>
+    <th>Työryhmiä</th>
+  </tr>
+  {% for user in count_memberships %}
+  <tr>
+    <td>{{user.last_name}}</td>
+    <td>{{user.first_name}}</td>
+    <td>{{user.username}}</td>
+    <td>{{user.number_memberships}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
 
 {% endblock %}

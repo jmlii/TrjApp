@@ -96,9 +96,9 @@
   {% if current_user.permission_name() == "admin" %}
 
   {% if count_new_rolerequests is defined %}
+  <p></p>
+  <p><b>Työryhmissä uusia jäsenyyspyyntöjä: </b></p>
   <table>
-    <p></p>
-    <p><b>Työryhmien uusien jäsenyyspyyntöjen lukumäärä: </b></p>
     <tr>
       <th>Työryhmä</th>
       <th>Uusia pyyntöjä</th>
@@ -113,9 +113,9 @@
   {% endif %}
 
   {% if count_approved_rolerequests is defined %}
+  <p></p>
+  <p><b>Työryhmissä hyväksyttyjä, käsittelyä odottavia jäsenyyspyyntöjä: </b></p>
   <table>
-    <p></p>
-    <p><b>Työryhmien hyväksyttyjen, käsittelyä odottavien jäsenyyspyyntöjen lukumäärä: </b></p>
     <tr>
       <th>Työryhmä</th>
       <th>Odottavia pyyntöjä</th>
@@ -124,6 +124,23 @@
     <tr>
       <td>{{wgroup.name}}</td>
       <td>{{wgroup.number}} kpl</td> 
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
+  {% if count_members is defined %}
+  <p></p>
+  <p><b> Työryhmissä jäseniä:</b></p>
+  <table>
+    <tr> 
+      <th>Työryhmä</th>
+      <th>Jäseniä</th>
+    </tr>
+    {% for wgroup in count_members %}
+    <tr>
+      <td>{{wgroup.name}}</td>
+      <td>{{wgroup.number_members}}</td>
     </tr>
     {% endfor %}
   </table>

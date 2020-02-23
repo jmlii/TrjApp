@@ -45,12 +45,12 @@ class User(Base):
     @staticmethod
     def list_memberships(user_id):
         stmt = text("SELECT Wgroup.name, Role.name, UserWgroupRole.date_created"
-        " FROM Wgroup"
-        " JOIN UserWgroupRole ON Wgroup.id = UserWgroupRole.wgroup_id"
-        " JOIN Role ON UserWgroupRole.role_id = Role.id"
-        " JOIN Account on UserWgroupRole.account_id = Account.id"
-        " WHERE Account.id = :user_id AND UserWgroupRole.date_ended IS NULL"
-        " ORDER BY Wgroup.name").params(user_id=user_id)
+            " FROM Wgroup"
+            " JOIN UserWgroupRole ON Wgroup.id = UserWgroupRole.wgroup_id"
+            " JOIN Role ON UserWgroupRole.role_id = Role.id"
+            " JOIN Account on UserWgroupRole.account_id = Account.id"
+            " WHERE Account.id = :user_id AND UserWgroupRole.date_ended IS NULL"
+            " ORDER BY Wgroup.name").params(user_id=user_id)
         res = db.engine.execute(stmt)
 
         response = []
@@ -58,3 +58,19 @@ class User(Base):
             response.append({"wgroup":row[0], "role":row[1], "date_created":row[2]})
         return response
     
+    @staticmethod
+    def count_memberships(active):
+        stmt = text("SELECT Account.last_name, Account.first_name , Account.username, COUNT(UserWgroupRole.account_id)"
+            " FROM Account"
+            " LEFT JOIN UserWgroupRole ON Account.id = UserWgroupRole.account_id"
+            " WHERE Account.account_active = :active AND UserWgroupRole.date_ended IS null"
+            " GROUP BY Account.last_name").params(active=active)
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"last_name":row[0], "first_name":row[1], "username":row[2], "number_memberships":row[3]})
+        return response
+
+
+

@@ -1,6 +1,5 @@
 from application import db
 from application.models import Base
-from sqlalchemy.sql import text
 
 class Rolerequest(Base):
     request_type = db.Column(db.String(32), nullable=False)
