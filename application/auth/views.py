@@ -33,7 +33,7 @@ def users_index():
     users = User.query.order_by(User.last_name).paginate(page=page, per_page=10, error_out=False)
 
     return render_template("auth/list.html", users=users,
-        count_memberships = User.count_memberships(active=1))
+        count_memberships = User.count_memberships(active=True))
 
 # Uuden käyttäjän luominen
 @app.route("/users/new/")

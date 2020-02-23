@@ -17,7 +17,7 @@ def wgroups_index():
         wgroups = wgroups,  
         count_new_rolerequests = Wgroup.count_rolerequests_per_wgroup(False, False, False),
         count_approved_rolerequests = Wgroup.count_rolerequests_per_wgroup(True, False, False),
-        count_members = Wgroup.count_members(active=1))
+        count_members = Wgroup.count_members(active=True))
 
 # Uuden työryhmän lisääminen
 @app.route("/wgroups/new/")

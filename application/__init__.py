@@ -87,6 +87,7 @@ except:
 
 from application.permissions.models import Permission
 
+# Luodaan oletus-käyttäjätasot ja yksi admin-käyttäjä
 try:
     if Permission.query.filter_by(name='admin').count()==0:
         db.session.add(Permission(name='admin'))
