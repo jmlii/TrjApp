@@ -84,3 +84,22 @@ try:
     db.create_all()
 except:
     pass
+
+from application.permissions.models import Permission
+
+try:
+    if Permission.query.filter_by(name='admin').count()==0:
+        db.session.add(Permission(name='admin'))
+    if Permission.query.filter_by(name='basic').count()==0:
+        db.session.add(Permission(name='basic'))
+    if User.query.filter_by(username='adminadmin2').count()==0:
+        adminuser = User(username='adminadmin')
+        adminuser.first_name = 'Admin'
+        adminuser.last_name = 'Admin'
+        adminuser.password = '1q2w3e4r'
+        adminuser.permission_id = Permission.query.from_self(Permission.id).filter_by(name='admin')
+        db.session.add(adminuser)
+    db.session.commit()
+except:
+    pass
+    
