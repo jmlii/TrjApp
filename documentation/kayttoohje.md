@@ -64,9 +64,15 @@ Sovellukseen voi lisätä uuden työryhmän joko valikon tai työryhmäraportin 
 
 #### Jäsenyyshakemuksien hallinta
  
-Listaa jäsenyyshakemukset -linkistä saat auki raportin jäsenyyshakemuksista. Jokaiseen hakemukseen liittyy painikkeet Hyväksytty, Hylätty, Toteutettu ja Poista. Kun työryhmän käyttöoikeushyväksyjältä on tarkistettu, saako haetun muutoksen tehdä, merkitään hakemus joko hyväksytyksi tai hylätyksi. Kun käyttäjä on liitetty yhteistyöalustassa työryhmään oikealla oikeustasolla, ja hänelle on lisätty nämä tiedot TrjApp-sovelluksen tietokantaan, merkitään hakemus toteutetuksi. Hakemuksen voi poistaa, jos käyttäjä on lähettänyt virheellisen tai turhan hakemuksen 
+Jäsenyyshakemukset-linkistä saat auki raportin jäsenyyshakemuksista. Jokaiseen hakemukseen liittyy painikkeet Hyväksytty, Hylätty, Toteutettu ja Poista. Kun työryhmän käyttöoikeushyväksyjältä on tarkistettu, saako haetun muutoksen tehdä, merkitään hakemus joko hyväksytyksi tai hylätyksi. Kun käyttäjä on liitetty yhteistyöalustassa työryhmään oikealla oikeustasolla, ja hänelle on lisätty nämä tiedot TrjApp-sovelluksen tietokantaan, merkitään hakemus toteutetuksi. Hakemuksen voi poistaa, jos käyttäjä on lähettänyt virheellisen tai turhan hakemuksen 
 
 Lisää uusi jäsenyyshakemus toiselle käyttäjälle -linkistä pääkäyttäjä pääsee tekemään jäsenyyshakemuksen toisen käyttäjän puolesta. Lomake on muuten vastaava kuin itselle tehtävässä hakemuksessa, mutta siinä annetaan lisäksi tieto käyttäjästä, jolle oikeuksia haetaan.
+
+#### Työryhmäjäsenyyksien hallinta
+
+Työryhmäjäsenyydet-linkistä saat auki raportin kaikista jäsenyyksistä, sekä aktiivisista että päättyneistä. Jos jäsenyys on aktiivinen, siihen on liitetty painike Merkitse päättyneeksi, jolla jäsenyyden voi päättää. Tietokantaan tallentuu tällöin tieto jäsenyyden päättymisajankohdasta. Jäsenyys merkitään päättyneeksi, kun käyttäjä tekee pyynnön oikeuksien poistosta tai jos työryhmän käyttöoikeushyväksyjältä saadaan tieto, että käyttäjä tulee poistaa. Jos käyttäjä ei ole itse tehnyt poistopyyntöä, niin pääkäyttäjä voi tehdä sen. Kaikista poistoista tulee löytyä hakemus jäsenyyspyynnöistä. Samoin toimitaan jos käyttäjä hakee muutosta rooliin, joka hänellä on jossain työryhmässä, tai jos työryhmän käyttöoikeushyväksyjä pyytää tekemään muutoksen. Tällöin voimassa oleva jäsenyys päätetään, ja sen jälkeen lisätään uusi jäsenyys uutta roolia vastaavilla tiedoilla. 
+
+Uusi työryhmäjäsenyys tallennetaan joko valikon tai työryhmäjäsenyysraportin Lisää uusi jäsenyys -linkistä. Lomakkeen pudotusvalikoista valitaan käyttäjä, työryhmä ja rooli, ja jäsenyys lisätään tallenna jäsenyys -painikkeella. Kun jäsenyys on lisätty, tulee vielä käydä sulkemassa sitä vastaava jäsenyyshakemus merkitsemällä se käsitellyksi. 
 
 
 ### Tietokannan rakenteet
