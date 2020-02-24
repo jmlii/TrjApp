@@ -12,7 +12,7 @@ class RolerequestForm(FlaskForm):
         ('Modify', 'Muokkaus'), ('Remove', 'Poisto')])
     wgroup_id = SelectField("Työryhmä", choices=[], coerce=int)
     role_id = SelectField("Rooli", choices=[], coerce=int)
-    justification = StringField("Perustelut", [validators.Length(min=3)])
+    justification = StringField("Perustelut", [validators.Length(min=3, max=256)])
 
     class Meta:
         csrf = False
@@ -24,7 +24,7 @@ class RolerequestForm2(FlaskForm):
     account_id = SelectField("Käyttäjä", choices=[], coerce=int)
     wgroup_id = SelectField("Työryhmä", choices=[], coerce=int)
     role_id = SelectField("Rooli", choices=[], coerce=int)
-    justification = StringField("Perustelut", [validators.Length(min=3)])
+    justification = StringField("Perustelut", [validators.Length(min=3, max=256)])
 
     class Meta:
         csrf = False

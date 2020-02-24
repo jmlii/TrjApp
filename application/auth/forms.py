@@ -13,9 +13,9 @@ class LoginForm(FlaskForm):
 class UserForm(FlaskForm):
     first_name = StringField("Etunimi", [validators.Length(min=1, max=64)])
     last_name = StringField("Sukunimi", [validators.Length(min=1, max=64)])
-    username = StringField("Käyttäjätunnus", [validators.Length(min=8, max=64)])
+    username = StringField("Käyttäjätunnus", [validators.Length(min=4, max=64)])
     password = PasswordField("Salasana", [validators.Length(min=6, max=64)])
-    permission_id = RadioField("Käyttäjätaso", choices=[], coerce=int)
+    permission_id = RadioField("Käyttäjätaso", [validators.InputRequired()], choices=[], coerce=int)
 
     class Meta:
         csrf = False
@@ -24,8 +24,8 @@ class UserForm(FlaskForm):
 class UserUpdateForm(FlaskForm):
     first_name = StringField("Etunimi", [validators.Length(min=1, max=64)])
     last_name = StringField("Sukunimi", [validators.Length(min=1, max=64)])
-    username = StringField("Käyttäjätunnus", [validators.Length(min=8, max=64)])
-    permission_id = RadioField("Käyttäjätaso", choices=[], coerce=int)
+    username = StringField("Käyttäjätunnus", [validators.Length(min=4, max=64)])
+    permission_id = RadioField("Käyttäjätaso", [validators.InputRequired()], choices=[], coerce=int)
     account_active = BooleanField("Käyttäjätunnus aktiivinen")
 
     class Meta:
