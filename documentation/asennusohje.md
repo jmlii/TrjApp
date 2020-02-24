@@ -20,29 +20,16 @@ Asenna projektin riippuvuudet documents-kansion requirements.txt-tiedostosta aja
 
 Käynnistä sovellus sovelluksen sisältävästä kansiosta komennolla `python3 run.py`. Sovellusta voi käyttää paikallisesti selaimessa osoitteessa http://127.0.0.1:5000/. 
 
-Sovelluksen ensimmäinen käynnistyskerta luo sovelluksen käyttämän paikallisen tietokannan (trj.db) ja sen luokat. 
+Sovelluksen ensimmäinen käynnistyskerta luo sovelluksen käyttämän paikallisen tietokannan (trj.db) ja sen luokat. Lisäksi ensimmäinen käynnistyskerta luo sovellukseen käyttäjätasot "admin" ja "basic" sekä yhden pääkäyttäjätunnuksen, jolla sovellukseen pääsee kirjautumaan (käyttäjätunnus "adminadmin", salasana "1q2w3e4r"). Tunnuksella voi luoda muut tarvittavat tunnukset, ja kun pääkäyttäjä on luonut oman tunnuksen, voi oletustunnuksen halutessaan poistaa.   
 
-Sovelluksen käyttö vaatii käyttäjätunnuksia. Uutta tunnusta ei pysty luomaan sovelluksessa ilman pääkäyttäjän oikeuksia, joten ensimmäinen pääkäyttäjätunnus on luotava suoraan tietokantaan sen jälkeen kun tietokanta on luotu sovelluksen ensimmäisen käynnistämisen yhteydessä. Jotta sovellukseen pystyy lisäämään käyttäjän User-luokkaan (taulu account), on ensin luotava pääkäyttäjä-käyttöoikeustaso Permission-luokkaan.
+Sovelluksen tietokantaa pystyy käyttämään suoraan sovelluksesta. Tarvittaessa sitä voi käyttää komentoriviltä. Paikallisesti tietokanta käyttää SQLite3:a. Tietokanta tallentuu sovelluksen application-kansioon. Avaa tietokanta komentorivillä kansiosta komennolla `sqlite3 trj.db`.Näet tietokannan mallin komennolla `.schema`.
 
-Paikallisesti ensimmäinen käyttäjä lisätään tietokantaan SQLitella. 
-
-Käynnistä tietokanta komentorivillä komennolla `sqlite3 trj.db`.
-
-Näet tietokannan mallin komennolla `.schema`.
-
-Lisää pääkäyttäjäluokka: `INSERT INTO permission ('name') VALUES ('admin')`. 
-Huom. On tärkeää luoda pääkäyttäjän käyttöoikeustaso nimellä "admin", jotta sovellus tunnistaa tason oikein ja sallii pääkäyttäjän tarvitsemat toiminnot.
-
-Lisää ensimmäinen käyttäjä (etunimen, sukunimen, käyttäjätunnuksen ja salasanan voi luoda haluamillaan sisällöillä, permission_id:ksi on annettava edellä luodun admin-tason id) : `INSERT INTO account ('first_name', 'last_name', 'username', 'password', 'permission_id') VALUES ('Admin', 'Admin', 'adminadmin', 'salasana', 1)`.
-
-Luotuasi pääkäyttäjäluokan ja yhden pääkäyttäjän, voit siirtyä käyttämään sovellusta selaimessa. Kirjaudu sovellukseen oikean yläkulman kirjaudu-linkistä käyttämällä juuri luomiasi pääkäyttäjätunnuksia. 
 
 ## Asennus ja käyttö Herokusta
 
-Jotta sovelluksen voi asentaa Herokuun, tulee asentajalla olla Herokun käyttäjätunnus. Tunnuksen voi luoda osoitteessa https://signup.heroku.com/. Herokuun tulee lisätä sovellus joko Herokussa omassa profiilissa tai komentoriviltä.
+Jotta sovelluksen voi asentaa Herokuun, tulee asentajalla olla Herokun käyttäjätunnus, käytössään Git ja välineet Herokun käyttöön komentoriviltä. Tunnuksen voi luoda osoitteessa https://signup.heroku.com/. Herokun omalla sivulla on ohjeet komentorivikäytöstä: [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli). Herokuun tulee lisätä sovellus joko Herokussa omassa profiilissa tai komentoriviltä.
 
 Herokussa uusi sovellus perustetaan oman profiilin sivulla olevan painikkeen New valikosta toiminnolla Create new app. Sovellukselle annetaan nimi ja maantieteellinen alue, ja se perustetaan painikkeella Create app. 
-
 Komentorivillä sovellus perustetaan komennolla `heroku create sovelluksen_nimi` (vaihda tekstin sovelluksen_nimi tilalle haluamasi nimi). Heroku luo samalla sovellukselle Git-osoitteen.
 
 Sovelluksen voi lähettää Herokuun Gitin avulla joko suoraan omalta koneelta tai GitHub-integraatiolla. Jos haluat käyttää GitHubia, tulee sovelluksen tiedostojen olla GitHub-repositoriossa, johon luodaan yhteys Herokun sovelluksesta. Asentajalla tulee tällöin olla käytössään myös GitHub-tunnus ja hänen tulee tuoda sovellus GitHub-repositorioon.
@@ -53,15 +40,4 @@ GitHub-integraatiota käytettäessä tulee luoda yhteys Heroku-sovelluksen ja Gi
 
 Kun sovellus on lähetetty Herokuun, tulee sille vielä lisätä Herokuun tietokanta. Tietokanta lisätään komentorivillä komennolla `heroku addons:add heroku-postgresql:hobby-dev`. 
 
-Lisättyäsi tietokannan Herokun käyttöön, avaa sovellus Herokussa. Sovelluksen ensimmäinen käynnistyskerta luo Herokun tietokantaan sovelluksen tietokantataulut. 
-
-Sovellukseen ei vielä pääse kirjautumaan, koska tietokannassa ei ole yhtään käyttäjää. Kuten paikallisesti käytettäessä, tulee tietokantaan ensin lisätä pääkäyttäjä-oikeustaso ja yksi pääkäyttäjä. 
-
-Avaa Herokun käyttämä PostgreSQL-tietokanta komennolla `heroku pg:psql`.
-
-Lisää pääkäyttäjäluokka: `INSERT INTO permission ('name') VALUES ('admin')`. 
-Huom. On tärkeää luoda pääkäyttäjän käyttöoikeustaso nimellä "admin", jotta sovellus tunnistaa tason oikein ja sallii pääkäyttäjän tarvitsemat toiminnot.
-
-Lisää ensimmäinen käyttäjä (etunimen, sukunimen, käyttäjätunnuksen ja salasanan voi luoda haluamillaan sisällöillä, permission_id:ksi on annettava edellä luodun admin-tason id) : `INSERT INTO account ('first_name', 'last_name', 'username', 'password', 'permission_id') VALUES ('Admin', 'Admin', 'adminadmin', 'salasana', 1)`.
-
-Luotuasi pääkäyttäjäluokan ja yhden pääkäyttäjän, voit siirtyä käyttämään sovellusta selaimessa. Kirjaudu sovellukseen oikean yläkulman kirjaudu-linkistä käyttämällä juuri luomiasi pääkäyttäjätunnuksia. 
+Lisättyäsi tietokannan Herokun käyttöön, avaa sovellus Herokussa. Sovelluksen ensimmäinen käynnistyskerta luo Herokun tietokantaan sovelluksen tietokantataulut, oletuskäyttäjätasot ja yhden pääkäyttäjätasoisen käyttäjän, kuten paikallisesti käytettäessä. Tarvittaessa tietokantaa voi käyttää komentoriviltä. Heroku käyttää PostgreSQL:ää. Avaa Herokun käyttämä PostgreSQL-tietokanta komennolla `heroku phttps://devcenter.heroku.com/articles/heroku-clg:psql`. 
