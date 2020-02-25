@@ -1,7 +1,28 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <p>
-        Tervetuloa työryhmäjäsenyydet-sovellukseen!
-    </p>
+  <p><b>Tervetuloa työryhmäjäsenyydet-sovellukseen!</b></p>
+
+  {% if current_user.is_authenticated %}
+  <p>
+    Valikon Työryhmät-linkistä pääset selaamaan työryhmiä ja niiden jäseniä.
+  </p>  
+  <p>
+    Työryhmäjäsenyydet-linkin valikosta pääset tarkastelemaan omia jäsenyyksiäsi, 
+    hakemaan työryhmäjäsenyyttä tai oikeuksien muutosta tai poistoa, ja tarkastelemaan hakemuksiasi.
+  </p>
+  {% endif %}
+
+  {% if current_user.is_authenticated and current_user.permission_name()  == "admin" %}
+  <p><b>Pääkäyttäjälle:</b></p>
+  <p>
+    Ylläpitäjän toiminnot -valikossa on toiminnot käyttäjien, työryhmien, 
+    jäsenyyshakemuksten ja työryhmäjäsenyyksien hallintaan.
+  </p>  
+  <p>
+    Tietokannan rakenteet -valikossa on toiminnot työryhmien roolien ja TrjApp-sovelluksen 
+    käyttäjätasojen hallintaan.
+  </p>
+  {% endif %}
+
 {% endblock %}
