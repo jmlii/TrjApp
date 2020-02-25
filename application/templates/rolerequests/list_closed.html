@@ -38,6 +38,7 @@
       <th>Toteutettu</th>
       <th>Luotu</th>
       <th>Muokattu</th>
+      <th>Muokkaukset</th>
     </tr>
     {% for rolerequest in rolerequests.items %}
     <tr>
@@ -57,6 +58,16 @@
       <td>{{ rolerequest.executed }}</td>
       <td>{{ rolerequest.date_created }}</td>
       <td>{{ rolerequest.date_modified }}</td>
+      <td>
+        <form method="GET" action="{{ url_for('rolerequests_update', rolerequest_id=rolerequest.id) }}">
+          <input type="submit" value="Muokkaa">
+        </form>
+      </td>
+      <td>
+        <form method="POST" action="{{ url_for('rolerequests_delete', rolerequest_id=rolerequest.id) }}">
+          <input type="submit" value="Poista" onclick="return confirm('Haluatko varmasti poistaa pyynnön tietokannasta? Poista pyyntö vain, jos käyttäjä on lähettänyt virheellisen tai turhan hakemuksen.')">
+        </form>
+      </td>
     </tr>
     {% endfor %}
   </table>

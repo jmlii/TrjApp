@@ -109,8 +109,8 @@ def rolerequests_create():
 
     rolerequest = Rolerequest(form.request_type.data)
     rolerequest.account_id = current_user.id
-    rolerequest.role_id = form.role_id.data
     rolerequest.wgroup_id = form.wgroup_id.data
+    rolerequest.role_id = form.role_id.data
     rolerequest.justification = form.justification.data
 
     db.session().add(rolerequest)
@@ -141,8 +141,8 @@ def rolerequests_create2():
 
     rolerequest2 = Rolerequest(form.request_type.data)
     rolerequest2.account_id = form.account_id.data
-    rolerequest2.role_id = form.role_id.data
     rolerequest2.wgroup_id = form.wgroup_id.data
+    rolerequest2.role_id = form.role_id.data
     rolerequest2.justification = form.justification.data
 
     db.session().add(rolerequest2)
@@ -182,13 +182,42 @@ def rolerequests_set_executed(rolerequest_id):
     db.session().commit()
     return redirect(url_for("rolerequests_index_closed"))
 
+# Jäsenyyspyynnön perustietojen muokkaaminen
+@app.route("/rolerequests/update<rolerequest_id>/", methods=["GET", "POST"])
+@login_required(permission="admin")
+def rolerequests_update(rolerequest_id):
+    
+    rolerequest = Rolerequest.query.get(rolerequest_id)
+    form = RolerequestForm2(request.form)
+    form.account_id.choices = [(user.id, user.username) for user in User.query.filter_by(account_active=True).order_by("username")]
+    form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.filter_by(active=True).order_by("name")]
+    form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
+    
+    if request.method=="POST" and form.validate():
+
+        rolerequest = Rolerequest(form.request_type.data)
+        rolerequest.account_id = form.account_id.data
+        rolerequest.wgroup_id = form.wgroup_id.data
+        rolerequest.role_id = form.role_id.data
+        rolerequest.justification = form.justification.data
+
+        db.session.commit()
+        return redirect(url_for("rolerequests_index"))
+
+    form.request_type.data = rolerequest.request_type
+    form.account_id.data = rolerequest.account_id 
+    form.wgroup_id.data = rolerequest.wgroup_id 
+    form.role_id.data = rolerequest.role_id 
+    form.justification.data = rolerequest.justification 
+
+    return render_template("rolerequests/update.html", rolerequest=rolerequest, rolerequest_id=rolerequest_id, form=form)      
+
 # Jäsenyyspyynnön poistaminen tietokannasta
 @app.route("/rolerequests_delete<rolerequest_id>/", methods=["POST"])
 @login_required(permission="admin")
-def rolerequest_delete(rolerequest_id):
+def rolerequests_delete(rolerequest_id):
     rolerequest = Rolerequest.query.get(rolerequest_id)
     db.session().delete(rolerequest)
 
     db.session().commit()
     return redirect(url_for("rolerequests_index_open"))
-    

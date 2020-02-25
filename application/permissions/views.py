@@ -38,8 +38,13 @@ def permissions_create():
 @login_required(permission="admin")
 def permissions_delete(permission_id):
     permission = Permission.query.get(permission_id)
-     
+
+    if permission.users:
+        return render_template("permissions/list.html", permissions = Permission.query.all(), 
+            error = "Et voi poistaa käyttäjätasoa, joka on käytössä jollain käyttäjällä.")
+
     db.session().delete(permission)
     db.session().commit()
 
     return redirect(url_for("permissions_index"))
+    

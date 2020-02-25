@@ -50,7 +50,7 @@
       <th>Luotu</th>
       <th>Muokattu</th>
       {% if current_user.permission_name() == "admin" %}
-      <th>Muuta tilaa</th>
+      <th>Muokkaukset</th>
       {% endif %}
     </tr>
     {% for rolerequest in rolerequests.items %}
@@ -92,12 +92,21 @@
           <input type="submit" value="Toteutettu" onclick="return confirm('Haluatko merkitä pyynnön toteutetuksi?')">
         </form>
       </td>
+      {% else %}
+      <td></td>
+      <td></td>
+      <td></td>
+      {% endif %}
       <td>
-        <form method="POST" action="{{ url_for('rolerequest_delete', rolerequest_id=rolerequest.id) }}">
+        <form method="GET" action="{{ url_for('rolerequests_update', rolerequest_id=rolerequest.id) }}">
+          <input type="submit" value="Muokkaa">
+        </form>
+      </td>
+      <td>
+        <form method="POST" action="{{ url_for('rolerequests_delete', rolerequest_id=rolerequest.id) }}">
           <input type="submit" value="Poista" onclick="return confirm('Haluatko varmasti poistaa pyynnön tietokannasta? Poista pyyntö vain, jos käyttäjä on lähettänyt virheellisen tai turhan hakemuksen.')">
         </form>
       </td>
-      {% endif %}
       {% endif %}
     </tr>
     {% endfor %}

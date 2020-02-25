@@ -4,6 +4,7 @@ from application import app, db, login_required
 from application.auth.models import User
 from application.auth.forms import LoginForm, UserForm, UserUpdateForm, UserUpdatePasswordForm
 from application.permissions.models import Permission
+from application.userwgrouproles.models import Membership
 
 # Käyttäjien sisäänkirjautuminen
 @app.route("/auth/login/", methods = ["GET", "POST"])
@@ -81,6 +82,15 @@ def users_inactivate(user_id):
 @login_required(permission="admin")
 def users_delete(user_id):
     user = User.query.get(user_id)
+
+    page=request.args.get('page', 1, type=int)
+    users = User.query.order_by(User.last_name).paginate(page=page, per_page=10, error_out=False)
+
+    if Membership.query.filter_by(account_id=user.id).count() > 0:
+        return render_template("auth/list.html", users=users, 
+            count_memberships = User.count_memberships(active=True),
+            error = "Et voi poistaa käyttäjää, jolla on tai on ollut jäsenyyksiä. Jos henkilön tietoihin ei ole enää käyttölupaa, on tiedot anonymisoitava.")
+    
     db.session().delete(user)
     db.session().commit()
     return redirect(url_for("users_index"))

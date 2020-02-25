@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+{{ error }}
 <h4>Käyttäjät</h4>
 {% if current_user.permission_name() == "admin" %}
 <a href="{{ url_for('users_form') }}">Lisää uusi käyttäjä</a>

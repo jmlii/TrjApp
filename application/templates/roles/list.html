@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+{{ error }}
   <h4>Työryhmien roolit</h4>
   <a href="{{ url_for('roles_form') }}">Lisää uusi rooli</a>
   <table>

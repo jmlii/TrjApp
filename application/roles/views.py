@@ -3,6 +3,7 @@ from flask_login import login_required
 from application import app, db, login_required
 from application.roles.models import Role
 from application.roles.forms import RoleForm
+from application.userwgrouproles.models import Membership
 
 # Roolien listaaminen
 @app.route("/roles/", methods=["GET"])
@@ -37,7 +38,11 @@ def roles_create():
 @login_required(permission="admin")
 def roles_delete(role_id):
     role = Role.query.get(role_id)
-     
+
+    if Membership.query.filter_by(role_id=role.id).count() > 0:
+        return render_template("roles/list.html", roles = Role.query.all(), 
+            error = "Et voi poistaa roolia, joka on liitettynä johonkin työryhmäjäsenyyteen.")
+    
     db.session().delete(role)
     db.session().commit()
 

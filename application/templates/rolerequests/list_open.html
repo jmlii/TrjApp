@@ -22,9 +22,7 @@
 
   <table>
     <tr>
-      {% if current_user.permission_name() == "admin" %}
       <th>Id</th>
-      {% endif %}
       <th>Pyynnön tyyppi</th>
       <th>Käyttäjä</th>
       <th>Työryhmä</th>
@@ -38,13 +36,11 @@
       <th>Toteutettu</th>
       <th>Luotu</th>
       <th>Muokattu</th>
-      <th>Muuta tilaa</th>
+      <th>Muokkaukset</th>
     </tr>
     {% for rolerequest in rolerequests.items %}
     <tr>
-      {% if current_user.permission_name() == "admin" %}
       <td>{{ rolerequest.id }}</td>
-      {% endif %}
       <td>{{ rolerequest.request_type }}</td>
       <td>{{ rolerequest.user }}</td>
       <td>{{ rolerequest.wgroup }}</td>
@@ -58,7 +54,6 @@
       <td>{{ rolerequest.executed }}</td>
       <td>{{ rolerequest.date_created }}</td>
       <td>{{ rolerequest.date_modified }}</td>
-      {% if current_user.permission_name() == "admin" %}
       <td>
         <form method="POST" action="{{ url_for('rolerequests_approve', rolerequest_id=rolerequest.id) }}">
             <input type="submit" value="Hyväksytty" onclick="return confirm('Haluatko merkitä pyynnön hyväksytyksi?')">
@@ -75,11 +70,15 @@
         </form>
       </td>
       <td>
-        <form method="POST" action="{{ url_for('rolerequest_delete', rolerequest_id=rolerequest.id) }}">
+        <form method="GET" action="{{ url_for('rolerequests_update', rolerequest_id=rolerequest.id) }}">
+          <input type="submit" value="Muokkaa">
+        </form>
+      </td>
+      <td>
+        <form method="POST" action="{{ url_for('rolerequests_delete', rolerequest_id=rolerequest.id) }}">
           <input type="submit" value="Poista" onclick="return confirm('Haluatko varmasti poistaa pyynnön tietokannasta? Poista pyyntö vain, jos käyttäjä on lähettänyt virheellisen tai turhan hakemuksen.')">
         </form>
       </td>
-      {% endif %}
     </tr>
     {% endfor %}
   </table>
