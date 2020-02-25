@@ -26,7 +26,7 @@ Sivuston ylälaidan valikon otsikkoa "Työryhmäjäsenyydet" klikkaamalla saat a
 
 Omat jäsenyydet -linkistä saat auki listan työryhmistä, joihin sinut on liitetty jäseneksi, roolisi (oikeustasosi) kussakin työryhmässä sekä kyseisen jäsenyyden alkamisajankohdasta.
 
-Hae jäsenyyttä -linkistä saat auki lomakkeen, jolla voit hakea uutta jäsenyyttä työryhmään, muutosta olemassa olevaan jäsenyystasoosi ja työryhmäjäsenyyden poistoa. Valitse ensin hakemuksen tyyppi (uusi rooli, muokkaus tai poisto). Hae sitten työryhmä-pudotusvalikosta haluamasi työryhmä, ja rooli-valikosta tarvitsemasi rooli työryhmään. Rooli määrittelee käyttöoikeuksien laajuutta työryhmän materiaaliin. Lopuksi kuvaile perustelut-kenttään lyhyesti, miksi tarvitset kyseisiä oikeuksia, tai miksi oikeudet saa ottaa pois. Paina lopuksi Lähetä pyyntö -painiketta, jolloin pyyntö tallentuu järjestelmään ja siirtyy pääkäyttäjien käsiteltäväksi.
+Hae tai muokkaa jäsenyyttä -linkistä saat auki lomakkeen, jolla voit hakea uutta jäsenyyttä työryhmään, muutosta olemassa olevaan jäsenyystasoosi ja työryhmäjäsenyyden poistoa. Valitse ensin hakemuksen tyyppi (uusi rooli, muokkaus tai poisto). Hae sitten työryhmä-pudotusvalikosta haluamasi työryhmä, ja rooli-valikosta tarvitsemasi rooli työryhmään. Rooli määrittelee käyttöoikeuksien laajuutta työryhmän materiaaliin. Lopuksi kuvaile perustelut-kenttään lyhyesti, miksi tarvitset kyseisiä oikeuksia, tai miksi oikeudet saa ottaa pois. Paina lopuksi Lähetä pyyntö -painiketta, jolloin pyyntö tallentuu järjestelmään ja siirtyy pääkäyttäjien käsiteltäväksi.
 
 Omat hakemuksesi -linkistä pääset selaamaan omia hakemuksiasi. Näet keskeneräisten hakemusten käsittelyn tilan sekä kaikki suljetut hakemukset.
 
