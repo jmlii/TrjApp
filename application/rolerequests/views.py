@@ -195,7 +195,7 @@ def rolerequests_update(rolerequest_id):
     
     if request.method=="POST" and form.validate():
 
-        rolerequest = Rolerequest(form.request_type.data)
+        rolerequest.request_type = form.request_type.data
         rolerequest.account_id = form.account_id.data
         rolerequest.wgroup_id = form.wgroup_id.data
         rolerequest.role_id = form.role_id.data
@@ -218,6 +218,5 @@ def rolerequests_update(rolerequest_id):
 def rolerequests_delete(rolerequest_id):
     rolerequest = Rolerequest.query.get(rolerequest_id)
     db.session().delete(rolerequest)
-
     db.session().commit()
     return redirect(url_for("rolerequests_index_open"))

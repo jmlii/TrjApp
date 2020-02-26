@@ -5,6 +5,7 @@ from application.auth.models import User
 from application.auth.forms import LoginForm, UserForm, UserUpdateForm, UserUpdatePasswordForm
 from application.permissions.models import Permission
 from application.userwgrouproles.models import Membership
+from application.rolerequests.models import Rolerequest
 
 # Käyttäjien sisäänkirjautuminen
 @app.route("/auth/login/", methods = ["GET", "POST"])
@@ -83,13 +84,16 @@ def users_inactivate(user_id):
 def users_delete(user_id):
     user = User.query.get(user_id)
 
-    page=request.args.get('page', 1, type=int)
-    users = User.query.order_by(User.last_name).paginate(page=page, per_page=10, error_out=False)
+    # Tarkistetaan onko käyttäjään liitetty jäsenyyshakemuksia tai työryhmäjäsenyyksiä
+    if Membership.query.filter_by(account_id=user.id).count() > 0 or Rolerequest.query.filter_by(account_id=user.id).count() > 0:
+        memberships = Membership.query.filter_by(account_id=user.id).all()
+        rolerequests = Rolerequest.query.filter_by(account_id=user.id).all()
 
-    if Membership.query.filter_by(account_id=user.id).count() > 0:
-        return render_template("auth/list.html", users=users, 
-            count_memberships = User.count_memberships(active=True),
-            error = "Et voi poistaa käyttäjää, jolla on tai on ollut jäsenyyksiä. Jos henkilön tietoihin ei ole enää käyttölupaa, on tiedot anonymisoitava.")
+    # Poistetaan mahdolliset riippuvuudet jäsenyyspynnöistä ja työryhmäjäsenyyksistä
+    for rolerequest in rolerequests:
+        db.session().delete(rolerequest)
+    for membership in memberships:
+        db.session().delete(membership)
     
     db.session().delete(user)
     db.session().commit()

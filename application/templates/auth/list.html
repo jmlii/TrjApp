@@ -40,7 +40,7 @@
       </td>
       <td>
         <form method="POST" action="{{ url_for('users_delete', user_id=user.id) }}">
-          <input type="submit" value="Poista käyttäjätili" onclick="return confirm('Oletko täysin varma, että haluat poistaa käyttäjätilin ja kaikki käyttäjän tiedot tietokannasta?')">
+          <input type="submit" value="Poista käyttäjän tiedot" onclick="return confirm('Oletko täysin varma, että haluat poistaa käyttäjätilin ja kaikki käyttäjän tiedot tietokannasta? Tietoja ei voi palauttaa poistamisen jälkeen. Tiedot tulee poistaa vain jos siihen on ehdoton tarve, ja yleensä riittää käyttäjän tietojen anonymisointi')">
         </form>
       </td>
       {% endif %}

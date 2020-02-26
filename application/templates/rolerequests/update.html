@@ -3,6 +3,7 @@
 {% block body %}
 <form method="POST" action="{{ url_for('rolerequests_update', rolerequest_id=rolerequest_id) }}">
     <h4>Päivitä jäsenyyshakemuksen tietoja</h4>
+    <p>Huom. Päivitä hakemusta vain, jos käyttäjä on lähettänyt virheellisen hakemuksen.</p>
     <table>
         <tr>
             <td>

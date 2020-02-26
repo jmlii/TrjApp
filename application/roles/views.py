@@ -4,6 +4,7 @@ from application import app, db, login_required
 from application.roles.models import Role
 from application.roles.forms import RoleForm
 from application.userwgrouproles.models import Membership
+from application.rolerequests.models import Rolerequest
 
 # Roolien listaaminen
 @app.route("/roles/", methods=["GET"])
@@ -39,9 +40,9 @@ def roles_create():
 def roles_delete(role_id):
     role = Role.query.get(role_id)
 
-    if Membership.query.filter_by(role_id=role.id).count() > 0:
+    if Membership.query.filter_by(role_id=role.id).count() > 0 or Rolerequest.query.filter_by(role_id=role.id).count() > 0:
         return render_template("roles/list.html", roles = Role.query.all(), 
-            error = "Et voi poistaa roolia, joka on liitettynä johonkin työryhmäjäsenyyteen.")
+            error = "Et voi poistaa roolia, joka on liitettynä johonkin työryhmäjäsenyyteen tai hakemukseen.")
     
     db.session().delete(role)
     db.session().commit()
