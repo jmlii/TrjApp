@@ -1,12 +1,12 @@
 # TrjApp: Käyttöohje
 
-Tässä ohjeessa opastetaan työryhmäjäsenyyksien hallintaan tarkoitetun TrjApp-sovelluksen käyttöä. Sovelluksella ylläpidetään tietoja tästä sovelluksesta erillisen yhteistyöalustan työryhmien työtilojen käyttöoikeuksista. Sovellukseen lisätään tiedot työryhmistä sekä työryhmien jäsenistä ja näiden käyttöoikeustasoista. Sovelluksesta pääsee tarkistamaan, mitä työryhmiä on, kuka hyväksyy työryhmän käyttöoikeudet, ja keitä kuuluu mihinkin työryhmiin. Lisäksi sovelluksessa on toiminto työryhmäjäsenyyksien hakemiseen, jolla käyttäjä pyytää lisäämään hänelle oikean tasoiset oikeudet työryhmiin, joissa hän on jäsenenä. 
+Tässä ohjeessa opastetaan työryhmäjäsenyyksien hallintaan tarkoitetun TrjApp-sovelluksen käyttöä. Sovelluksella ylläpidetään tietoja tästä sovelluksesta erillisen yhteistyöalustan työryhmien työtilojen tai muun aineiston käyttöoikeuksista. Sovellukseen lisätään tiedot työryhmistä sekä työryhmien jäsenistä ja näiden käyttöoikeustasoista. Sovelluksesta pääsee tarkistamaan, mitä työryhmiä on, kuka hyväksyy työryhmän käyttöoikeudet, ja keitä kuuluu mihinkin työryhmiin. Lisäksi sovelluksessa on toiminto työryhmäjäsenyyksien hakemiseen, jolla käyttäjä pyytää lisäämään hänelle oikean tasoiset oikeudet työryhmiin, joissa hän on jäsenenä. 
 
 Ohjeessa oletetaan, että sovellus on asennettu Herokuun asennusohjeen mukaisella tavalla, ja että sitä käytetään Heroku-sovelluksena. 
 
 ## Kirjautuminen
 
-Siirry sovelluksen internetsivulle osoitteeseen, jonka olet saanut organisaatiosi pääkäyttäjältä. Jos et ole saanut käyttäjätunnusta, pyydä pääkäyttäjää luomaan sinulle tunnus ja salasana. 
+Siirry sovelluksen internetsivulle osoitteeseen, jonka olet saanut pääkäyttäjältä. Jos et ole saanut käyttäjätunnusta, pyydä pääkäyttäjää luomaan sinulle tunnus ja salasana. 
 
 Mallisovellus on osoitteessa https://jmlii-trjapp.herokuapp.com/. Testikäyttöön tarkoitetut tunnukset ovat: 
 * Peruskäyttäjä: käyttäjätunnus "perustesti", salasana "salasana"
@@ -38,13 +38,13 @@ Jos sinulla on sovellukseen pääkäyttäjän oikeudet, näet sivuston ylälaida
 
 #### Käyttäjien hallinta
 
-Käyttäjät-linkistä saat auki raportin sovelluksen käyttäjistä ja listan kunkin käyttäjän työryhmäjäsenyyksien lukumäärästä. Käyttäjäraportilla jokaiseen käyttäjään liittyy painikkeet Päivitä tietoja, Työryhmät ja Poista käyttäjätili. 
+Käyttäjät-linkistä saat auki raportin sovelluksen käyttäjistä ja listan kunkin käyttäjän työryhmäjäsenyyksien lukumäärästä. Käyttäjäraportilla jokaiseen käyttäjään liittyy painikkeet Päivitä tietoja, Työryhmät ja Poista käyttäjän tiedot. 
 
 Päivitä tietoja -painikkeesta avautuu lomake käyttäjän tietojen muuttamiseen. Lomakkeella voit muuttaa käyttäjän nimiä ja käyttäjätasoa sekä merkitä tunnuksen aktiiviseksi tai epäaktiiviseksi. Käyttäjä muutetaan epäaktiiviseksi, jos hänellä ei ole aktiivisia työryhmäjäsenyyksiä eikä enää tarvetta sovelluksen käytölle. Tällöin käyttäjän tiedot säilyvät tietokannassa, mutta hän ei pysty kirjautumaan sovellukseen ja käyttämään sitä. Tallenna muutokset Päivitä käyttäjän tiedot -painikkeella. Jos haluat muuttaa käyttäjän salasanaa, pääset salansanan vaihtamislomakkeelle Vaihda salasana -linkistä.
 
 Työryhmät-painikkeesta saat auki listan käyttäjän työryhmäjäsenyyksistä. Lista on vastaava kuin käyttäjien listaus omista työryhmistään.
 
-Poista käyttäjätili -painikkeella voi poistaa käyttäjän tiedot. Jos käyttäjä poistetaan, niin kaikki häneen liittyvät tiedot poistuvat tietokannasta. Käyttäjä poistetaan vain, jos hänen tietojaan ei enää tarvita tai jos hänen henkilötietojensa käyttöön ei enää ole lupaa.
+Poista käyttäjän tiedot -painikkeella voi poistaa käyttäjän tiedot. Jos käyttäjä poistetaan, niin kaikki häneen liittyvät tiedot poistuvat tietokannasta, myös kaikki käyttäjän tekemät jäsenyyshakemukset ja jäsenyydet. Käyttäjä poistetaan vain, jos siihen on erityinen syy, esimerkiksi jos hänen tietonsa on poistettava tietosuojasyistä. Tilanteessa jossa käyttäjän henkilötietojen käyttöön ei ole lupaa, ensisijainen toimenpide on kuitenkin tietojen anonymisointi. Pääsääntöisesti käyttäjän tiedot jätetään tietokantaan,jotta siellä säilyy historiatieto työryhmien jäsenistä eri aikoina.  
 
 Sovellukseen voi lisätä uuden käyttäjän joko valikon tai käyttäjäraportin Lisää uusi käyttäjä -linkistä. Käyttäjästä on tallennettava etu- ja sukunimi, käyttäjätunnus, salasana ja sovelluksen käyttäjätaso. Käyttäjä lisätään oletuksena aktiiviseksi. Kaikki työryhmien jäseninä olevat henkilöt on lisättävä myös sovelluksen aktiivisiksi käyttäjiksi, vaikka he eivät käyttäisi sovellusta.
 
@@ -64,7 +64,7 @@ Sovellukseen voi lisätä uuden työryhmän joko valikon tai työryhmäraportin 
 
 #### Jäsenyyshakemuksien hallinta
  
-Jäsenyyshakemukset-linkistä saat auki raportin jäsenyyshakemuksista. Jokaiseen hakemukseen liittyy painikkeet Hyväksytty, Hylätty, Toteutettu ja Poista. Kun työryhmän käyttöoikeushyväksyjältä on tarkistettu, saako haetun muutoksen tehdä, merkitään hakemus joko hyväksytyksi tai hylätyksi. Kun käyttäjä on liitetty yhteistyöalustassa työryhmään oikealla oikeustasolla, ja hänelle on lisätty nämä tiedot TrjApp-sovelluksen tietokantaan, merkitään hakemus toteutetuksi. Hakemuksen voi poistaa, jos käyttäjä on lähettänyt virheellisen tai turhan hakemuksen 
+Jäsenyyshakemukset-linkistä saat auki raportin avoimista jäsenyyshakemuksista. Sivulla voit myös siirtyä tarkastelemaan suljettuja tai kaikkia hakemuksia. Avoimiin hakemuksiin liittyvät painikkeet Hyväksytty, Hylätty, Toteutettu, Muokkaa ja Poista. Kun työryhmän käyttöoikeushyväksyjältä on tarkistettu, saako haetun muutoksen tehdä, merkitään hakemus joko hyväksytyksi tai hylätyksi. Kun käyttäjä on liitetty yhteistyöalustassa työryhmään oikealla oikeustasolla, ja hänelle on lisätty nämä tiedot TrjApp-sovelluksen tietokantaan, merkitään hakemus toteutetuksi. Kaikki hylätyty hakemukset sulkeutuvat järjestelmästä heti. Hyväksytyt hakemukset sulkeutuvat, kun ne on merkitty myös toteutetuksi. Hakemusta voi muokata, jos käyttäjä on lähettänyt virheellisen hakemuksen. Hakemuksen voi poistaa, jos käyttäjä on lähettänyt turhan hakemuksen. Myös toteutetuksi merkittyjä hakemuksia voi muokata tai ne voidaan poistaa tarvittaessa. 
 
 Lisää uusi jäsenyyshakemus toiselle käyttäjälle -linkistä pääkäyttäjä pääsee tekemään jäsenyyshakemuksen toisen käyttäjän puolesta. Lomake on muuten vastaava kuin itselle tehtävässä hakemuksessa, mutta siinä annetaan lisäksi tieto käyttäjästä, jolle oikeuksia haetaan.
 
@@ -80,7 +80,7 @@ Uusi työryhmäjäsenyys tallennetaan joko valikon tai työryhmäjäsenyysraport
 
 #### Työryhmien roolien hallinta
 
-Työryhmien roolit -linkistä saat auki raportin rooleista eli jäsenyystasoista, joita käyttäjillä voi olla yhteistyöalusta työryhmien työtiloihin. Listasta voit myös poistaa sellaiset roolit, joita ei enää ole käytössä. 
+Työryhmien roolit -linkistä saat auki raportin rooleista eli jäsenyystasoista, joita käyttäjillä voi olla yhteistyöalustan työryhmien työtiloihin tai aineistoihin. Listasta voit myös poistaa turhat roolit. Jäsenyyshakemuksissa tai työryhmäjäsenyyksissä käytössä olevia rooleja ei voi poistaa. 
 
 Lisää uusi rooli -linkistä voit lisätä tietokantaan rooleja eli jäsenyystasoja, joita käyttäjillä voi olla työryhmien työtiloihin. Sovelluksen käyttöönoton yhteydessä tulee lisätä kaikki ne roolit, joita organisaatiolla on käytössä. Jos rooleja otetaan myöhemmin käyttöön lisää, voit lisätä uusia rooleja.
 
@@ -90,7 +90,9 @@ Lisää uusi rooli -linkistä voit lisätä tietokantaan rooleja eli jäsenyysta
 
 HUOM. Tämän osion toimintoja tulee käyttää vain harkiten, sillä ne vaikuttavat suoraan sovelluksen käyttöön!
 
-Sovelluksen käyttäjätasot -linkistä saat auki raportin sovelluksen käyttäjätasoja. Jos sovellus on asetettu asennusohjeen mukaisesti, on tietokannassa ainakin tasot "admin" pääkäyttäjälle ja "basic" peruskäyttäjälle. 
+Sovelluksen käyttäjätasot -linkistä saat auki raportin sovelluksen käyttäjätasoja. Jos sovellus on asetettu asennusohjeen mukaisesti, on tietokannassa ainakin tasot "admin" pääkäyttäjälle ja "basic" peruskäyttäjälle. Voit poistaa käyttäjätason, jos se ei ole käytössä yhdelläkään käyttäjällä. 
 
 Lisää uusi käyttäjätaso -linkistä voit lisätä tietokantaan uusia käyttäjätasoja sovelluksen käyttöön. Käyttäjätason admin on oltava juuri tällä nimellä, mutta muut tasot voit nimetä sopivaksi katsomallasi tavalla, sillä sovelluksen ohjelmakoodissa ei ole viittauksia niihin. Jos haluat ottaa käyttöön muita kuin pää- ja peruskäyttäjätasot, joudut muuttamaan myös ohjelmakoodia, jotta saat aidosti käyttöön eri tasoisia oikeuksia.
+
+
 
