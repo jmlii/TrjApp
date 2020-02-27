@@ -2,22 +2,17 @@
 
 {% block body %}
 
+  {% block pagetop %}
   {% if request_list != "my_requests" %}
   <h4> Jäsenyyshakemukset</h4>
   <table>
     <tr>
       <td><a href="{{ url_for('rolerequests_index_open') }}">Näytä avoimet hakemukset</a></td>
       <td></td>
-      <td><a href="{{ url_for('rolerequests_form') }}">Lisää uusi jäsenyyshakemus</a></td>
+      <td><a href="{{ url_for('rolerequests_form2') }}">Lisää uusi jäsenyyshakemus toiselle käyttäjälle</a></td>
     </tr>
     <tr>
-      <td><a href="{{ url_for('rolerequests_index_closed') }}" >Näytä suljetut hakemukset</a></td>
-      <td></td>
-      <td>
-      {% if current_user.permission_name() == "admin" %}
-        <a href="{{ url_for('rolerequests_form2') }}">Lisää uusi jäsenyyshakemus toiselle käyttäjälle</a>
-      {% endif %}
-      </td>
+      <td><a href="{{ url_for('rolerequests_index_closed') }}">Näytä suljetut hakemukset</a></td>
     </tr>
   </table>
   {% endif %}
@@ -26,12 +21,12 @@
   <h4> Omat jäsenyyshakemukseni</h4>
     <a href="{{ url_for('rolerequests_form') }}">Lisää uusi jäsenyyshakemus</a>
   {% endif %}
+  {% endblock %}
 
+  {% block listing %}  
   <table>
     <tr>
-      {% if current_user.permission_name() == "admin" %}
       <th>Id</th>
-      {% endif %}
       <th>Pyynnön tyyppi</th>
       <th>Käyttäjä</th>
       <th>Työryhmä</th>
@@ -39,25 +34,16 @@
       <th>Perustelut</th>
       <th>Hyväksyjä</th>
       <th>Hyväksytty</th>
-      {% if current_user.permission_name() == "admin" %}
       <th>Hyväksynnän ajankohta</th>
-      {% endif %}
       <th>Hylätty</th>
-      {% if current_user.permission_name() == "admin" %}
       <th>Hylkäyksen ajakohta</th>
-      {% endif %}
       <th>Toteutettu</th>
       <th>Luotu</th>
       <th>Muokattu</th>
-      {% if current_user.permission_name() == "admin" %}
-      <th>Muokkaukset</th>
-      {% endif %}
     </tr>
     {% for rolerequest in rolerequests.items %}
     <tr>
-      {% if current_user.permission_name() == "admin" %}
       <td>{{ rolerequest.id }}</td>
-      {% endif %}
       <td>{{ rolerequest.request_type }}</td>
       <td>{{ rolerequest.user }}</td>
       <td>{{ rolerequest.wgroup }}</td>
@@ -65,31 +51,28 @@
       <td>{{ rolerequest.justification }}</td>
       <td>{{ rolerequest.authoriser }}</td>
       <td>{{ rolerequest.approved }}</td>
-      {% if current_user.permission_name() == "admin" %}
       <td>{{ rolerequest.date_approved }}</td>
-      {% endif %}
       <td>{{ rolerequest.rejected }}</td>
-      {% if current_user.permission_name() == "admin" %}
       <td>{{ rolerequest.date_rejected }}</td>
-      {% endif %}
       <td>{{ rolerequest.executed }}</td>
       <td>{{ rolerequest.date_created }}</td>
       <td>{{ rolerequest.date_modified }}</td>
-      {% if current_user.permission_name() == "admin" %}
+
+      {% if request_list != "my_requests" %}
       {% if rolerequest.executed == False %}
       <td>
         <form method="POST" action="{{ url_for('rolerequests_approve', rolerequest_id=rolerequest.id) }}">
-            <input type="submit" value="Hyväksytty" onclick="return confirm('Haluatko merkitä pyynnön hyväksytyksi?')">
+            <input type="submit" value="Hyväksytty" onclick="return confirm('Haluatko merkitä hakemuksen hyväksytyksi?')">
         </form>
       </td>
       <td>
         <form method="POST" action="{{ url_for('rolerequests_reject', rolerequest_id=rolerequest.id) }}">
-            <input type="submit" value="Hylätty" onclick="return confirm('Haluatko merkitä pyynnön hylätyksi?')">
+            <input type="submit" value="Hylätty" onclick="return confirm('Haluatko merkitä hakemuksen hylätyksi?')">
         </form>
       </td>
       <td>
         <form method="POST" action="{{ url_for('rolerequests_set_executed', rolerequest_id=rolerequest.id) }}">
-          <input type="submit" value="Toteutettu" onclick="return confirm('Haluatko merkitä pyynnön toteutetuksi?')">
+          <input type="submit" value="Toteutettu" onclick="return confirm('Haluatko merkitä hakemuksen toteutetuksi?')">
         </form>
       </td>
       {% else %}
@@ -104,13 +87,14 @@
       </td>
       <td>
         <form method="POST" action="{{ url_for('rolerequests_delete', rolerequest_id=rolerequest.id) }}">
-          <input type="submit" value="Poista" onclick="return confirm('Haluatko varmasti poistaa pyynnön tietokannasta? Poista pyyntö vain, jos käyttäjä on lähettänyt turhan hakemuksen.')">
+          <input type="submit" value="Poista" onclick="return confirm('Haluatko varmasti poistaa hakemuksen tietokannasta? Poista hakemus vain, jos käyttäjä on lähettänyt turhan hakemuksen.')">
         </form>
       </td>
       {% endif %}
+      {% endfor %}
     </tr>
-    {% endfor %}
   </table>
+  {% endblock %} 
 
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">

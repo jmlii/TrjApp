@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from application import app, db, login_required
 from application.rolerequests.models import Rolerequest
-from application.rolerequests.forms import RolerequestForm, RolerequestForm2
+from application.rolerequests.forms import RolerequestForm, RolerequestForm2, RolerequestUpdateForm
 from application.wgroups.models import Wgroup
 from application.roles.models import Role
 from application.auth.models import User
@@ -23,8 +23,7 @@ def rolerequests_index():
         order_by(Rolerequest.date_created.desc()).\
         paginate(page=page, per_page=10, error_out=False)
     
-    return render_template("rolerequests/list.html", 
-        rolerequests = rolerequests)
+    return render_template("rolerequests/list.html", rolerequests = rolerequests)
 
 # Avoimien jäsenyyspyyntöjen listaaminen
 @app.route("/rolerequests/open", methods=["GET"])
@@ -168,6 +167,9 @@ def rolerequests_reject(rolerequest_id):
     rolerequest.rejected = True
     rolerequest.date_rejected = db.func.current_timestamp()
     rolerequest.executed = True 
+    if rolerequest.approved == True:
+        rolerequest.approved = False
+        rolerequest.date_approved = None
 
     db.session().commit()
     return redirect(url_for("rolerequests_index_closed"))
@@ -182,13 +184,13 @@ def rolerequests_set_executed(rolerequest_id):
     db.session().commit()
     return redirect(url_for("rolerequests_index_closed"))
 
-# Jäsenyyspyynnön perustietojen muokkaaminen
+# Jäsenyyspyynnön tietojen muokkaaminen
 @app.route("/rolerequests/update<rolerequest_id>/", methods=["GET", "POST"])
 @login_required(permission="admin")
 def rolerequests_update(rolerequest_id):
     
     rolerequest = Rolerequest.query.get(rolerequest_id)
-    form = RolerequestForm2(request.form)
+    form = RolerequestUpdateForm(request.form)
     form.account_id.choices = [(user.id, user.username) for user in User.query.filter_by(account_active=True).order_by("username")]
     form.wgroup_id.choices = [(wgroup.id, wgroup.name) for wgroup in Wgroup.query.filter_by(active=True).order_by("name")]
     form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
@@ -200,6 +202,28 @@ def rolerequests_update(rolerequest_id):
         rolerequest.wgroup_id = form.wgroup_id.data
         rolerequest.role_id = form.role_id.data
         rolerequest.justification = form.justification.data
+        rolerequest.approved = form.approved.data
+        rolerequest.rejected = form.rejected.data
+        rolerequest.executed = form.executed.data
+
+        if rolerequest.approved == True and rolerequest.rejected == True:
+            return render_template("rolerequests/update.html", error = "Et voi merkitä hakemusta samaan aikaan hyväksytyksi ja hylätyksi.",
+                rolerequest=rolerequest, rolerequest_id=rolerequest_id, form=form)
+
+        if rolerequest.executed == True and rolerequest.approved == False and rolerequest.rejected == False:
+            return render_template("rolerequests/update.html", error = "Hakemuksen tulee olla joko hyväksytty tai hylätty, jotta sen voi merkitä toteutetuksi.",
+                rolerequest=rolerequest, rolerequest_id=rolerequest_id, form=form)
+
+        if rolerequest.rejected == True and rolerequest.executed == False:
+            rolerequest.executed = True
+
+        if rolerequest.approved == True:
+            rolerequest.date_approved = db.func.current_timestamp()
+            rolerequest.date_rejected = None
+        
+        if rolerequest.rejected == True:
+            rolerequest.date_rejected = db.func.current_timestamp()
+            rolerequest.date_approved = None
 
         db.session.commit()
         return redirect(url_for("rolerequests_index"))
@@ -209,6 +233,9 @@ def rolerequests_update(rolerequest_id):
     form.wgroup_id.data = rolerequest.wgroup_id 
     form.role_id.data = rolerequest.role_id 
     form.justification.data = rolerequest.justification 
+    form.approved.data = rolerequest.approved
+    form.rejected.data = rolerequest.rejected
+    form.executed.data = rolerequest.executed
 
     return render_template("rolerequests/update.html", rolerequest=rolerequest, rolerequest_id=rolerequest_id, form=form)      
 

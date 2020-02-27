@@ -1,88 +1,22 @@
-{% extends "layout.html" %}
+{% extends "/rolerequests/list.html" %}
 
 {% block body %}
+  {% block pagetop %}
   <h4> Avoimet jäsenyyshakemukset</h4>
-
   <table>
     <tr>
       <td><a href="{{ url_for('rolerequests_index_closed') }}">Näytä suljetut hakemukset</a></td>
       <td></td>
-      <td><a href="{{ url_for('rolerequests_form') }}">Lisää uusi jäsenyyshakemus</a></td>
+      <td><a href="{{ url_for('rolerequests_form2') }}">Lisää uusi jäsenyyshakemus toiselle käyttäjälle</a></td>
     </tr>
     <tr>
       <td><a href="{{ url_for('rolerequests_index') }}" >Näytä kaikki hakemukset</a></td>
-      <td></td>
-      <td>
-      {% if current_user.permission_name() == "admin" %}
-        <a href="{{ url_for('rolerequests_form2') }}">Lisää uusi jäsenyyshakemus toiselle käyttäjälle</a>
-      {% endif %}
-      </td>
     </tr>
   </table>
+  {% endblock %}
 
-  <table>
-    <tr>
-      <th>Id</th>
-      <th>Pyynnön tyyppi</th>
-      <th>Käyttäjä</th>
-      <th>Työryhmä</th>
-      <th>Rooli</th>
-      <th>Perustelut</th>
-      <th>Hyväksyjä</th>
-      <th>Hyväksytty</th>
-      <th>Hyväksynnän ajankohta</th>
-      <th>Hylätty</th>
-      <th>Hylkäyksen ajakohta</th>
-      <th>Toteutettu</th>
-      <th>Luotu</th>
-      <th>Muokattu</th>
-      <th>Muokkaukset</th>
-    </tr>
-    {% for rolerequest in rolerequests.items %}
-    <tr>
-      <td>{{ rolerequest.id }}</td>
-      <td>{{ rolerequest.request_type }}</td>
-      <td>{{ rolerequest.user }}</td>
-      <td>{{ rolerequest.wgroup }}</td>
-      <td>{{ rolerequest.role }}</td>
-      <td>{{ rolerequest.justification }}</td>
-      <td>{{ rolerequest.authoriser }}</td>
-      <td>{{ rolerequest.approved }}</td>
-      <td>{{ rolerequest.date_approved }}</td>
-      <td>{{ rolerequest.rejected }}</td>
-      <td>{{ rolerequest.date_rejected }}</td>
-      <td>{{ rolerequest.executed }}</td>
-      <td>{{ rolerequest.date_created }}</td>
-      <td>{{ rolerequest.date_modified }}</td>
-      <td>
-        <form method="POST" action="{{ url_for('rolerequests_approve', rolerequest_id=rolerequest.id) }}">
-            <input type="submit" value="Hyväksytty" onclick="return confirm('Haluatko merkitä pyynnön hyväksytyksi?')">
-        </form>
-      </td>
-      <td>
-        <form method="POST" action="{{ url_for('rolerequests_reject', rolerequest_id=rolerequest.id) }}">
-            <input type="submit" value="Hylätty" onclick="return confirm('Haluatko merkitä pyynnön hylätyksi?')">
-        </form>
-      </td>
-      <td>
-        <form method="POST" action="{{ url_for('rolerequests_set_executed', rolerequest_id=rolerequest.id) }}">
-          <input type="submit" value="Toteutettu" onclick="return confirm('Haluatko merkitä pyynnön toteutetuksi?')">
-        </form>
-      </td>
-      <td>
-        <form method="GET" action="{{ url_for('rolerequests_update', rolerequest_id=rolerequest.id) }}">
-          <input type="submit" value="Muokkaa">
-        </form>
-      </td>
-      <td>
-        <form method="POST" action="{{ url_for('rolerequests_delete', rolerequest_id=rolerequest.id) }}">
-          <input type="submit" value="Poista" onclick="return confirm('Haluatko varmasti poistaa pyynnön tietokannasta? Poista pyyntö vain, jos käyttäjä on lähettänyt turhan hakemuksen.')">
-        </form>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
-  
+  {% block listing %}{{ super() }}{% endblock %}  
+
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
       {% if rolerequests.has_prev %}

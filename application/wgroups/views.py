@@ -11,7 +11,7 @@ from application.permissions.models import Permission
 @login_required
 def wgroups_index():
     page=request.args.get('page', 1, type=int)
-    wgroups =  Wgroup.query.paginate(page=page, per_page=10, error_out=False)  
+    wgroups =  Wgroup.query.order_by(Wgroup.name).paginate(page=page, per_page=10, error_out=False)  
 
     return render_template("wgroups/list.html",
         wgroups = wgroups,  
