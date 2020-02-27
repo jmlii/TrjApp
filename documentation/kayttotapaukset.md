@@ -137,11 +137,11 @@ INSERT INTO Rolerequest (date_created, date_modified, request_type, justificatio
 VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, False, None, False, None, False, ?, ?, ?);
 ```
 * Käyttäjä ei pysty muokkaamaan hakemusta tallennettuaan sen. 
-* Pääkäyttäjä pystyy muokkaamaan hakemuksen tilaa sen jälkeen kun se on tallennettu, ja poistamaan virheellisiä tai erehdyksessä lähetettyjä hakemuksia.
+* Pääkäyttäjä pystyy muokkaamaan hakemusta ja sen tilaa sen jälkeen kun se on tallennettu, ja poistamaan virheellisiä tai erehdyksessä lähetettyjä hakemuksia. Hyväksytyksi ja hylätyksi tulemisesta tallentuu automaattisesti ajankohta.
 ```
- UPDATE Rolerequest 
- SET date_modified=CURRENT_TIMESTAMP, request_type=?, justification=?, account_id=?, wgroup_id=?, role_id=? 
- WHERE rolerequest.id = ?;
+UPDATE Rolerequest 
+SET date_modified=CURRENT_TIMESTAMP, request_type=?, justification=?, approved=?, date_approved=CURRENT_TIMESTAMP, rejected=?, date_rejected=?, executed=?, account_id=?, wgroup_id=?, role_id=? 
+WHERE rolerequest.id = ?;
 ```
 ```
 DELETE FROM Rolerequest 
@@ -149,9 +149,9 @@ WHERE rolerequest.id = ?;
 ```
 * Pääkäyttäjät tarkistavat järjestelmästä erillään työryhmälle nimetyltä hyväksyjältä, hyväksyykö vai hylkääkö tämä hakemuksen, ja merkitsevät hakemuksen tilan hyväksytyksi tai hylätyksi. Hylätty hakemus merkitään samalla toteutetuksi.
 ```
- UPDATE Rolerequest 
- SET date_modified=CURRENT_TIMESTAMP, approved=True, date_approved=CURRENT_TIMESTAMP 
- WHERE rolerequest.id = ?;
+UPDATE Rolerequest 
+SET date_modified=CURRENT_TIMESTAMP, approved=True, date_approved=CURRENT_TIMESTAMP 
+WHERE rolerequest.id = ?;
 ```
 ```
 UPDATE Rolerequest 
