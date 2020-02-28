@@ -84,16 +84,15 @@ def users_inactivate(user_id):
 def users_delete(user_id):
     user = User.query.get(user_id)
 
-    # Tarkistetaan onko käyttäjään liitetty jäsenyyshakemuksia tai työryhmäjäsenyyksiä
-    if Membership.query.filter_by(account_id=user.id).count() > 0 or Rolerequest.query.filter_by(account_id=user.id).count() > 0:
+    if Membership.query.filter_by(account_id=user.id).count() > 0: 
         memberships = Membership.query.filter_by(account_id=user.id).all()
+        for membership in memberships:
+            db.session().delete(membership)
+    
+    if Rolerequest.query.filter_by(account_id=user.id).count() > 0:
         rolerequests = Rolerequest.query.filter_by(account_id=user.id).all()
-
-    # Poistetaan mahdolliset riippuvuudet jäsenyyspynnöistä ja työryhmäjäsenyyksistä
-    for rolerequest in rolerequests:
-        db.session().delete(rolerequest)
-    for membership in memberships:
-        db.session().delete(membership)
+        for rolerequest in rolerequests:
+            db.session().delete(rolerequest)
     
     db.session().delete(user)
     db.session().commit()

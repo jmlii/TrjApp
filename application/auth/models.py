@@ -64,7 +64,8 @@ class User(Base):
             " FROM Account"
             " LEFT JOIN UserWgroupRole ON Account.id = UserWgroupRole.account_id"
             " WHERE Account.account_active = :active AND UserWgroupRole.date_ended IS null"
-            " GROUP BY Account.last_name, Account.first_name, Account.username").params(active=active)
+            " GROUP BY Account.last_name, Account.first_name, Account.username"
+            " HAVING COUNT(UserWgroupRole.account_id) > 0 ").params(active=active)
         res = db.engine.execute(stmt)
 
         response = []
